@@ -26,7 +26,6 @@
     .subtitle { color: #aaa; margin-top: 6px; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
 
     .today-stats { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; max-width: 460px; }
-
     .stat-box { flex: 1; background: #fff; border-radius: 16px; padding: 14px 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
     .stat-number { font-size: 1.6rem; font-weight: 700; color: #111; line-height: 1; }
     .stat-label { font-size: 0.7rem; color: #bbb; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
@@ -41,35 +40,28 @@
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #a78bfa); border-radius: 10px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
     .progress-counts { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.72rem; color: #bbb; }
 
-    #study-view, #test-view, #review-view, #dict-view { width: 100%; max-width: 460px; }
+    #study-view, #test-view, #review-view, #dict-view, #settings-view { width: 100%; max-width: 460px; }
 
     .card { background: #fff; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
     .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
     .card.review-card::before { background: #f59e0b; }
 
     .review-badge { display: inline-block; background: #fff7ed; color: #f59e0b; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
-
     .category { display: inline-block; font-size: 0.68rem; letter-spacing: 2.5px; color: #111; text-transform: uppercase; font-weight: 600; background: #f0f0f0; padding: 4px 14px; border-radius: 20px; margin-bottom: 24px; }
-
     .word-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
     .word { font-size: 3rem; font-weight: 700; color: #111; letter-spacing: -1px; line-height: 1; }
-
     .speak-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
     .speak-btn:hover { background: #e0e0e0; }
-
     .pronunciation { color: #bbb; font-size: 0.88rem; margin-bottom: 24px; font-weight: 300; }
     .divider { width: 36px; height: 2px; background: #111; margin: 0 auto 24px; border-radius: 2px; }
     .meaning-main { font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 8px; line-height: 1.5; }
     .meaning-sub { font-size: 0.85rem; color: #aaa; margin-bottom: 20px; line-height: 1.6; }
-
     .example { background: #f7f7f7; border-radius: 12px; padding: 18px 22px; font-size: 0.88rem; color: #888; font-style: italic; margin-bottom: 36px; line-height: 1.65; }
-
     .buttons { display: flex; gap: 10px; justify-content: center; }
     .btn-again { background: #f0f0f0; color: #888; flex: 1; border: 1px solid #e8e8e8; }
     .btn-got { background: #111; color: #fff; flex: 1.4; }
     .btn-got:hover { background: #333; }
     .btn-again:hover { background: #e8e8e8; }
-
     .buttons button { padding: 14px 26px; border: none; border-radius: 14px; font-size: 0.9rem; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif; transition: all 0.15s ease; }
     .buttons button:active { transform: scale(0.97); }
     .progress { margin-top: 20px; text-align: center; color: #ccc; font-size: 0.78rem; letter-spacing: 2px; }
@@ -83,57 +75,45 @@
     .card-container { width: 100%; perspective: 1000px; cursor: pointer; }
     .card-inner { position: relative; width: 100%; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
     .card-container.flipped .card-inner { transform: rotateY(180deg); }
-
     .card-front, .card-back { width: 100%; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; }
     .card-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
     .card-front::before, .card-back::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
     .flip-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-top: 24px; }
     .flip-back-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 20px; }
 
-    /* 사전 탭 */
+    /* 사전 */
     .dict-search-box { display: flex; gap: 8px; margin-bottom: 16px; }
-    .dict-input { flex: 1; padding: 14px 18px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; color: #111; transition: border-color 0.15s; }
+    .dict-input { flex: 1; padding: 14px 18px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; color: #111; }
     .dict-input:focus { border-color: #111; }
-    .dict-search-btn { padding: 14px 20px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 1rem; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; transition: all 0.15s; }
-    .dict-search-btn:hover { background: #333; }
-
+    .dict-search-btn { padding: 14px 20px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 1rem; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; }
     .dict-result { background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
     .dict-result::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
-
     .dict-word-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
     .dict-word { font-size: 2.2rem; font-weight: 700; color: #111; letter-spacing: -1px; }
     .dict-phonetic { color: #bbb; font-size: 0.88rem; margin-bottom: 20px; text-align: center; }
-
     .dict-part-of-speech { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #6366f1; background: #f0f0ff; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
     .dict-def { font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 6px; }
     .dict-def-ko { font-size: 0.95rem; color: #6366f1; line-height: 1.6; margin-bottom: 12px; }
     .dict-example { font-size: 0.85rem; color: #aaa; font-style: italic; line-height: 1.5; padding-left: 12px; border-left: 2px solid #e0e0e0; margin-top: 8px; }
-
-    .dict-add-btn { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 20px; transition: all 0.15s; }
-    .dict-add-btn:hover { background: #333; }
+    .dict-add-btn { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 20px; }
     .dict-add-btn:disabled { background: #ddd; color: #aaa; cursor: not-allowed; }
-
     .dict-loading { text-align: center; color: #aaa; padding: 40px 0; font-size: 0.9rem; }
     .dict-error { text-align: center; color: #f87171; padding: 40px 0; font-size: 0.9rem; line-height: 1.6; }
 
+    /* 목록 */
     #list-view { display: none; width: 100%; max-width: 460px; }
     .search-input { width: 100%; padding: 12px 16px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; margin-bottom: 12px; background: #fff; color: #111; }
-    .search-input:focus { border-color: #111; }
     .list-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
     .list-tab { flex: 1; padding: 10px; border: none; border-radius: 12px; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: #ebebeb; color: #888; transition: all 0.15s; }
     .list-tab.active { background: #111; color: #fff; }
     .word-list { display: flex; flex-direction: column; gap: 10px; max-height: 45vh; overflow-y: auto; }
-
     .word-item { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
     .word-item-left { text-align: left; flex: 1; }
     .word-item-word { font-size: 1.05rem; font-weight: 700; color: #111; }
     .word-item-meaning { font-size: 0.78rem; color: #aaa; margin-top: 2px; }
     .word-item-right { display: flex; align-items: center; gap: 8px; }
-    .toggle-btn { padding: 8px 12px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: all 0.15s; background: #f0f0f0; }
-    .toggle-btn:hover { background: #e0e0e0; }
-
-    .review-start-btn { width: 100%; padding: 16px; background: #f59e0b; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 16px; transition: all 0.15s; }
-    .review-start-btn:hover { background: #d97706; }
+    .toggle-btn { padding: 8px 12px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; background: #f0f0f0; }
+    .review-start-btn { width: 100%; padding: 16px; background: #f59e0b; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 16px; }
     .review-start-btn:disabled { background: #ddd; color: #aaa; cursor: not-allowed; }
     .empty-msg { text-align: center; color: #ccc; font-size: 0.9rem; padding: 40px 0; }
 
@@ -143,8 +123,21 @@
     .complete-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; }
     .complete-btn { padding: 14px 28px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
 
+    /* 설정 */
+    .settings-card { background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); }
+    .settings-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+    .settings-desc { font-size: 0.85rem; color: #aaa; margin-bottom: 20px; line-height: 1.5; }
+    .settings-input { width: 100%; padding: 14px 16px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 12px; }
+    .settings-input:focus { border-color: #111; }
+    .settings-save-btn { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-bottom: 12px; }
+    .settings-status { text-align: center; font-size: 0.85rem; color: #aaa; }
+    .settings-status.ok { color: #4ade80; }
+    .settings-divider { width: 100%; height: 1px; background: #f0f0f0; margin: 24px 0; }
+    .settings-danger-btn { width: 100%; padding: 14px; background: #fff0f0; color: #f87171; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; }
+
+    /* 네비게이션 */
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; display: flex; justify-content: center; padding: 8px 0 20px; }
-    .nav-btn { flex: 1; max-width: 90px; padding: 10px 0; border: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 0.62rem; font-weight: 600; color: #bbb; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: color 0.15s; }
+    .nav-btn { flex: 1; max-width: 80px; padding: 10px 0; border: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 0.58rem; font-weight: 600; color: #bbb; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: color 0.15s; }
     .nav-btn.active { color: #111; }
     .nav-icon { font-size: 1.3rem; }
   </style>
@@ -241,9 +234,22 @@
       <button class="list-tab" onclick="switchListTab('again')">🔄 Again</button>
     </div>
     <div class="word-list" id="word-list"></div>
-    <button class="review-start-btn" id="review-btn" onclick="startReview()" style="display:none;">
-      🔄 Again 단어 다시 공부하기
-    </button>
+    <button class="review-start-btn" id="review-btn" onclick="startReview()" style="display:none;">🔄 Again 단어 다시 공부하기</button>
+  </div>
+
+  <!-- 설정 화면 -->
+  <div id="settings-view" style="display:none;">
+    <div class="settings-card">
+      <div class="settings-title">🔑 API 키 설정</div>
+      <div class="settings-desc">Anthropic API 키를 입력하면 Dictionary 검색 기능을 사용할 수 있어요. 키는 이 기기에만 저장되고 외부로 전송되지 않아요.</div>
+      <input class="settings-input" type="password" id="api-key-input" placeholder="sk-ant-api03-...">
+      <button class="settings-save-btn" onclick="saveApiKey()">저장하기</button>
+      <div class="settings-status" id="api-status"></div>
+      <div class="settings-divider"></div>
+      <div class="settings-title" style="margin-bottom:6px;">🗑️ 데이터 초기화</div>
+      <div class="settings-desc">학습 기록(Sorted/Again)을 모두 초기화해요.</div>
+      <button class="settings-danger-btn" onclick="resetData()">학습 기록 초기화</button>
+    </div>
   </div>
 
   <div class="bottom-nav">
@@ -254,15 +260,18 @@
       <span class="nav-icon">🧪</span>Test
     </button>
     <button class="nav-btn" id="nav-dict" onclick="switchView('dict')">
-      <span class="nav-icon">🔍</span>Dictionary
+      <span class="nav-icon">🔍</span>Dict
     </button>
     <button class="nav-btn" id="nav-list" onclick="switchView('list')">
       <span class="nav-icon">📋</span>My Words
     </button>
+    <button class="nav-btn" id="nav-settings" onclick="switchView('settings')">
+      <span class="nav-icon">⚙️</span>Settings
+    </button>
   </div>
 
   <script>
-    const CLAUDE_API_KEY = '';
+    let CLAUDE_API_KEY = localStorage.getItem('claudeApiKey') || '';
 
     const defaultCards = [
       { category: "Casual", word: "Cheers", pronunciation: "[tʃɪərz]", meaningMain: "고마워! / 건배!", meaningSub: "영국에서는 '감사합니다' 대신 일상적으로 씀", example: "\"Cheers, mate!\" — 친구에게 뭔가 받았을 때" },
@@ -375,11 +384,39 @@
       renderList();
     }
 
+    // 설정
+    function saveApiKey() {
+      const key = document.getElementById('api-key-input').value.trim();
+      if (!key) return;
+      localStorage.setItem('claudeApiKey', key);
+      CLAUDE_API_KEY = key;
+      document.getElementById('api-status').textContent = '✅ 저장됐어요!';
+      document.getElementById('api-status').className = 'settings-status ok';
+      document.getElementById('api-key-input').value = '';
+    }
+
+    function resetData() {
+      if (confirm('학습 기록을 모두 초기화할까요?')) {
+        localStorage.removeItem('britishResults');
+        results = {};
+        initDecks();
+        updateProgressBar();
+        showStudyCard();
+        alert('초기화됐어요!');
+      }
+    }
+
     // Claude API 사전 검색
     async function dictSearch() {
       const input = document.getElementById('dict-input').value.trim();
       if (!input) return;
       const area = document.getElementById('dict-result-area');
+
+      if (!CLAUDE_API_KEY) {
+        area.innerHTML = '<div class="dict-error">⚙️ Settings에서 API 키를 먼저 입력해주세요!</div>';
+        return;
+      }
+
       area.innerHTML = '<div class="dict-loading">🔍 검색 중... 잠깐만요!</div>';
 
       try {
@@ -412,7 +449,6 @@
 
         const data = await response.json();
         if (data.error) throw new Error(data.error.message);
-
         const text = data.content[0].text;
         const clean = text.replace(/```json|```/g, '').trim();
         const result = JSON.parse(clean);
@@ -428,13 +464,8 @@
             <span class="dict-part-of-speech">${result.partOfSpeech}</span>
             <div class="dict-def">${result.meaningEn}</div>
             <div class="dict-def-ko">🇰🇷 ${result.meaningKo}</div>
-            ${result.example ? `
-              <div class="dict-example">
-                "${result.example}"<br>
-                <span style="color:#bbb; font-style:normal;">${result.exampleKo}</span>
-              </div>` : ''}
-            <button class="dict-add-btn" id="add-btn" ${alreadyAdded ? 'disabled' : ''}
-              onclick="addToStudy(${JSON.stringify(result)})">
+            ${result.example ? `<div class="dict-example">"${result.example}"<br><span style="color:#bbb;font-style:normal;">${result.exampleKo}</span></div>` : ''}
+            <button class="dict-add-btn" id="add-btn" ${alreadyAdded ? 'disabled' : ''} onclick="addToStudy(${JSON.stringify(result)})">
               ${alreadyAdded ? '✅ 이미 추가된 단어' : '➕ Study에 추가하기'}
             </button>
           </div>`;
@@ -464,13 +495,7 @@
     function showStudyCard() {
       const area = document.getElementById('study-card-area');
       if (studyDeck.length === 0) {
-        area.innerHTML = `
-          <div class="all-done-card">
-            <div class="all-done-emoji">🎉</div>
-            <div class="all-done-title">모두 완료!</div>
-            <div class="all-done-sub">모든 단어를 Sorted 했어요!<br>사전에서 새 단어를 추가해봐요.</div>
-            <button class="all-done-btn" onclick="switchView('dict')">🔍 사전 열기</button>
-          </div>`;
+        area.innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">모두 완료!</div><div class="all-done-sub">모든 단어를 Sorted 했어요!<br>사전에서 새 단어를 추가해봐요.</div><button class="all-done-btn" onclick="switchView('dict')">🔍 사전 열기</button></div>`;
         document.getElementById('s-progress').textContent = '';
         return;
       }
@@ -501,15 +526,8 @@
     }
 
     function showTestCard() {
-      const area = document.getElementById('test-card-area');
       if (testDeck.length === 0) {
-        area.innerHTML = `
-          <div class="all-done-card">
-            <div class="all-done-emoji">🎉</div>
-            <div class="all-done-title">모두 완료!</div>
-            <div class="all-done-sub">모든 단어를 Sorted 했어요!</div>
-            <button class="all-done-btn" onclick="switchView('list')">My Words 보기</button>
-          </div>`;
+        document.getElementById('test-card-area').innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">모두 완료!</div><div class="all-done-sub">모든 단어를 Sorted 했어요!</div><button class="all-done-btn" onclick="switchView('list')">My Words 보기</button></div>`;
         document.getElementById('t-progress').textContent = '';
         return;
       }
@@ -534,13 +552,7 @@
     function showReviewCard() {
       const area = document.getElementById('review-card-area');
       if (reviewCurrent >= reviewCards.length) {
-        area.innerHTML = `
-          <div class="complete-card">
-            <div class="complete-emoji">🎉</div>
-            <div class="complete-title">Review 완료!</div>
-            <div class="complete-sub">Again 단어를 모두 복습했어요</div>
-            <button class="complete-btn" onclick="switchView('list')">My Words로 돌아가기</button>
-          </div>`;
+        area.innerHTML = `<div class="complete-card"><div class="complete-emoji">🎉</div><div class="complete-title">Review 완료!</div><div class="complete-sub">Again 단어를 모두 복습했어요</div><button class="complete-btn" onclick="switchView('list')">My Words로 돌아가기</button></div>`;
         document.getElementById('r-progress').textContent = '';
         return;
       }
@@ -603,13 +615,25 @@
     }
 
     function switchView(view) {
-      ['study','test','dict','list','review'].forEach(v => {
-        document.getElementById(v + '-view').style.display = view === v ? 'block' : 'none';
+      ['study','test','dict','list','review','settings'].forEach(v => {
+        const el = document.getElementById(v + '-view');
+        if (el) el.style.display = view === v ? 'block' : 'none';
       });
-      ['study','test','dict','list'].forEach(v => {
-        document.getElementById('nav-' + v).classList.toggle('active', view === v);
+      ['study','test','dict','list','settings'].forEach(v => {
+        const el = document.getElementById('nav-' + v);
+        if (el) el.classList.toggle('active', view === v);
       });
       if (view === 'list') renderList();
+      if (view === 'settings') {
+        const status = document.getElementById('api-status');
+        if (CLAUDE_API_KEY) {
+          status.textContent = '✅ API 키가 저장되어 있어요';
+          status.className = 'settings-status ok';
+        } else {
+          status.textContent = 'API 키가 없어요. 입력해주세요.';
+          status.className = 'settings-status';
+        }
+      }
     }
 
     function switchListTab(tab) {
@@ -649,9 +673,7 @@
               <div class="word-item-meaning">${c.meaningMain}</div>
             </div>
             <div class="word-item-right">
-              <button class="toggle-btn" onclick="toggleWordStatus('${c.word}')">
-                ${isSorted ? '🔄' : '✅'}
-              </button>
+              <button class="toggle-btn" onclick="toggleWordStatus('${c.word}')">${isSorted ? '🔄' : '✅'}</button>
             </div>
           </div>`;
       }).join('');
