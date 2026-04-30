@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>British English 🇬🇧</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7f7f7;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 20px 100px 20px;
+    }
+
+    .header { text-align: center; margin-bottom: 16px; }
+    h1 { font-size: 1.5rem; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+    .subtitle { color: #aaa; margin-top: 6px; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; }
+
+    .today-stats { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; max-width: 460px; }
+
+    .stat-box { flex: 1; background: #fff; border-radius: 16px; padding: 14px 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .stat-number { font-size: 1.6rem; font-weight: 700; color: #111; line-height: 1; }
+    .stat-label { font-size: 0.7rem; color: #bbb; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+    .stat-box.again .stat-number { color: #f59e0b; }
+    .stat-box.total .stat-number { color: #6366f1; }
+
+    .progress-section { width: 100%; max-width: 460px; background: #fff; border-radius: 16px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-label { font-size: 0.78rem; font-weight: 600; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+    .progress-percent { font-size: 1rem; font-weight: 700; color: #111; }
+    .progress-bar-bg { width: 100%; height: 10px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #a78bfa); border-radius: 10px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .progress-counts { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.72rem; color: #bbb; }
+
+    #study-view, #test-view, #review-view, #dict-view { width: 100%; max-width: 460px; }
+
+    .card { background: #fff; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
+    .card.review-card::before { background: #f59e0b; }
+
+    .review-badge { display: inline-block; background: #fff7ed; color: #f59e0b; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
+
+    .category { display: inline-block; font-size: 0.68rem; letter-spacing: 2.5px; color: #111; text-transform: uppercase; font-weight: 600; background: #f0f0f0; padding: 4px 14px; border-radius: 20px; margin-bottom: 24px; }
+
+    .word-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
+    .word { font-size: 3rem; font-weight: 700; color: #111; letter-spacing: -1px; line-height: 1; }
+
+    .speak-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+    .speak-btn:hover { background: #e0e0e0; }
+
+    .pronunciation { color: #bbb; font-size: 0.88rem; margin-bottom: 24px; font-weight: 300; }
+    .divider { width: 36px; height: 2px; background: #111; margin: 0 auto 24px; border-radius: 2px; }
+    .meaning-main { font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 8px; line-height: 1.5; }
+    .meaning-sub { font-size: 0.85rem; color: #aaa; margin-bottom: 20px; line-height: 1.6; }
+
+    .example { background: #f7f7f7; border-radius: 12px; padding: 18px 22px; font-size: 0.88rem; color: #888; font-style: italic; margin-bottom: 36px; line-height: 1.65; }
+
+    .buttons { display: flex; gap: 10px; justify-content: center; }
+    .btn-again { background: #f0f0f0; color: #888; flex: 1; border: 1px solid #e8e8e8; }
+    .btn-got { background: #111; color: #fff; flex: 1.4; }
+    .btn-got:hover { background: #333; }
+    .btn-again:hover { background: #e8e8e8; }
+
+    .buttons button { padding: 14px 26px; border: none; border-radius: 14px; font-size: 0.9rem; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif; transition: all 0.15s ease; }
+    .buttons button:active { transform: scale(0.97); }
+    .progress { margin-top: 20px; text-align: center; color: #ccc; font-size: 0.78rem; letter-spacing: 2px; }
+
+    .all-done-card { background: #fff; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); }
+    .all-done-emoji { font-size: 3rem; margin-bottom: 16px; }
+    .all-done-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+    .all-done-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
+    .all-done-btn { padding: 14px 28px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+
+    .card-container { width: 100%; perspective: 1000px; cursor: pointer; }
+    .card-inner { position: relative; width: 100%; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+    .card-container.flipped .card-inner { transform: rotateY(180deg); }
+
+    .card-front, .card-back { width: 100%; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; }
+    .card-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
+    .card-front::before, .card-back::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
+    .flip-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-top: 24px; }
+    .flip-back-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 20px; }
+
+    /* 사전 탭 */
+    .dict-search-box { display: flex; gap: 8px; margin-bottom: 16px; }
+    .dict-input { flex: 1; padding: 14px 18px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; color: #111; transition: border-color 0.15s; }
+    .dict-input:focus { border-color: #111; }
+    .dict-search-btn { padding: 14px 20px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 1rem; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; transition: all 0.15s; }
+    .dict-search-btn:hover { background: #333; }
+
+    .dict-result { background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
+    .dict-result::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
+
+    .dict-word-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
+    .dict-word { font-size: 2.2rem; font-weight: 700; color: #111; letter-spacing: -1px; }
+    .dict-phonetic { color: #bbb; font-size: 0.88rem; margin-bottom: 20px; text-align: center; }
+
+    .dict-part-of-speech { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #6366f1; background: #f0f0ff; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+    .dict-def { font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 6px; }
+    .dict-def-ko { font-size: 0.95rem; color: #6366f1; line-height: 1.6; margin-bottom: 12px; }
+    .dict-example { font-size: 0.85rem; color: #aaa; font-style: italic; line-height: 1.5; padding-left: 12px; border-left: 2px solid #e0e0e0; margin-top: 8px; }
+
+    .dict-add-btn { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 20px; transition: all 0.15s; }
+    .dict-add-btn:hover { background: #333; }
+    .dict-add-btn:disabled { background: #ddd; color: #aaa; cursor: not-allowed; }
+
+    .dict-loading { text-align: center; color: #aaa; padding: 40px 0; font-size: 0.9rem; }
+    .dict-error { text-align: center; color: #f87171; padding: 40px 0; font-size: 0.9rem; line-height: 1.6; }
+
+    #list-view { display: none; width: 100%; max-width: 460px; }
+    .search-input { width: 100%; padding: 12px 16px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; margin-bottom: 12px; background: #fff; color: #111; }
+    .search-input:focus { border-color: #111; }
+    .list-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .list-tab { flex: 1; padding: 10px; border: none; border-radius: 12px; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: #ebebeb; color: #888; transition: all 0.15s; }
+    .list-tab.active { background: #111; color: #fff; }
+    .word-list { display: flex; flex-direction: column; gap: 10px; max-height: 45vh; overflow-y: auto; }
+
+    .word-item { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .word-item-left { text-align: left; flex: 1; }
+    .word-item-word { font-size: 1.05rem; font-weight: 700; color: #111; }
+    .word-item-meaning { font-size: 0.78rem; color: #aaa; margin-top: 2px; }
+    .word-item-right { display: flex; align-items: center; gap: 8px; }
+    .toggle-btn { padding: 8px 12px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: all 0.15s; background: #f0f0f0; }
+    .toggle-btn:hover { background: #e0e0e0; }
+
+    .review-start-btn { width: 100%; padding: 16px; background: #f59e0b; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 16px; transition: all 0.15s; }
+    .review-start-btn:hover { background: #d97706; }
+    .review-start-btn:disabled { background: #ddd; color: #aaa; cursor: not-allowed; }
+    .empty-msg { text-align: center; color: #ccc; font-size: 0.9rem; padding: 40px 0; }
+
+    .complete-card { background: #fff; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); }
+    .complete-emoji { font-size: 3rem; margin-bottom: 16px; }
+    .complete-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+    .complete-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; }
+    .complete-btn { padding: 14px 28px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; display: flex; justify-content: center; padding: 8px 0 20px; }
+    .nav-btn { flex: 1; max-width: 90px; padding: 10px 0; border: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 0.62rem; font-weight: 600; color: #bbb; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: color 0.15s; }
+    .nav-btn.active { color: #111; }
+    .nav-icon { font-size: 1.3rem; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>🇬🇧 British English</h1>
+    <p class="subtitle">영국식 표현 마스터하기</p>
+  </div>
+
+  <div class="today-stats">
+    <div class="stat-box total">
+      <div class="stat-number" id="stat-total">0</div>
+      <div class="stat-label">오늘 학습</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number" id="stat-sorted">0</div>
+      <div class="stat-label">Sorted ✅</div>
+    </div>
+    <div class="stat-box again">
+      <div class="stat-number" id="stat-again">0</div>
+      <div class="stat-label">Again 🔄</div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-label">전체 진행률</span>
+      <span class="progress-percent" id="progress-percent">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="progress-counts">
+      <span id="progress-sorted-count">Sorted 0개</span>
+      <span id="progress-total-count">전체 0개</span>
+    </div>
+  </div>
+
+  <div id="study-view">
+    <div id="study-card-area"></div>
+    <div class="progress" id="s-progress"></div>
+  </div>
+
+  <div id="test-view" style="display:none;">
+    <div id="test-card-area">
+      <div class="card-container" id="card-container" onclick="toggleFlip()">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="category" id="t-category"></div>
+            <div class="word-row">
+              <div class="word" id="t-word"></div>
+              <button class="speak-btn" onclick="event.stopPropagation(); speakText(document.getElementById('t-word').textContent)">🔊</button>
+            </div>
+            <div class="pronunciation" id="t-pronunciation"></div>
+            <div class="flip-hint">카드를 눌러서 뜻 확인 →</div>
+          </div>
+          <div class="card-back">
+            <div class="category" id="t-category-back"></div>
+            <div class="flip-back-hint">← 다시 눌러서 단어 보기</div>
+            <div class="divider"></div>
+            <div class="meaning-main" id="t-meaning-main"></div>
+            <div class="meaning-sub" id="t-meaning-sub"></div>
+            <div class="example" id="t-example"></div>
+            <div class="buttons">
+              <button class="btn-again" onclick="event.stopPropagation(); markCard('again', 'test')">Again, mate</button>
+              <button class="btn-got" onclick="event.stopPropagation(); markCard('sorted', 'test')">Sorted! ✅</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="progress" id="t-progress"></div>
+  </div>
+
+  <div id="dict-view" style="display:none;">
+    <div class="dict-search-box">
+      <input class="dict-input" type="text" id="dict-input" placeholder="한국어 또는 영어로 검색..." onkeydown="if(event.key==='Enter') dictSearch()">
+      <button class="dict-search-btn" onclick="dictSearch()">🔍</button>
+    </div>
+    <div id="dict-result-area"></div>
+  </div>
+
+  <div id="review-view" style="display:none;">
+    <div id="review-card-area"></div>
+    <div class="progress" id="r-progress"></div>
+  </div>
+
+  <div id="list-view" style="display:none;">
+    <input class="search-input" type="text" id="search-input" placeholder="🔍 단어 검색..." oninput="renderList()">
+    <div class="list-tabs">
+      <button class="list-tab active" onclick="switchListTab('sorted')">✅ Sorted</button>
+      <button class="list-tab" onclick="switchListTab('again')">🔄 Again</button>
+    </div>
+    <div class="word-list" id="word-list"></div>
+    <button class="review-start-btn" id="review-btn" onclick="startReview()" style="display:none;">
+      🔄 Again 단어 다시 공부하기
+    </button>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-study" onclick="switchView('study')">
+      <span class="nav-icon">📖</span>Study
+    </button>
+    <button class="nav-btn" id="nav-test" onclick="switchView('test')">
+      <span class="nav-icon">🧪</span>Test
+    </button>
+    <button class="nav-btn" id="nav-dict" onclick="switchView('dict')">
+      <span class="nav-icon">🔍</span>Dictionary
+    </button>
+    <button class="nav-btn" id="nav-list" onclick="switchView('list')">
+      <span class="nav-icon">📋</span>My Words
+    </button>
+  </div>
+
+  <script>
+    const CLAUDE_API_KEY = '';
+
+    const defaultCards = [
+      { category: "Casual", word: "Cheers", pronunciation: "[tʃɪərz]", meaningMain: "고마워! / 건배!", meaningSub: "영국에서는 '감사합니다' 대신 일상적으로 씀", example: "\"Cheers, mate!\" — 친구에게 뭔가 받았을 때" },
+      { category: "Casual", word: "Mate", pronunciation: "[meɪt]", meaningMain: "친구, 사람", meaningSub: "미국의 'buddy', 'dude'와 비슷한 표현", example: "\"You alright, mate?\" — 친구한테 하는 인사" },
+      { category: "Casual", word: "Fancy", pronunciation: "[ˈfænsi]", meaningMain: "~하고 싶다, ~가 당기다", meaningSub: "'want' 대신 쓰는 영국식 표현", example: "\"Do you fancy a cuppa?\" — 차 한 잔 할래?" },
+      { category: "Casual", word: "Sorted", pronunciation: "[ˈsɔːtɪd]", meaningMain: "다 해결됐다, 준비됐다", meaningSub: "'done' 또는 'fixed'의 영국식 표현", example: "\"Don't worry, it's all sorted.\" — 다 처리했어" },
+      { category: "Casual", word: "Proper", pronunciation: "[ˈprɒpə]", meaningMain: "진짜, 제대로 된", meaningSub: "'really' 또는 'very'처럼 강조할 때 씀", example: "\"That's a proper meal.\" — 이거 진짜 제대로 된 밥이다" },
+      { category: "Casual", word: "Bloke", pronunciation: "[bləʊk]", meaningMain: "남자, 사람", meaningSub: "미국의 'guy'와 비슷한 영국식 표현", example: "\"He's a good bloke.\" — 걔 좋은 사람이야" },
+      { category: "Casual", word: "Dodgy", pronunciation: "[ˈdɒdʒi]", meaningMain: "수상한, 믿기 어려운", meaningSub: "사람, 장소, 상황 모두에 쓸 수 있음", example: "\"That place looks a bit dodgy.\" — 저기 좀 수상한데" },
+      { category: "Casual", word: "Cheeky", pronunciation: "[ˈtʃiːki]", meaningMain: "약간 건방지지만 귀여운", meaningSub: "뻔뻔하지만 재밌는 느낌", example: "\"A cheeky Nando's?\" — 갑자기 난도스 먹으러 가자는 제안" },
+      { category: "Casual", word: "Lovely", pronunciation: "[ˈlʌvli]", meaningMain: "좋다, 멋지다, 감사해요", meaningSub: "영국인이 정말 자주 쓰는 만능 표현", example: "\"That'd be lovely, thanks.\" — 그러면 좋겠어요, 감사해요" },
+      { category: "Casual", word: "Bit", pronunciation: "[bɪt]", meaningMain: "약간, 좀", meaningSub: "'a bit'으로 자주 쓰임 — 영국인이 완곡하게 표현할 때", example: "\"It's a bit cold today.\" — 오늘 좀 춥네 (사실 엄청 추운 거)" },
+      { category: "Casual", word: "You alright?", pronunciation: "[juː əˈraɪt]", meaningMain: "잘 지내? / 안녕?", meaningSub: "영국식 인사 — 대답도 'Alright!'로 하면 됨", example: "\"You alright?\" \"Yeah, alright, cheers!\"" },
+      { category: "Casual", word: "Queue", pronunciation: "[kjuː]", meaningMain: "줄, 줄을 서다", meaningSub: "영국인은 줄 서기를 정말 중요하게 생각함", example: "\"Join the queue, please.\" — 줄 서주세요" },
+      { category: "Casual", word: "Taking the mickey", pronunciation: "[ˈteɪkɪŋ ðə ˈmɪki]", meaningMain: "놀리다, 장난치다", meaningSub: "'Are you serious?' 할 때도 씀", example: "\"Are you taking the mickey?\" — 지금 나 놀리는 거야?" },
+      { category: "Casual", word: "Chatterbox", pronunciation: "[ˈtʃætəbɒks]", meaningMain: "수다쟁이", meaningSub: "말이 정말 많은 사람을 부를 때", example: "\"She's such a chatterbox.\" — 걔 진짜 수다쟁이야" },
+      { category: "Emotions", word: "Brilliant", pronunciation: "[ˈbrɪliənt]", meaningMain: "대박이다! 완벽해!", meaningSub: "영국에서 'amazing' 대신 자주 쓰는 표현", example: "\"That's brilliant!\" — 좋은 소식 들었을 때" },
+      { category: "Emotions", word: "Gutted", pronunciation: "[ˈɡʌtɪd]", meaningMain: "너무 실망했다, 속상하다", meaningSub: "강한 실망감을 표현할 때 씀", example: "\"I'm absolutely gutted.\" — 경기에서 졌을 때" },
+      { category: "Emotions", word: "Knackered", pronunciation: "[ˈnækəd]", meaningMain: "완전히 지쳤다, 녹초가 됐다", meaningSub: "'exhausted'의 영국식 표현", example: "\"I'm absolutely knackered.\" — 나 완전 뻗었어" },
+      { category: "Emotions", word: "Chuffed", pronunciation: "[tʃʌft]", meaningMain: "엄청 기쁘다, 뿌듯하다", meaningSub: "좋은 일이 생겼을 때 쓰는 표현", example: "\"I'm well chuffed!\" — 나 진짜 기분 좋아!" },
+      { category: "Emotions", word: "Miffed", pronunciation: "[mɪft]", meaningMain: "약간 짜증난, 기분 나쁜", meaningSub: "화가 많이 난 건 아니고 살짝 불쾌한 느낌", example: "\"She was a bit miffed.\" — 걔 좀 기분 나빠했어" },
+      { category: "Emotions", word: "Bloody hell", pronunciation: "[ˈblʌdi hel]", meaningMain: "이런!, 세상에!", meaningSub: "놀라거나 짜증날 때 쓰는 영국식 감탄사", example: "\"Bloody hell, it's cold!\" — 이런, 너무 춥다!" },
+      { category: "Emotions", word: "Gobsmacked", pronunciation: "[ˈɡɒbsmækt]", meaningMain: "완전 충격받았다, 할 말을 잃었다", meaningSub: "너무 놀라서 입이 떡 벌어진 상태", example: "\"I was absolutely gobsmacked.\" — 진짜 말도 못 할 만큼 놀랐어" },
+      { category: "Emotions", word: "Crikey", pronunciation: "[ˈkraɪki]", meaningMain: "이런!, 맙소사!", meaningSub: "놀랐을 때 쓰는 오래된 영국식 감탄사", example: "\"Crikey, that was close!\" — 이런, 아슬아슬했다!" },
+      { category: "Emotions", word: "Skint", pronunciation: "[skɪnt]", meaningMain: "돈이 없다, 빈털터리다", meaningSub: "'broke'의 영국식 표현", example: "\"Can't come out, I'm skint.\" — 못 나가, 나 돈 없어" },
+      { category: "Food & Drink", word: "Cuppa", pronunciation: "[ˈkʌpə]", meaningMain: "차 한 잔", meaningSub: "'cup of tea'의 줄임말 — 영국 문화의 핵심", example: "\"I need a cuppa.\" — 힘들 때 영국인이 하는 말" },
+      { category: "Food & Drink", word: "Biscuit", pronunciation: "[ˈbɪskɪt]", meaningMain: "쿠키", meaningSub: "영국에서 'cookie'는 안 쓰고 'biscuit'이라고 함", example: "\"Fancy a biscuit with your tea?\" — 차랑 쿠키 먹을래?" },
+      { category: "Food & Drink", word: "Chips", pronunciation: "[tʃɪps]", meaningMain: "감자튀김 (프렌치프라이)", meaningSub: "미국의 'fries' — 영국 'crisps'는 과자 감자칩", example: "\"Fish and chips, please.\" — 피시앤칩스 주세요" },
+      { category: "Transport", word: "Underground", pronunciation: "[ˈʌndəɡraʊnd]", meaningMain: "지하철", meaningSub: "런던 지하철 — 'Tube'라고도 부름", example: "\"Take the Underground to Oxford Street.\"" },
+      { category: "Transport", word: "Pavement", pronunciation: "[ˈpeɪvmənt]", meaningMain: "인도, 보도", meaningSub: "미국의 'sidewalk' — 영국은 항상 'pavement'", example: "\"Walk on the pavement!\" — 인도로 걸어!" },
+      { category: "Weather", word: "Dreary", pronunciation: "[ˈdrɪəri]", meaningMain: "우중충한, 칙칙한", meaningSub: "영국 날씨 묘사할 때 빠지지 않는 단어", example: "\"What a dreary day.\" — 오늘 날씨 진짜 칙칙하다" },
+      { category: "Weather", word: "Brisk", pronunciation: "[brɪsk]", meaningMain: "쌀쌀하지만 상쾌한", meaningSub: "춥지만 기분 좋은 날씨를 표현할 때", example: "\"It's a bit brisk out there.\" — 밖에 좀 쌀쌀한데 상쾌해" }
+    ];
+
+    let userCards = JSON.parse(localStorage.getItem('britishUserCards') || '[]');
+    let cards = [...defaultCards, ...userCards];
+
+    function shuffle(array) {
+      const a = [...array];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    let results = JSON.parse(localStorage.getItem('britishResults') || '{}');
+    let currentListTab = 'sorted';
+    let isFlipped = false;
+    const todayKey = 'britishToday_' + new Date().toISOString().slice(0, 10);
+    let todayStats = JSON.parse(localStorage.getItem(todayKey) || '{"total":0,"sorted":0,"again":0}');
+
+    function getActiveDeck() { return cards.filter(c => results[c.word] !== 'sorted'); }
+
+    let studyDeck = [], studyCurrent = 0;
+    let testDeck = [], testCurrent = 0;
+    let reviewCards = [], reviewCurrent = 0;
+
+    function initDecks() {
+      studyDeck = shuffle(getActiveDeck());
+      testDeck = shuffle(getActiveDeck());
+      studyCurrent = 0;
+      testCurrent = 0;
+    }
+
+    function saveTodayStats() { localStorage.setItem(todayKey, JSON.stringify(todayStats)); }
+
+    function updateStatsUI() {
+      document.getElementById('stat-total').textContent = todayStats.total;
+      document.getElementById('stat-sorted').textContent = todayStats.sorted;
+      document.getElementById('stat-again').textContent = todayStats.again;
+    }
+
+    function updateProgressBar() {
+      const total = cards.length;
+      const sortedCount = cards.filter(c => results[c.word] === 'sorted').length;
+      const pct = total > 0 ? Math.round((sortedCount / total) * 100) : 0;
+      document.getElementById('progress-percent').textContent = pct + '%';
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('progress-sorted-count').textContent = `Sorted ${sortedCount}개`;
+      document.getElementById('progress-total-count').textContent = `전체 ${total}개`;
+    }
+
+    function toggleFlip() {
+      isFlipped = !isFlipped;
+      document.getElementById('card-container').classList.toggle('flipped', isFlipped);
+    }
+
+    function speakText(text) {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'en-GB';
+      utter.rate = 0.85;
+      utter.pitch = 1.1;
+      utter.volume = 1;
+      const voices = window.speechSynthesis.getVoices();
+      const britishVoice = voices.find(v => v.name === 'Daniel') ||
+                           voices.find(v => v.name.includes('Daniel')) ||
+                           voices.find(v => v.lang === 'en-GB');
+      if (britishVoice) utter.voice = britishVoice;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function saveResults() { localStorage.setItem('britishResults', JSON.stringify(results)); }
+
+    function toggleWordStatus(word) {
+      results[word] = results[word] === 'sorted' ? 'again' : 'sorted';
+      saveResults();
+      updateProgressBar();
+      renderList();
+    }
+
+    // Claude API 사전 검색
+    async function dictSearch() {
+      const input = document.getElementById('dict-input').value.trim();
+      if (!input) return;
+      const area = document.getElementById('dict-result-area');
+      area.innerHTML = '<div class="dict-loading">🔍 검색 중... 잠깐만요!</div>';
+
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': CLAUDE_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 1000,
+            messages: [{
+              role: 'user',
+              content: `"${input}"에 해당하는 영어 단어를 찾아줘. 영국식 영어 기준으로. 반드시 아래 JSON 형식으로만 응답해. 다른 말 하지 마:
+{
+  "word": "영어 단어",
+  "pronunciation": "IPA 발음기호",
+  "partOfSpeech": "품사 (영어로)",
+  "meaningEn": "영어 뜻 (간결하게)",
+  "meaningKo": "한국어 뜻",
+  "example": "영국식 영어 예문",
+  "exampleKo": "예문 한국어 해석"
+}`
+            }]
+          })
+        });
+
+        const data = await response.json();
+        if (data.error) throw new Error(data.error.message);
+
+        const text = data.content[0].text;
+        const clean = text.replace(/```json|```/g, '').trim();
+        const result = JSON.parse(clean);
+        const alreadyAdded = cards.some(c => c.word.toLowerCase() === result.word.toLowerCase());
+
+        area.innerHTML = `
+          <div class="dict-result">
+            <div class="dict-word-row">
+              <div class="dict-word">${result.word}</div>
+              <button class="speak-btn" onclick="speakText('${result.word}')">🔊</button>
+            </div>
+            <div class="dict-phonetic">${result.pronunciation}</div>
+            <span class="dict-part-of-speech">${result.partOfSpeech}</span>
+            <div class="dict-def">${result.meaningEn}</div>
+            <div class="dict-def-ko">🇰🇷 ${result.meaningKo}</div>
+            ${result.example ? `
+              <div class="dict-example">
+                "${result.example}"<br>
+                <span style="color:#bbb; font-style:normal;">${result.exampleKo}</span>
+              </div>` : ''}
+            <button class="dict-add-btn" id="add-btn" ${alreadyAdded ? 'disabled' : ''}
+              onclick="addToStudy(${JSON.stringify(result)})">
+              ${alreadyAdded ? '✅ 이미 추가된 단어' : '➕ Study에 추가하기'}
+            </button>
+          </div>`;
+      } catch (e) {
+        area.innerHTML = `<div class="dict-error">오류가 발생했어요 😢<br><small>${e.message}</small></div>`;
+      }
+    }
+
+    function addToStudy(result) {
+      const newCard = {
+        category: "My Words",
+        word: result.word,
+        pronunciation: result.pronunciation || '',
+        meaningMain: result.meaningKo || '',
+        meaningSub: result.meaningEn || '',
+        example: result.example ? `"${result.example}" — ${result.exampleKo}` : ''
+      };
+      userCards.push(newCard);
+      cards = [...defaultCards, ...userCards];
+      localStorage.setItem('britishUserCards', JSON.stringify(userCards));
+      initDecks();
+      updateProgressBar();
+      const btn = document.getElementById('add-btn');
+      if (btn) { btn.disabled = true; btn.textContent = '✅ 추가됐어요!'; }
+    }
+
+    function showStudyCard() {
+      const area = document.getElementById('study-card-area');
+      if (studyDeck.length === 0) {
+        area.innerHTML = `
+          <div class="all-done-card">
+            <div class="all-done-emoji">🎉</div>
+            <div class="all-done-title">모두 완료!</div>
+            <div class="all-done-sub">모든 단어를 Sorted 했어요!<br>사전에서 새 단어를 추가해봐요.</div>
+            <button class="all-done-btn" onclick="switchView('dict')">🔍 사전 열기</button>
+          </div>`;
+        document.getElementById('s-progress').textContent = '';
+        return;
+      }
+      if (studyCurrent >= studyDeck.length) {
+        studyDeck = shuffle(getActiveDeck());
+        studyCurrent = 0;
+        if (studyDeck.length === 0) { showStudyCard(); return; }
+      }
+      const c = studyDeck[studyCurrent];
+      area.innerHTML = `
+        <div class="card">
+          <div class="category">${c.category}</div>
+          <div class="word-row">
+            <div class="word" id="s-word">${c.word}</div>
+            <button class="speak-btn" onclick="speakText('${c.word}')">🔊</button>
+          </div>
+          <div class="pronunciation">${c.pronunciation}</div>
+          <div class="divider"></div>
+          <div class="meaning-main">${c.meaningMain}</div>
+          <div class="meaning-sub">${c.meaningSub}</div>
+          <div class="example">${c.example}</div>
+          <div class="buttons">
+            <button class="btn-again" onclick="markCard('again', 'study')">Again, mate</button>
+            <button class="btn-got" onclick="markCard('sorted', 'study')">Sorted! ✅</button>
+          </div>
+        </div>`;
+      document.getElementById('s-progress').textContent = `남은 단어 ${studyDeck.length - studyCurrent}개`;
+    }
+
+    function showTestCard() {
+      const area = document.getElementById('test-card-area');
+      if (testDeck.length === 0) {
+        area.innerHTML = `
+          <div class="all-done-card">
+            <div class="all-done-emoji">🎉</div>
+            <div class="all-done-title">모두 완료!</div>
+            <div class="all-done-sub">모든 단어를 Sorted 했어요!</div>
+            <button class="all-done-btn" onclick="switchView('list')">My Words 보기</button>
+          </div>`;
+        document.getElementById('t-progress').textContent = '';
+        return;
+      }
+      if (testCurrent >= testDeck.length) {
+        testDeck = shuffle(getActiveDeck());
+        testCurrent = 0;
+        if (testDeck.length === 0) { showTestCard(); return; }
+      }
+      const c = testDeck[testCurrent];
+      document.getElementById('t-category').textContent = c.category;
+      document.getElementById('t-category-back').textContent = c.category;
+      document.getElementById('t-word').textContent = c.word;
+      document.getElementById('t-pronunciation').textContent = c.pronunciation;
+      document.getElementById('t-meaning-main').textContent = c.meaningMain;
+      document.getElementById('t-meaning-sub').textContent = c.meaningSub;
+      document.getElementById('t-example').textContent = c.example;
+      document.getElementById('t-progress').textContent = `남은 단어 ${testDeck.length - testCurrent}개`;
+      isFlipped = false;
+      document.getElementById('card-container').classList.remove('flipped');
+    }
+
+    function showReviewCard() {
+      const area = document.getElementById('review-card-area');
+      if (reviewCurrent >= reviewCards.length) {
+        area.innerHTML = `
+          <div class="complete-card">
+            <div class="complete-emoji">🎉</div>
+            <div class="complete-title">Review 완료!</div>
+            <div class="complete-sub">Again 단어를 모두 복습했어요</div>
+            <button class="complete-btn" onclick="switchView('list')">My Words로 돌아가기</button>
+          </div>`;
+        document.getElementById('r-progress').textContent = '';
+        return;
+      }
+      const c = reviewCards[reviewCurrent];
+      area.innerHTML = `
+        <div class="card review-card">
+          <div class="review-badge">🔄 REVIEW MODE</div>
+          <div class="category">${c.category}</div>
+          <div class="word-row">
+            <div class="word">${c.word}</div>
+            <button class="speak-btn" onclick="speakText('${c.word}')">🔊</button>
+          </div>
+          <div class="pronunciation">${c.pronunciation}</div>
+          <div class="divider"></div>
+          <div class="meaning-main">${c.meaningMain}</div>
+          <div class="meaning-sub">${c.meaningSub}</div>
+          <div class="example">${c.example}</div>
+          <div class="buttons">
+            <button class="btn-again" onclick="markCard('again', 'review')">Again, mate</button>
+            <button class="btn-got" onclick="markCard('sorted', 'review')">Sorted! ✅</button>
+          </div>
+        </div>`;
+      document.getElementById('r-progress').textContent = `${reviewCurrent + 1} / ${reviewCards.length}`;
+    }
+
+    function startReview() {
+      reviewCards = shuffle(cards.filter(c => results[c.word] === 'again'));
+      reviewCurrent = 0;
+      switchView('review');
+      showReviewCard();
+    }
+
+    function markCard(status, mode) {
+      window.speechSynthesis.cancel();
+      todayStats.total++;
+      if (status === 'sorted') todayStats.sorted++;
+      else todayStats.again++;
+      saveTodayStats();
+      updateStatsUI();
+
+      if (mode === 'study') {
+        results[studyDeck[studyCurrent].word] = status;
+        saveResults();
+        if (status === 'sorted') studyDeck.splice(studyCurrent, 1);
+        else studyCurrent++;
+        showStudyCard();
+      } else if (mode === 'test') {
+        results[testDeck[testCurrent].word] = status;
+        saveResults();
+        if (status === 'sorted') testDeck.splice(testCurrent, 1);
+        else testCurrent++;
+        showTestCard();
+      } else if (mode === 'review') {
+        results[reviewCards[reviewCurrent].word] = status;
+        saveResults();
+        reviewCurrent++;
+        showReviewCard();
+      }
+      updateProgressBar();
+    }
+
+    function switchView(view) {
+      ['study','test','dict','list','review'].forEach(v => {
+        document.getElementById(v + '-view').style.display = view === v ? 'block' : 'none';
+      });
+      ['study','test','dict','list'].forEach(v => {
+        document.getElementById('nav-' + v).classList.toggle('active', view === v);
+      });
+      if (view === 'list') renderList();
+    }
+
+    function switchListTab(tab) {
+      currentListTab = tab;
+      document.querySelectorAll('.list-tab').forEach((el, i) => {
+        el.classList.toggle('active', (i === 0 && tab === 'sorted') || (i === 1 && tab === 'again'));
+      });
+      renderList();
+    }
+
+    function renderList() {
+      const list = document.getElementById('word-list');
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const filtered = cards.filter(c =>
+        results[c.word] === currentListTab &&
+        (c.word.toLowerCase().includes(query) || c.meaningMain.includes(query))
+      );
+      const reviewBtn = document.getElementById('review-btn');
+      if (currentListTab === 'again') {
+        const againCount = cards.filter(c => results[c.word] === 'again').length;
+        reviewBtn.style.display = 'block';
+        reviewBtn.disabled = againCount === 0;
+        reviewBtn.textContent = againCount > 0 ? `🔄 Again 단어 ${againCount}개 다시 공부하기` : '🔄 Again 단어가 없어요';
+      } else {
+        reviewBtn.style.display = 'none';
+      }
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="empty-msg">${query ? '검색 결과가 없어요 🔍' : currentListTab === 'sorted' ? '아직 Sorted한 단어가 없어요 📖' : '아직 Again한 단어가 없어요 🎉'}</div>`;
+        return;
+      }
+      list.innerHTML = filtered.map(c => {
+        const isSorted = currentListTab === 'sorted';
+        return `
+          <div class="word-item">
+            <div class="word-item-left">
+              <div class="word-item-word">${c.word}</div>
+              <div class="word-item-meaning">${c.meaningMain}</div>
+            </div>
+            <div class="word-item-right">
+              <button class="toggle-btn" onclick="toggleWordStatus('${c.word}')">
+                ${isSorted ? '🔄' : '✅'}
+              </button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    window.speechSynthesis.onvoiceschanged = () => {};
+    initDecks();
+    updateStatsUI();
+    updateProgressBar();
+    showStudyCard();
+    showTestCard();
+  </script>
+</body>
+</html>
