@@ -29,9 +29,7 @@
     .filter-btn { padding: 7px 14px; border: 1.5px solid #e0e0e0; border-radius: 20px; font-size: 0.75rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: #fff; color: #888; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
     .filter-btn.active { background: #111; color: #fff; border-color: #111; }
     #study-view, #test-view, #review-view, #dict-view, #settings-view { width: 100%; max-width: 460px; }
-    .card { background: #fff; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
-    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
-    .card.review-card::before { background: #f59e0b; }
+.card { background: #fff; border-radius: 24px; padding: 32px 36px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; display: flex; flex-direction: column; }    .card.review-card::before { background: #f59e0b; }
     .review-badge { display: inline-block; background: #fff7ed; color: #f59e0b; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
     .category { display: inline-block; font-size: 0.68rem; letter-spacing: 2.5px; color: #111; text-transform: uppercase; font-weight: 600; background: #f0f0f0; padding: 4px 14px; border-radius: 20px; margin-bottom: 24px; }
     .word-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
@@ -43,11 +41,7 @@
     .divider { width: 36px; height: 2px; background: #111; margin: 0 auto 24px; border-radius: 2px; }
     .meaning-main { font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 8px; line-height: 1.5; }
     .meaning-sub { font-size: 0.85rem; color: #aaa; margin-bottom: 20px; line-height: 1.6; }
-    .example-wrap { position: relative; margin-bottom: 36px; }
-    .example { background: #f7f7f7; border-radius: 12px; padding: 18px 22px; font-size: 0.88rem; color: #888; font-style: italic; line-height: 1.65; text-align: left; }
-    .example-speak { position: absolute; top: 8px; right: 8px; background: #ebebeb; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .example-speak:hover { background: #ddd; }
-    .buttons { display: flex; gap: 10px; justify-content: center; }
+.example-wrap { position: relative; margin-bottom: 20px; flex: 1; background: #f7f7f7; border-radius: 12px; padding: 14px 18px; max-height: 120px; overflow-y: auto; font-size: 0.85rem; color: #888; font-style: italic; line-height: 1.55; text-align: left; }    .buttons { display: flex; gap: 10px; justify-content: center; }
     .btn-again { background: #f0f0f0; color: #888; flex: 1; border: 1px solid #e8e8e8; }
     .btn-got { background: #111; color: #fff; flex: 1.4; }
     .btn-got:hover { background: #333; }
@@ -61,11 +55,9 @@
     .all-done-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
     .all-done-btn { padding: 14px 28px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
     .card-container { width: 100%; perspective: 1000px; cursor: pointer; }
-    .card-inner { position: relative; width: 100%; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
-    .card-container.flipped .card-inner { transform: rotateY(180deg); }
-    .card-front, .card-back { width: 100%; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; }
-    .card-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
-    .card-front::before, .card-back::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
+.card-inner { position: relative; width: 100%; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; min-height: 480px; }    .card-container.flipped .card-inner { transform: rotateY(180deg); }
+.card-front, .card-back { width: 100%; border-radius: 24px; padding: 32px 36px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 480px; transition: opacity 0.15s ease; }
+.card-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }    .card-front::before, .card-back::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
     .flip-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-top: 24px; }
     .flip-back-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 20px; }
     .dict-search-box { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -190,30 +182,31 @@
     .speak-btn:hover svg { stroke: #111; }
     .example-speak svg { width: 14px; height: 14px; stroke: #666; }
     .example-speak:hover svg { stroke: #111; }
+    .example-ko { color: #bbb; font-style: normal; display: block; margin-top: 4px; }
   </style>
 </head>
 <body>
 
   <div class="header">
     <h1>🇬🇧 British English</h1>
-    <p class="subtitle">영국식 표현 마스터하기</p>
+    <p class="subtitle">Master the lingo</p>
   </div>
 
   <div class="today-stats">
-    <div class="stat-box total"><div class="stat-number" id="stat-total">0</div><div class="stat-label">오늘 학습</div></div>
+    <div class="stat-box total"><div class="stat-number" id="stat-total">0</div><div class="stat-label">Today</div></div>
     <div class="stat-box"><div class="stat-number" id="stat-sorted">0</div><div class="stat-label">Sorted ✅</div></div>
     <div class="stat-box again"><div class="stat-number" id="stat-again">0</div><div class="stat-label">Again 🔄</div></div>
   </div>
 
   <div class="progress-section">
     <div class="progress-header">
-      <span class="progress-label">전체 진행률</span>
+      <span class="progress-label">Overall progress</span>
       <span class="progress-percent" id="progress-percent">0%</span>
     </div>
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
     <div class="progress-counts">
-      <span id="progress-sorted-count">Sorted 0개</span>
-      <span id="progress-total-count">전체 0개</span>
+      <span id="progress-sorted-count">Sorted: 0</span>
+      <span id="progress-total-count">Total: 0</span>
     </div>
   </div>
 
@@ -235,16 +228,17 @@
               <button class="speak-btn" onclick="event.stopPropagation(); speakText(document.getElementById('t-word').textContent)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg></button>
             </div>
             <div class="pronunciation" id="t-pronunciation"></div>
-            <div class="flip-hint">카드를 눌러서 뜻 확인 →</div>
+            <div class="flip-hint">Tap to reveal meaning →</div>
           </div>
           <div class="card-back">
             <div class="category" id="t-category-back"></div>
-            <div class="flip-back-hint">← 다시 눌러서 단어 보기</div>
+            <div class="flip-back-hint">← Tap to flip back</div>
             <div class="divider"></div>
             <div class="meaning-main" id="t-meaning-main"></div>
             <div class="meaning-sub" id="t-meaning-sub"></div>
             <div class="example-wrap">
-              <div class="example" id="t-example"></div>
+<span id="t-example-en"></span>
+<span class="example-ko" id="t-example-ko"></span>
               <button class="example-speak" onclick="event.stopPropagation(); speakText(document.getElementById('t-example').textContent)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg></button>
             </div>
             <div class="buttons">
@@ -260,7 +254,7 @@
 
   <div id="dict-view" style="display:none;">
     <div class="dict-search-box">
-      <input class="dict-input" type="text" id="dict-input" placeholder="한국어 또는 영어로 검색..." onkeydown="if(event.key==='Enter') dictSearch()">
+      <input class="dict-input" type="text" id="dict-input" placeholder="Search in English or Korean..." onkeydown="if(event.key==='Enter') dictSearch()">
       <button class="dict-search-btn" onclick="dictSearch()">🔍</button>
     </div>
     <div id="dict-result-area"></div>
@@ -280,14 +274,14 @@
   </div>
 
   <div id="list-view" style="display:none;">
-    <input class="search-input" type="text" id="search-input" placeholder="🔍 단어 검색..." oninput="renderList()">
+    <input class="search-input" type="text" id="search-input" placeholder="🔍 Search words..." oninput="renderList()">
     <div class="list-category-filter" id="list-category-filter"></div>
     <div class="list-tabs">
       <button class="list-tab active" onclick="switchListTab('sorted')">✅ Sorted</button>
       <button class="list-tab" onclick="switchListTab('again')">🔄 Again</button>
     </div>
     <div class="word-list" id="word-list"></div>
-    <button class="review-start-btn" id="review-btn" onclick="startReview()" style="display:none;">🔄 Again 단어 다시 공부하기</button>
+    <button class="review-start-btn" id="review-btn" onclick="startReview()" style="display:none;">🔄 Practise your Again words</button>
   </div>
 
   <div id="calendar-view" style="display:none;">
@@ -299,30 +293,34 @@
       </div>
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-month-stats">
-        <div class="cal-stat"><div class="cal-stat-num" id="cal-stat-days">0</div><div class="cal-stat-label">학습일</div></div>
-        <div class="cal-stat"><div class="cal-stat-num" id="cal-stat-words">0</div><div class="cal-stat-label">총 학습</div></div>
-        <div class="cal-stat"><div class="cal-stat-num" id="cal-stat-best">0</div><div class="cal-stat-label">최고 기록</div></div>
+        <div class="cal-stat"><div class="cal-stat-num" id="cal-stat-days">0</div><div class="cal-stat-label">Active days</div></div>
+        <div class="cal-stat"><div class="cal-stat-num" id="cal-stat-words">0</div><div class="cal-stat-label">Total words</div></div>
+        <div class="cal-stat"><div class="cal-stat-num" id="cal-stat-best">0</div><div class="cal-stat-label">Best day</div></div>
       </div>
       <div class="cal-legend">
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#d1fae5;"></div>1–5개</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#a7f3d0;"></div>6–10개</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#6366f1;"></div>11–20개</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#4338ca;"></div>21개+</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#d1fae5;"></div>1–5</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#a7f3d0;"></div>6–10</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#6366f1;"></div>11–20</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#4338ca;"></div>21+</div>
       </div>
     </div>
   </div>
 
   <div id="settings-view" style="display:none;">
     <div class="settings-card">
-      <div class="settings-title">🔑 API 키 설정</div>
-      <div class="settings-desc">Anthropic API 키를 입력하면 Dictionary 검색 기능을 사용할 수 있어요. 키는 이 기기에만 저장되고 외부로 전송되지 않아요.</div>
+      <div class="settings-title">🔑 API Key</div>
+      <div class="settings-desc">Enter your Anthropic API key to use the Dictionary search. Your key is stored on this device only and never sent anywhere else.</div>
       <input class="settings-input" type="password" id="api-key-input" placeholder="sk-ant-api03-...">
-      <button class="settings-save-btn" onclick="saveApiKey()">저장하기</button>
+      <button class="settings-save-btn" onclick="saveApiKey()">Save</button>
       <div class="settings-status" id="api-status"></div>
       <div class="settings-divider"></div>
-      <div class="settings-title" style="margin-bottom:6px;">🗑️ 데이터 초기화</div>
-      <div class="settings-desc">학습 기록(Sorted/Again)을 모두 초기화해요.</div>
-      <button class="settings-danger-btn" onclick="resetData()">학습 기록 초기화</button>
+      <div class="settings-title" style="margin-bottom:6px;">🗑️ Reset progress</div>
+      <div class="settings-desc">Clear your study history (Sorted/Again marks and today's stats). Your saved words stay put.</div>
+      <button class="settings-danger-btn" onclick="resetData()">Reset progress</button>
+      <div class="settings-divider"></div>
+      <div class="settings-title" style="margin-bottom:6px;">⚠️ Wipe everything</div>
+      <div class="settings-desc">Reset everything — progress, stats, and all words you've added from the Dictionary. Default words stay. There's no going back, mate.</div>
+      <button class="settings-danger-btn" onclick="resetAll()">Wipe everything</button>
     </div>
   </div>
 
@@ -373,7 +371,139 @@
       { category: "Weather", word: "Muggy", pronunciation: "[ˈmʌɡi]", meaningMain: "후텁지근한, 습한", meaningSub: "덥고 습해서 불쾌한 날씨", example: "It's so muggy today, I can't bear it. — 오늘 너무 후텁지근해" },
       { category: "Weather", word: "Overcast", pronunciation: "[ˈəʊvəkɑːst]", meaningMain: "잔뜩 흐린", meaningSub: "구름이 잔뜩 낀 영국의 일상 날씨", example: "It's overcast again. Typical. — 또 흐리네. 역시나." },
       { category: "Weather", word: "Blustery", pronunciation: "[ˈblʌstəri]", meaningMain: "바람이 몹시 부는", meaningSub: "강하고 불규칙적으로 부는 바람", example: "A blustery autumn day. — 바람이 몰아치는 가을 날" },
-
+      { category: "Casual", word: "Cheeky Nando's", pronunciation: "[ˈtʃiːki ˈnændəʊz]", meaningMain: "갑작스러운 난도스 방문 제안", meaningSub: "계획 없이 즉흥적으로 난도스 가자는 영국 밈", example: "Fancy a cheeky Nando's? — 난도스 한 번 가볼까?" },
+      { category: "Pub & Drinking", word: "Legless", pronunciation: "[ˈleɡləs]", meaningMain: "완전히 취한", meaningSub: "너무 취해서 걷지도 못하는 상태", example: "He was absolutely legless. — 걔 완전 뻗어 있었어" },
+      { category: "Insults & Banter", word: "Mug", pronunciation: "[mʌɡ]", meaningMain: "속기 쉬운 사람, 봉", meaningSub: "쉽게 속는 사람을 뜻하는 슬랭", example: "Don't be a mug and fall for that. — 봉처럼 속지 마" },
+      { category: "Pub & Drinking", word: "Plastered", pronunciation: "[ˈplɑːstəd]", meaningMain: "완전 취한", meaningSub: "매우 취한 상태를 나타내는 표현", example: "He got absolutely plastered. — 걔 완전히 퍼졌어" },
+      { category: "Casual", word: "Waffle", pronunciation: "[ˈwɒfl]", meaningMain: "횡설수설하다, 말을 길게 늘이다", meaningSub: "핵심 없이 말을 길게 하는 것", example: "Stop waffling and get to the point. — 횡설수설하지 말고 요점만 말해" },
+      { category: "Casual", word: "Blag", pronunciation: "[blæɡ]", meaningMain: "사기치다, 공짜로 얻어내다", meaningSub: "말빨로 뭔가를 얻어내는 것", example: "He blagged his way in. — 걔 말빨로 들어갔어" },
+      { category: "Casual", word: "Bodge", pronunciation: "[bɒdʒ]", meaningMain: "대충 고치다, 엉터리로 하다", meaningSub: "제대로 안 하고 임시방편으로 하는 것", example: "He bodged the repair job. — 걔 수리를 대충 해버렸어" },
+      { category: "Casual", word: "Chin up", pronunciation: "[tʃɪn ʌp]", meaningMain: "힘내, 기운 내", meaningSub: "힘든 상황에서 격려할 때", example: "Chin up, it'll get better. — 힘내, 좋아질 거야" },
+      { category: "Casual", word: "Do", pronunciation: "[duː]", meaningMain: "파티, 행사", meaningSub: "영국에서 party 대신 쓰는 표현", example: "Are you coming to Sarah's do? — 사라 파티에 와?" },
+      { category: "Casual", word: "Fit", pronunciation: "[fɪt]", meaningMain: "매력적인, 잘생긴", meaningSub: "외모가 좋은 사람을 표현할 때", example: "He's well fit. — 걔 완전 잘생겼어" },
+      { category: "Casual", word: "Gaff", pronunciation: "[ɡæf]", meaningMain: "집, 장소", meaningSub: "비격식으로 집을 부를 때", example: "Come round to my gaff later. — 나중에 우리 집 와" },
+      { category: "Casual", word: "Hard up", pronunciation: "[hɑːd ʌp]", meaningMain: "돈이 없는, 궁핍한", meaningSub: "일시적으로 돈이 부족한 상태", example: "I'm a bit hard up this month. — 이번 달 좀 빠듯해" },
+      { category: "Casual", word: "Innit", pronunciation: "[ˈɪnɪt]", meaningMain: "그렇지? 맞지?", meaningSub: "'isn't it'의 줄임말, 동의 구할 때", example: "It's cold, innit? — 춥지, 그렇지?" },
+      { category: "Casual", word: "Jolly", pronunciation: "[ˈdʒɒli]", meaningMain: "매우, 꽤", meaningSub: "'very'의 영국식 표현", example: "That's jolly good! — 아주 좋아!" },
+      { category: "Casual", word: "Knees up", pronunciation: "[niːz ʌp]", meaningMain: "파티, 흥겨운 모임", meaningSub: "신나는 파티나 모임", example: "We had a right knees up last night. — 어젯밤 진짜 신나게 놀았어" },
+      { category: "Casual", word: "Lost the plot", pronunciation: "[lɒst ðə plɒt]", meaningMain: "제정신이 아니다, 미쳤다", meaningSub: "이성적 판단을 잃은 상태", example: "He's completely lost the plot. — 걔 완전 제정신이 아니야" },
+      { category: "Casual", word: "Nick", pronunciation: "[nɪk]", meaningMain: "훔치다 / 감옥", meaningSub: "steal 또는 prison의 영국식 표현", example: "Someone nicked my bike! — 누가 내 자전거 훔쳐갔어!" },
+      { category: "Casual", word: "Off your trolley", pronunciation: "[ɒf jɔː ˈtrɒli]", meaningMain: "제정신이 아닌, 미친", meaningSub: "완전히 이상한 행동을 할 때", example: "Are you off your trolley? — 너 제정신이야?" },
+      { category: "Casual", word: "Prat", pronunciation: "[præt]", meaningMain: "멍청이, 바보", meaningSub: "가벼운 욕으로 바보 같은 사람", example: "Don't be such a prat. — 그렇게 바보같이 굴지 마" },
+      { category: "Casual", word: "Snog", pronunciation: "[snɒɡ]", meaningMain: "키스하다", meaningSub: "열정적인 키스를 뜻하는 영국식 표현", example: "They were snogging in the corner. — 걔네 구석에서 키스하고 있었어" },
+      { category: "Casual", word: "Stroppy", pronunciation: "[ˈstrɒpi]", meaningMain: "심술궂은, 까다로운", meaningSub: "이유 없이 짜증내거나 고집 부리는 사람", example: "Don't get stroppy with me! — 나한테 심술부리지 마!" },
+      { category: "Casual", word: "Twee", pronunciation: "[twiː]", meaningMain: "지나치게 귀여운, 과하게 깜찍한", meaningSub: "과도하게 귀엽거나 달콤한 느낌", example: "The café was a bit twee for my taste. — 그 카페 내 취향엔 좀 과하게 귀여웠어" },
+      { category: "Casual", word: "Under the weather", pronunciation: "[ˌʌndə ðə ˈweðə]", meaningMain: "몸이 좀 안 좋은", meaningSub: "살짝 아프거나 컨디션이 안 좋을 때", example: "I'm feeling a bit under the weather. — 나 좀 몸이 안 좋아" },
+      { category: "Insults & Banter", word: "Wind up", pronunciation: "[waɪnd ʌp]", meaningMain: "놀리다, 약 올리다", meaningSub: "장난으로 누군가를 놀릴 때", example: "Are you winding me up? — 나 놀리는 거야?" },
+      { category: "Casual", word: "Gutsy", pronunciation: "[ˈɡʌtsi]", meaningMain: "배짱 있는, 용감한", meaningSub: "용기 있는 행동이나 사람", example: "That was a gutsy decision. — 그건 배짱 있는 결정이었어" },
+      { category: "Casual", word: "Chops", pronunciation: "[tʃɒps]", meaningMain: "실력, 능력", meaningSub: "어떤 분야의 기술이나 능력", example: "She's got the chops for it. — 걔 그 일 할 실력 있어" },
+      { category: "Casual", word: "Naff", pronunciation: "[næf]", meaningMain: "촌스러운, 멋없는", meaningSub: "유행에 뒤떨어지거나 촌스러운 것", example: "That shirt's a bit naff. — 그 셔츠 좀 촌스럽다" },
+      { category: "Emotions", word: "Beside oneself", pronunciation: "[bɪˈsaɪd wʌnˈself]", meaningMain: "제정신이 아닐 정도로 흥분한", meaningSub: "기쁨이나 슬픔으로 자제력을 잃은 상태", example: "She was beside herself with joy. — 걔 기뻐서 제정신이 아니었어" },
+      { category: "Emotions", word: "Rattled", pronunciation: "[ˈrætld]", meaningMain: "당황한, 불안한", meaningSub: "예상치 못한 일로 흔들린 상태", example: "He seemed rattled by the question. — 걔 그 질문에 당황한 것 같았어" },
+      { category: "Emotions", word: "Wound up", pronunciation: "[waʊnd ʌp]", meaningMain: "잔뜩 긴장한, 화가 난", meaningSub: "스트레스나 화로 긴장된 상태", example: "Don't get all wound up about it. — 그거에 너무 흥분하지 마" },
+      { category: "Emotions", word: "Chuffed to bits", pronunciation: "[tʃʌft tə bɪts]", meaningMain: "엄청나게 기쁜", meaningSub: "chuffed보다 더 강한 표현", example: "I'm chuffed to bits about the promotion. — 승진해서 너무너무 기뻐" },
+      { category: "Emotions", word: "Deflated", pronunciation: "[dɪˈfleɪtɪd]", meaningMain: "기가 꺾인, 풀이 죽은", meaningSub: "기대가 무너졌을 때의 실망감", example: "I felt really deflated after the rejection. — 거절당하고 나서 완전 풀이 죽었어" },
+      { category: "Emotions", word: "On edge", pronunciation: "[ɒn edʒ]", meaningMain: "초조한, 불안한", meaningSub: "긴장되고 예민한 상태", example: "I've been on edge all day. — 하루 종일 초조했어" },
+      { category: "Emotions", word: "Buzzing", pronunciation: "[ˈbʌzɪŋ]", meaningMain: "신나는, 들뜬", meaningSub: "흥분되고 에너지 넘치는 상태", example: "I'm absolutely buzzing after that concert. — 콘서트 끝나고 완전 신나" },
+      { category: "Emotions", word: "Fed up", pronunciation: "[fed ʌp]", meaningMain: "지겨운, 질린", meaningSub: "어떤 상황이나 사람에게 완전히 지친 상태", example: "I'm fed up with this weather. — 이 날씨 진짜 질렸어" },
+      { category: "Emotions", word: "Tickled pink", pronunciation: "[ˈtɪkld pɪŋk]", meaningMain: "매우 기쁜, 즐거운", meaningSub: "예상치 못한 기쁨을 표현할 때", example: "She was tickled pink by the surprise. — 걔 깜짝 선물에 너무 기뻐했어" },
+      { category: "Emotions", word: "Put out", pronunciation: "[pʊt aʊt]", meaningMain: "기분 나쁜, 불편한", meaningSub: "폐를 끼침을 당해 불편한 상태", example: "She looked a bit put out by it. — 걔 그거에 좀 불편해 보였어" },
+      { category: "Emotions", word: "Nervy", pronunciation: "[ˈnɜːvi]", meaningMain: "긴장된, 불안한", meaningSub: "nervous의 영국식 표현", example: "I always get nervy before exams. — 시험 전에 항상 긴장돼" },
+      { category: "Emotions", word: "Giddy", pronunciation: "[ˈɡɪdi]", meaningMain: "들뜬, 어지러울 정도로 신난", meaningSub: "흥분해서 어지러울 정도인 상태", example: "She was giddy with excitement. — 걔 흥분해서 어쩔 줄 몰랐어" },
+      { category: "Food & Drink", word: "Full English", pronunciation: "[fʊl ˈɪŋɡlɪʃ]", meaningMain: "영국식 풀 아침식사", meaningSub: "베이컨, 에그, 소시지, 토스트 등이 포함된 아침", example: "I'll have a full English please. — 풀 잉글리시 하나 주세요" },
+      { category: "Food & Drink", word: "Banger", pronunciation: "[ˈbæŋə]", meaningMain: "소시지", meaningSub: "영국식 소시지의 비격식 표현", example: "Bangers and mash is my favourite. — 소시지랑 으깬 감자가 제일 좋아" },
+      { category: "Food & Drink", word: "Jacket potato", pronunciation: "[ˈdʒækɪt pəˈteɪtəʊ]", meaningMain: "구운 감자", meaningSub: "껍질째 구운 감자, 영국 점심 메뉴의 정석", example: "I'll have a jacket potato with beans. — 구운 감자에 콩 얹어서 주세요" },
+      { category: "Food & Drink", word: "Spotted dick", pronunciation: "[ˌspɒtɪd ˈdɪk]", meaningMain: "건포도 스펀지 푸딩", meaningSub: "건포도가 들어간 전통 영국 디저트", example: "Fancy some spotted dick for pudding? — 디저트로 스팟 딕 먹을래?" },
+      { category: "Food & Drink", word: "Squash", pronunciation: "[skwɒʃ]", meaningMain: "과일 농축 음료", meaningSub: "물에 타서 마시는 과일 시럽 음료", example: "Want some orange squash? — 오렌지 스쿼시 마실래?" },
+      { category: "Food & Drink", word: "Toast rack", pronunciation: "[təʊst ræk]", meaningMain: "토스트 거치대", meaningSub: "영국 식당에서 토스트를 담아오는 도구", example: "The toast came in a toast rack. — 토스트가 거치대에 담겨 나왔어" },
+      { category: "Food & Drink", word: "Ploughman's lunch", pronunciation: "[ˈplaʊmənz lʌntʃ]", meaningMain: "치즈, 빵, 피클 등으로 구성된 점심", meaningSub: "전통 영국 펍 점심 메뉴", example: "I'll have the ploughman's please. — 플라우맨스 런치 주세요" },
+      { category: "Food & Drink", word: "Scone", pronunciation: "[skɒn]", meaningMain: "스콘", meaningSub: "크림과 잼을 얹어 먹는 영국 전통 빵", example: "Scones with clotted cream and jam. — 클로티드 크림과 잼을 얹은 스콘" },
+      { category: "Food & Drink", word: "Digestive", pronunciation: "[daɪˈdʒestɪv]", meaningMain: "다이제스티브 비스킷", meaningSub: "영국에서 가장 인기 있는 비스킷 종류", example: "A digestive with your tea? — 차랑 다이제스티브 먹을래?" },
+      { category: "Food & Drink", word: "Pork scratchings", pronunciation: "[pɔːk ˈskrætʃɪŋz]", meaningMain: "돼지 껍데기 튀김", meaningSub: "영국 펍의 대표 안주", example: "A pint and some pork scratchings please. — 맥주 한 잔이랑 포크 스크래칭 주세요" },
+      { category: "Food & Drink", word: "Clotted cream", pronunciation: "[ˌklɒtɪd ˈkriːm]", meaningMain: "클로티드 크림", meaningSub: "스콘에 얹어 먹는 진한 크림", example: "Scones with clotted cream are divine. — 클로티드 크림 얹은 스콘 진짜 맛있어" },
+      { category: "Food & Drink", word: "Porridge", pronunciation: "[ˈpɒrɪdʒ]", meaningMain: "오트밀 죽", meaningSub: "영국식 아침 오트밀", example: "Porridge keeps you warm in winter. — 오트밀이 겨울에 몸을 따뜻하게 해줘" },
+      { category: "Food & Drink", word: "Pasty", pronunciation: "[ˈpæsti]", meaningMain: "콘월식 고기 파이", meaningSub: "반달 모양의 영국 전통 파이", example: "A Cornish pasty for lunch. — 점심으로 콘월 패스티" },
+      { category: "Food & Drink", word: "Toad in the hole", pronunciation: "[təʊd ɪn ðə həʊl]", meaningMain: "요크셔 푸딩 반죽에 구운 소시지", meaningSub: "영국 전통 가정식", example: "Mum made toad in the hole for dinner. — 엄마가 저녁으로 토드 인 더 홀 만들었어" },
+      { category: "Transport", word: "Tube", pronunciation: "[tjuːb]", meaningMain: "런던 지하철", meaningSub: "Underground의 별칭", example: "Take the Tube to Oxford Circus. — 옥스퍼드 서커스까지 지하철 타" },
+      { category: "Transport", word: "Coach", pronunciation: "[kəʊtʃ]", meaningMain: "장거리 버스", meaningSub: "도시 간 이동하는 버스", example: "We took the coach to Edinburgh. — 에든버러까지 버스 탔어" },
+      { category: "Transport", word: "Car boot", pronunciation: "[kɑː buːt]", meaningMain: "차 트렁크", meaningSub: "미국의 'trunk'에 해당", example: "Put it in the car boot. — 트렁크에 넣어" },
+      { category: "Transport", word: "Motorway", pronunciation: "[ˈməʊtəweɪ]", meaningMain: "고속도로", meaningSub: "미국의 'highway/freeway'에 해당", example: "Take the M1 motorway north. — M1 고속도로로 북쪽으로 가" },
+      { category: "Transport", word: "Zebra crossing", pronunciation: "[ˈzebrə ˈkrɒsɪŋ]", meaningMain: "횡단보도", meaningSub: "흑백 줄무늬 횡단보도", example: "Use the zebra crossing. — 횡단보도 이용해" },
+      { category: "Transport", word: "Roundabout", pronunciation: "[ˈraʊndəbaʊt]", meaningMain: "로터리, 원형 교차로", meaningSub: "영국 도로의 특징적인 교통 시스템", example: "Take the second exit at the roundabout. — 로터리에서 두 번째 출구로 나가" },
+      { category: "Transport", word: "Articulated lorry", pronunciation: "[ɑːˈtɪkjʊleɪtɪd ˈlɒri]", meaningMain: "대형 트럭", meaningSub: "미국의 'semi-truck'에 해당", example: "Watch out for the articulated lorry. — 대형 트럭 조심해" },
+      { category: "Transport", word: "Level crossing", pronunciation: "[ˈlevl ˈkrɒsɪŋ]", meaningMain: "철도 건널목", meaningSub: "도로와 철도가 교차하는 지점", example: "Wait at the level crossing. — 건널목에서 기다려" },
+      { category: "Transport", word: "Oyster card", pronunciation: "[ˈɔɪstə kɑːd]", meaningMain: "런던 교통카드", meaningSub: "런던 대중교통 충전식 카드", example: "Top up your Oyster card. — 오이스터 카드 충전해" },
+      { category: "Transport", word: "Diversion", pronunciation: "[daɪˈvɜːʃn]", meaningMain: "우회로", meaningSub: "미국의 'detour'에 해당", example: "Follow the diversion signs. — 우회 표지판 따라가" },
+      { category: "Pub & Drinking", word: "Pint", pronunciation: "[paɪnt]", meaningMain: "맥주 한 잔 (파인트)", meaningSub: "영국 펍에서 맥주 주문할 때 기본 단위", example: "A pint of lager, please. — 라거 한 파인트 주세요" },
+      { category: "Pub & Drinking", word: "Round", pronunciation: "[raʊnd]", meaningMain: "한 번에 모두에게 술 한 잔씩 사는 것", meaningSub: "영국 펍 문화의 핵심 — 돌아가면서 술 사기", example: "It's my round. — 이번엔 내가 살게" },
+      { category: "Pub & Drinking", word: "Lock in", pronunciation: "[lɒk ɪn]", meaningMain: "영업 종료 후 단골들과 계속 마시는 것", meaningSub: "영업시간 종료 후 문 잠그고 계속 마시는 영국 펍 문화", example: "The landlord gave us a lock in. — 주인이 우리한테 락인 해줬어" },
+      { category: "Pub & Drinking", word: "Shandy", pronunciation: "[ˈʃændi]", meaningMain: "맥주와 레모네이드를 섞은 음료", meaningSub: "영국에서 자주 마시는 가벼운 음료", example: "I'll have a shandy please. — 샌디 한 잔 주세요" },
+      { category: "Pub & Drinking", word: "Pub crawl", pronunciation: "[pʌb krɔːl]", meaningMain: "여러 펍을 돌아다니며 마시는 것", meaningSub: "한 펍에서 마시고 다음 펍으로 이동하는 활동", example: "We're doing a pub crawl tonight. — 오늘 밤 펍 투어 할 거야" },
+      { category: "Pub & Drinking", word: "Last orders", pronunciation: "[lɑːst ˈɔːdəz]", meaningMain: "마지막 주문", meaningSub: "영업 종료 전 마지막으로 주문받는 시간", example: "Last orders please! — 마지막 주문 받습니다!" },
+      { category: "Pub & Drinking", word: "Boozer", pronunciation: "[ˈbuːzə]", meaningMain: "펍, 술집", meaningSub: "pub의 비격식 표현", example: "Let's head to the boozer. — 술집 가자" },
+      { category: "Pub & Drinking", word: "Tipsy", pronunciation: "[ˈtɪpsi]", meaningMain: "살짝 취한", meaningSub: "약간 알딸딸한 상태", example: "I'm a bit tipsy after two glasses. — 두 잔 마셨더니 살짝 취했어" },
+      { category: "Pub & Drinking", word: "Bitter", pronunciation: "[ˈbɪtə]", meaningMain: "영국 전통 에일 맥주", meaningSub: "영국에서 가장 전통적인 맥주 스타일", example: "A pint of bitter please. — 비터 한 파인트 주세요" },
+      { category: "Pub & Drinking", word: "Landlord", pronunciation: "[ˈlændlɔːd]", meaningMain: "펍 주인", meaningSub: "펍을 운영하는 사람", example: "The landlord knows everyone's name. — 펍 주인은 모두의 이름을 알아" },
+      { category: "Pub & Drinking", word: "On the pull", pronunciation: "[ɒn ðə pʊl]", meaningMain: "이성을 찾아 나서다", meaningSub: "클럽이나 펍에서 이성을 찾는 것", example: "He's definitely on the pull tonight. — 걔 오늘 밤 완전 작업하러 나왔어" },
+      { category: "Pub & Drinking", word: "Lads night out", pronunciation: "[lædz naɪt aʊt]", meaningMain: "남자들끼리 밤 외출", meaningSub: "남자 친구들끼리 하는 야간 외출", example: "It's a lads night out tonight. — 오늘 남자들끼리 놀러 나가는 날이야" },
+      { category: "Pub & Drinking", word: "Hen do", pronunciation: "[hen duː]", meaningMain: "여성 결혼 전 파티 (bachelorette party)", meaningSub: "결혼 전 신부가 여자친구들과 즐기는 파티", example: "We're going on a hen do this weekend. — 이번 주말에 헨 두 해" },
+      { category: "Pub & Drinking", word: "Stag do", pronunciation: "[stæɡ duː]", meaningMain: "남성 결혼 전 파티 (bachelor party)", meaningSub: "결혼 전 신랑이 남자친구들과 즐기는 파티", example: "His stag do was absolutely wild. — 걔 스태그 두 진짜 난리났어" },
+      { category: "Pub & Drinking", word: "Chaser", pronunciation: "[ˈtʃeɪsə]", meaningMain: "독주 뒤에 마시는 음료", meaningSub: "독한 술 뒤에 마시는 가벼운 음료", example: "A whisky with a beer chaser. — 위스키에 맥주 체이서" },
+      { category: "Pub & Drinking", word: "Bevvy", pronunciation: "[ˈbevi]", meaningMain: "음료, 술", meaningSub: "음료나 술을 뜻하는 비격식 표현", example: "Fancy a bevvy? — 한 잔 할래?" },
+      { category: "Pub & Drinking", word: "Skinful", pronunciation: "[ˈskɪnfʊl]", meaningMain: "잔뜩 취할 만큼 많은 양의 술", meaningSub: "과음한 상태", example: "He'd had a skinful by midnight. — 걔 자정쯤에 완전히 취했어" },
+      { category: "Pub & Drinking", word: "Off licence", pronunciation: "[ɒf ˈlaɪsns]", meaningMain: "주류 판매점", meaningSub: "미국의 'liquor store'에 해당", example: "Pop to the off licence for some wine. — 주류 판매점에서 와인 좀 사와" },
+      { category: "Work & School", word: "Fortnight", pronunciation: "[ˈfɔːtnaɪt]", meaningMain: "2주", meaningSub: "업무 일정 잡을 때 자주 씀", example: "I'll see you in a fortnight. — 2주 후에 봐" },
+      { category: "Work & School", word: "Ring in sick", pronunciation: "[rɪŋ ɪn sɪk]", meaningMain: "아파서 결근 전화하다", meaningSub: "미국의 'call in sick'에 해당", example: "I had to ring in sick today. — 오늘 아파서 결근 전화했어" },
+      { category: "Work & School", word: "On the dole", pronunciation: "[ɒn ðə dəʊl]", meaningMain: "실업급여를 받는", meaningSub: "실업 상태로 정부 지원을 받는 것", example: "He's been on the dole for months. — 걔 몇 달째 실업급여 받고 있어" },
+      { category: "Work & School", word: "Bunk off", pronunciation: "[bʌŋk ɒf]", meaningMain: "학교나 직장을 몰래 빠지다", meaningSub: "허가 없이 무단으로 빠지는 것", example: "We bunked off school on Friday. — 금요일에 학교 몰래 빠졌어" },
+      { category: "Work & School", word: "Fresher", pronunciation: "[ˈfreʃə]", meaningMain: "대학교 1학년생", meaningSub: "미국의 'freshman'에 해당", example: "All the freshers are out tonight. — 1학년들 다 오늘 밤에 나왔어" },
+      { category: "Work & School", word: "Uni", pronunciation: "[ˈjuːni]", meaningMain: "대학교", meaningSub: "university의 줄임말", example: "Where did you go to uni? — 어느 대학 다녔어?" },
+      { category: "Work & School", word: "Revision", pronunciation: "[rɪˈvɪʒn]", meaningMain: "시험 공부, 복습", meaningSub: "미국의 'studying for exams'에 해당", example: "I need to do my revision tonight. — 오늘 밤 시험 공부해야 해" },
+      { category: "Work & School", word: "Redundant", pronunciation: "[rɪˈdʌndənt]", meaningMain: "정리해고 당한", meaningSub: "회사 구조조정으로 해고된 것", example: "He was made redundant last year. — 걔 작년에 정리해고 당했어" },
+      { category: "Work & School", word: "Headmaster", pronunciation: "[ˈhedˌmɑːstə]", meaningMain: "교장 선생님 (남성)", meaningSub: "미국의 'principal'에 해당", example: "The headmaster called my parents. — 교장 선생님이 우리 부모님한테 전화했어" },
+      { category: "Work & School", word: "Invigilator", pronunciation: "[ɪnˈvɪdʒɪleɪtə]", meaningMain: "시험 감독관", meaningSub: "시험을 감독하는 사람", example: "The invigilator handed out the papers. — 시험 감독관이 시험지를 나눠줬어" },
+      { category: "Work & School", word: "Car park", pronunciation: "[kɑː pɑːk]", meaningMain: "주차장", meaningSub: "미국의 'parking lot'에 해당", example: "Meet me in the car park. — 주차장에서 만나" },
+      { category: "Work & School", word: "Pay rise", pronunciation: "[peɪ raɪz]", meaningMain: "급여 인상", meaningSub: "미국의 'pay raise'에 해당", example: "I asked for a pay rise. — 급여 인상 요청했어" },
+      { category: "Work & School", word: "Appraisal", pronunciation: "[əˈpreɪzl]", meaningMain: "업무 평가", meaningSub: "정기적인 직원 성과 평가", example: "My appraisal is next week. — 다음 주에 업무 평가 있어" },
+      { category: "Work & School", word: "Sixth form", pronunciation: "[sɪksθ fɔːm]", meaningMain: "고등학교 마지막 2년 (16-18세)", meaningSub: "영국 교육 시스템의 마지막 단계", example: "She's in sixth form now. — 걔 지금 식스스 폼이야" },
+      { category: "Shopping", word: "Queueing", pronunciation: "[ˈkjuːɪŋ]", meaningMain: "줄을 서는 것", meaningSub: "영국인의 가장 중요한 사회적 규범", example: "No pushing in — everyone's queueing! — 새치기하지 마, 다들 줄 서 있잖아!" },
+      { category: "Shopping", word: "Cashpoint", pronunciation: "[ˈkæʃpɔɪnt]", meaningMain: "ATM", meaningSub: "미국의 'ATM'에 해당하는 영국식 표현", example: "I need to find a cashpoint. — ATM 찾아야 해" },
+      { category: "Shopping", word: "Till", pronunciation: "[tɪl]", meaningMain: "계산대", meaningSub: "미국의 'cash register/checkout'에 해당", example: "Pay at the till please. — 계산대에서 결제해 주세요" },
+      { category: "Shopping", word: "Trolley", pronunciation: "[ˈtrɒli]", meaningMain: "쇼핑 카트", meaningSub: "미국의 'shopping cart'에 해당", example: "Can you grab a trolley? — 카트 하나 가져올 수 있어?" },
+      { category: "Shopping", word: "Carrier bag", pronunciation: "[ˈkæriə bæɡ]", meaningMain: "비닐봉지", meaningSub: "미국의 'plastic bag'에 해당", example: "Do you need a carrier bag? — 봉투 필요하세요?" },
+      { category: "Shopping", word: "Charity shop", pronunciation: "[ˈtʃærɪti ʃɒp]", meaningMain: "자선 상점 (중고품 판매)", meaningSub: "미국의 'thrift store'에 해당", example: "I found this in a charity shop. — 이거 자선 상점에서 찾았어" },
+      { category: "Shopping", word: "Car boot sale", pronunciation: "[kɑː buːt seɪl]", meaningMain: "자동차 트렁크 벼룩시장", meaningSub: "차 트렁크에서 물건을 파는 벼룩시장", example: "I got this lamp at a car boot sale. — 이 램프 벼룩시장에서 샀어" },
+      { category: "Shopping", word: "Jumble sale", pronunciation: "[ˈdʒʌmbl seɪl]", meaningMain: "중고품 바자회", meaningSub: "학교나 교회 등에서 여는 중고품 판매 행사", example: "The school's jumble sale is on Saturday. — 학교 바자회가 토요일에 있어" },
+      { category: "Shopping", word: "Pound shop", pronunciation: "[paʊnd ʃɒp]", meaningMain: "1파운드 균일가 상점", meaningSub: "미국의 'dollar store'에 해당", example: "I got it from the pound shop. — 파운드샵에서 샀어" },
+      { category: "Shopping", word: "High street", pronunciation: "[haɪ striːt]", meaningMain: "중심 상업가", meaningSub: "미국의 'main street'에 해당", example: "There are lots of shops on the high street. — 중심가에 상점이 많아" },
+      { category: "Shopping", word: "Voucher", pronunciation: "[ˈvaʊtʃə]", meaningMain: "상품권, 쿠폰", meaningSub: "미국의 'coupon'에 해당", example: "I've got a voucher for 20% off. — 20% 할인 쿠폰 있어" },
+      { category: "Shopping", word: "Closing down sale", pronunciation: "[ˈkləʊzɪŋ daʊn seɪl]", meaningMain: "폐업 세일", meaningSub: "가게 문 닫기 전 재고 정리 세일", example: "The bookshop's having a closing down sale. — 서점이 폐업 세일 하고 있어" },
+      { category: "Cockney Slang", word: "Dog and bone", pronunciation: "[dɒɡ ænd bəʊn]", meaningMain: "전화 (phone)", meaningSub: "Cockney rhyming slang — phone과 bone이 운율", example: "Get on the dog and bone. — 전화해" },
+      { category: "Cockney Slang", word: "Plates of meat", pronunciation: "[pleɪts əv miːt]", meaningMain: "발 (feet)", meaningSub: "Cockney rhyming slang — feet와 meat이 운율", example: "My plates are killing me. — 발이 너무 아파" },
+      { category: "Cockney Slang", word: "Apples and pears", pronunciation: "[ˈæplz ænd peəz]", meaningMain: "계단 (stairs)", meaningSub: "Cockney rhyming slang — stairs와 pears가 운율", example: "Get up the apples. — 계단 올라가" },
+      { category: "Cockney Slang", word: "Adam and Eve", pronunciation: "[ˌædəm ænd ˈiːv]", meaningMain: "믿다 (believe)", meaningSub: "Cockney rhyming slang — believe와 Eve가 운율", example: "Would you Adam and Eve it! — 믿을 수 있어?" },
+      { category: "Cockney Slang", word: "Barnet Fair", pronunciation: "[ˈbɑːnɪt feə]", meaningMain: "머리카락 (hair)", meaningSub: "Cockney rhyming slang — hair와 fair가 운율", example: "Nice barnet! — 머리 좋은데!" },
+      { category: "Cockney Slang", word: "Trouble and strife", pronunciation: "[ˈtrʌbl ænd straɪf]", meaningMain: "아내 (wife)", meaningSub: "Cockney rhyming slang — wife와 strife가 운율", example: "My trouble's waiting at home. — 집에서 아내가 기다리고 있어" },
+      { category: "Cockney Slang", word: "Butcher's hook", pronunciation: "[ˈbʊtʃəz hʊk]", meaningMain: "보다 (look)", meaningSub: "Cockney rhyming slang — look와 hook이 운율", example: "Have a butcher's at this. — 이거 한번 봐봐" },
+      { category: "Cockney Slang", word: "Ruby Murray", pronunciation: "[ˈruːbi ˈmʌri]", meaningMain: "카레 (curry)", meaningSub: "Cockney rhyming slang — curry와 Murray가 운율", example: "Fancy a Ruby tonight? — 오늘 밤 카레 먹을래?" },
+      { category: "Cockney Slang", word: "Brown bread", pronunciation: "[braʊn bred]", meaningMain: "죽었다 (dead)", meaningSub: "Cockney rhyming slang — dead와 bread가 운율", example: "The battery's brown bread. — 배터리 다 죽었어" },
+      { category: "Cockney Slang", word: "Mince pies", pronunciation: "[mɪns paɪz]", meaningMain: "눈 (eyes)", meaningSub: "Cockney rhyming slang — eyes와 pies가 운율", example: "Use your mince pies! — 눈 좀 써!" },
+      { category: "Cockney Slang", word: "Cockney rhyming slang", pronunciation: "[ˈkɒkni ˈraɪmɪŋ slæŋ]", meaningMain: "코크니 라이밍 슬랭", meaningSub: "런던 이스트엔드 출신 노동계층의 언어 코드", example: "It's all Cockney rhyming slang to me. — 나한테는 다 외계어야" },
+      { category: "Cockney Slang", word: "Tea leaf", pronunciation: "[tiː liːf]", meaningMain: "도둑 (thief)", meaningSub: "Cockney rhyming slang — thief와 leaf가 운율", example: "Watch out, he's a tea leaf. — 조심해, 걔 도둑이야" },
+      { category: "Cockney Slang", word: "Porky pies", pronunciation: "[ˈpɔːki paɪz]", meaningMain: "거짓말 (lies)", meaningSub: "Cockney rhyming slang — lies와 pies가 운율", example: "You're telling porky pies! — 거짓말하고 있잖아!" },
+      { category: "British Culture", word: "Bank holiday", pronunciation: "[bæŋk ˈhɒlɪdeɪ]", meaningMain: "공휴일", meaningSub: "영국의 공식 공휴일", example: "It's a bank holiday on Monday. — 월요일이 공휴일이야" },
+      { category: "British Culture", word: "Bonfire Night", pronunciation: "[ˈbɒnfaɪə naɪt]", meaningMain: "폭죽 축제의 밤 (11월 5일)", meaningSub: "가이 포크스 데이, 폭죽과 모닥불 행사", example: "We watched fireworks on Bonfire Night. — 본파이어 나이트에 불꽃놀이 봤어" },
+      { category: "British Culture", word: "Allotment", pronunciation: "[əˈlɒtmənt]", meaningMain: "주말 텃밭", meaningSub: "영국에서 임대해서 가꾸는 작은 텃밭", example: "He grows vegetables at his allotment. — 걔 텃밭에서 채소 키워" },
+      { category: "British Culture", word: "Fete", pronunciation: "[feɪt]", meaningMain: "야외 바자회, 마을 축제", meaningSub: "학교나 마을에서 열리는 야외 행사", example: "The village fete is on Sunday. — 마을 축제가 일요일에 있어" },
+      { category: "British Culture", word: "Pantomime", pronunciation: "[ˈpæntəmaɪm]", meaningMain: "크리스마스 시즌 코미디 뮤지컬", meaningSub: "영국 크리스마스 전통 공연", example: "We're going to the pantomime. — 팬토마임 보러 가" },
+      { category: "British Culture", word: "The Proms", pronunciation: "[ðə prɒmz]", meaningMain: "BBC 프롬스 (여름 클래식 음악 축제)", meaningSub: "영국 여름의 상징적인 클래식 음악 행사", example: "Did you watch the Last Night of the Proms? — 프롬스 마지막 밤 봤어?" },
+      { category: "British Culture", word: "Wimbledon", pronunciation: "[ˈwɪmbldən]", meaningMain: "윔블던 테니스 대회", meaningSub: "영국의 상징적인 테니스 대회, 딸기와 크림이 유명", example: "Strawberries at Wimbledon is a must. — 윔블던에서 딸기 먹는 건 필수야" },
+      { category: "British Culture", word: "Guy Fawkes", pronunciation: "[ɡaɪ fɔːks]", meaningMain: "가이 포크스 (화약 음모 사건의 인물)", meaningSub: "11월 5일 본파이어 나이트의 유래", example: "Remember, remember the fifth of November. — 기억해, 기억해, 11월 5일을" },
+      { category: "British Culture", word: "Beefeater", pronunciation: "[ˈbiːfiːtə]", meaningMain: "런던 탑 근위병", meaningSub: "런던 탑을 지키는 전통 근위대", example: "The Beefeaters guard the Tower of London. — 비프이터들이 런던 탑을 지켜" },
+      { category: "British Culture", word: "Punting", pronunciation: "[ˈpʌntɪŋ]", meaningMain: "장대로 배 밀기", meaningSub: "옥스퍼드, 케임브리지 강에서 즐기는 활동", example: "Let's go punting in Cambridge. — 케임브리지에서 펀팅하자" },
+      { category: "British Culture", word: "Afternoon tea", pronunciation: "[ˌɑːftəˈnuːn tiː]", meaningMain: "애프터눈 티", meaningSub: "스콘, 샌드위치, 케이크와 함께 하는 오후 티타임", example: "We had afternoon tea at the Ritz. — 리츠 호텔에서 애프터눈 티 했어" },
+      { category: "British Culture", word: "Boxing Day", pronunciation: "[ˈbɒksɪŋ deɪ]", meaningMain: "박싱 데이 (12월 26일)", meaningSub: "크리스마스 다음날, 영국 공휴일", example: "The sales start on Boxing Day. — 세일이 박싱 데이에 시작해" },
+      { category: "British Culture", word: "Marmite", pronunciation: "[ˈmɑːmaɪt]", meaningMain: "마마이트 (영국 전통 효모 스프레드)", meaningSub: "좋아하거나 싫어하거나 — 중간이 없는 식품", example: "Marmite — you either love it or hate it. — 마마이트는 좋아하거나 싫어하거나야" },
       { category: "Casual", word: "Natter", pronunciation: "[ˈnætə]", meaningMain: "수다 떨다, 잡담하다", meaningSub: "'chat'과 비슷한 영국식 표현", example: "We had a good natter over tea. — 차 마시면서 수다 떨었어" },
       { category: "Casual", word: "Faff", pronunciation: "[fæf]", meaningMain: "꾸물거리다, 시간 낭비하다", meaningSub: "쓸데없이 시간을 끄는 행동", example: "Stop faffing about! — 꾸물거리지 마!" },
       { category: "Casual", word: "Gobby", pronunciation: "[ˈɡɒbi]", meaningMain: "입이 싼, 말이 많은", meaningSub: "생각 없이 말 많이 하는 사람", example: "He's a gobby so-and-so. — 걔 진짜 입이 싸" },
@@ -388,19 +518,14 @@
       { category: "Casual", word: "Minted", pronunciation: "[ˈmɪntɪd]", meaningMain: "돈이 많다, 부자다", meaningSub: "매우 부유한 상태", example: "His family is absolutely minted. — 걔 집안 진짜 부자야" },
       { category: "Casual", word: "Posh", pronunciation: "[pɒʃ]", meaningMain: "고급스러운, 상류층의", meaningSub: "럭셔리하거나 상류층 느낌", example: "That's a very posh restaurant. — 저기 완전 고급 식당이다" },
       { category: "Casual", word: "Wonky", pronunciation: "[ˈwɒŋki]", meaningMain: "삐뚤어진, 제대로 안 된", meaningSub: "뭔가 잘못됐거나 불안정한 상태", example: "The table's a bit wonky. — 테이블이 좀 삐뚤어졌어" },
-      { category: "Casual", word: "Fortnight", pronunciation: "[ˈfɔːtnaɪt]", meaningMain: "2주", meaningSub: "fourteen nights의 줄임, 영국에서 자주 씀", example: "I'll see you in a fortnight. — 2주 후에 봐" },
       { category: "Casual", word: "Rubbish", pronunciation: "[ˈrʌbɪʃ]", meaningMain: "쓰레기, 말도 안 돼!", meaningSub: "물건도 되고 '말도 안 돼'라는 감탄사도 됨", example: "That's absolute rubbish! — 말도 안 되는 소리야!" },
       { category: "Casual", word: "Daft", pronunciation: "[dɑːft]", meaningMain: "바보 같은, 멍청한", meaningSub: "'stupid'의 부드러운 영국식 표현", example: "Don't be daft! — 바보같이 굴지 마!" },
-
       { category: "Emotions", word: "Over the moon", pronunciation: "[ˌəʊvə ðə muːn]", meaningMain: "너무너무 기쁘다", meaningSub: "극도로 행복한 상태", example: "She was over the moon about the news. — 걔 그 소식에 너무 기뻐했어" },
       { category: "Emotions", word: "Cheesed off", pronunciation: "[tʃiːzd ɒf]", meaningMain: "짜증나다, 지쳐있다", meaningSub: "지루하거나 짜증난 상태", example: "I'm well cheesed off with this weather. — 이 날씨에 정말 짜증나" },
       { category: "Emotions", word: "Narked", pronunciation: "[nɑːkt]", meaningMain: "짜증난, 화난", meaningSub: "annoy당한 느낌의 영국식 표현", example: "She looked well narked. — 걔 완전 짜증난 것처럼 보였어" },
       { category: "Emotions", word: "Choked", pronunciation: "[tʃəʊkt]", meaningMain: "감동받아 말을 잇지 못하는", meaningSub: "감동이나 슬픔으로 목이 메인 상태", example: "I was a bit choked at the end of the film. — 영화 결말에 목이 메였어" },
       { category: "Emotions", word: "Brassed off", pronunciation: "[brɑːst ɒf]", meaningMain: "완전히 지쳐서 짜증난", meaningSub: "'fed up'보다 강한 표현", example: "I'm totally brassed off with it. — 이거에 완전히 질렸어" },
       { category: "Emotions", word: "Peeved", pronunciation: "[piːvd]", meaningMain: "약간 화난, 언짢은", meaningSub: "살짝 짜증나고 기분 안 좋은 상태", example: "He was a bit peeved about missing out. — 놓쳐서 좀 언짢아했어" },
-      { category: "Emotions", word: "Stoked", pronunciation: "[stəʊkt]", meaningMain: "신난다, 들떠있다", meaningSub: "매우 흥분되고 기대되는 상태", example: "I'm absolutely stoked for the weekend! — 주말이 너무 기대돼!" },
-      { category: "Emotions", word: "Homesick", pronunciation: "[ˈhəʊmsɪk]", meaningMain: "향수병이 난", meaningSub: "집이나 고향이 그리운 상태", example: "I was terribly homesick at first. — 처음엔 향수병이 심했어" },
-
       { category: "Food & Drink", word: "Butty", pronunciation: "[ˈbʌti]", meaningMain: "샌드위치", meaningSub: "북부 영국에서 자주 쓰는 표현", example: "I'll have a bacon butty, please. — 베이컨 샌드위치 하나 주세요" },
       { category: "Food & Drink", word: "Brew", pronunciation: "[bruː]", meaningMain: "차 한 잔", meaningSub: "북부 영국에서 'cuppa' 대신 씀", example: "Fancy a brew? — 차 한 잔 할래?" },
       { category: "Food & Drink", word: "Mash", pronunciation: "[mæʃ]", meaningMain: "으깬 감자", meaningSub: "mashed potato의 줄임말", example: "Bangers and mash for tea? — 저녁으로 소시지랑 으깬 감자?" },
@@ -409,73 +534,37 @@
       { category: "Food & Drink", word: "Sarnie", pronunciation: "[ˈsɑːni]", meaningMain: "샌드위치", meaningSub: "sandwich의 영국식 슬랭", example: "I made some sarnies for the trip. — 여행용 샌드위치 만들었어" },
       { category: "Food & Drink", word: "Crisps", pronunciation: "[krɪsps]", meaningMain: "감자칩 (과자)", meaningSub: "미국의 'chips' — 영국 'chips'는 프렌치프라이", example: "A packet of crisps please. — 감자칩 한 봉지 주세요" },
       { category: "Food & Drink", word: "Nosh", pronunciation: "[nɒʃ]", meaningMain: "먹다, 음식", meaningSub: "food나 eating을 뜻하는 비격식 표현", example: "Let's get some nosh. — 뭔가 먹으러 가자" },
-      { category: "Food & Drink", word: "Full English", pronunciation: "[fʊl ˈɪŋɡlɪʃ]", meaningMain: "잉글리시 브렉퍼스트", meaningSub: "베이컨, 달걀, 소시지 등이 포함된 영국식 아침", example: "I could murder a full English right now. — 지금 당장 잉글리시 브렉퍼스트 먹고 싶다" },
-      { category: "Food & Drink", word: "Jacket potato", pronunciation: "[ˈdʒækɪt pəˈteɪtəʊ]", meaningMain: "구운 감자", meaningSub: "껍질째 구운 감자 요리, 영국 점심 단골", example: "A jacket potato with cheese, please. — 치즈 올린 구운 감자 주세요" },
       { category: "Food & Drink", word: "Tuck in", pronunciation: "[tʌk ɪn]", meaningMain: "맛있게 먹다, 시작하다", meaningSub: "식사를 시작하라는 영국식 표현", example: "Right, tuck in everyone! — 자, 다들 먹어!" },
-
-      { category: "Transport", word: "Tube", pronunciation: "[tjuːb]", meaningMain: "런던 지하철", meaningSub: "Underground의 별칭", example: "Take the Tube to King's Cross. — 킹스 크로스까지 지하철 타" },
       { category: "Transport", word: "Motor", pronunciation: "[ˈməʊtə]", meaningMain: "자동차", meaningSub: "car의 영국 구어체 표현", example: "Nice motor, mate! — 차 좋은데!" },
       { category: "Transport", word: "Lorry", pronunciation: "[ˈlɒri]", meaningMain: "트럭", meaningSub: "미국의 'truck'에 해당", example: "A lorry blocked the road. — 트럭이 도로를 막았어" },
-      { category: "Transport", word: "Coach", pronunciation: "[kəʊtʃ]", meaningMain: "장거리 버스", meaningSub: "도시 간 이동하는 버스", example: "We took the coach to Edinburgh. — 버스 타고 에든버러 갔어" },
       { category: "Transport", word: "Boot", pronunciation: "[buːt]", meaningMain: "자동차 트렁크", meaningSub: "미국의 'trunk'에 해당", example: "Put it in the boot. — 트렁크에 넣어" },
       { category: "Transport", word: "Bonnet", pronunciation: "[ˈbɒnɪt]", meaningMain: "자동차 보닛 (앞 덮개)", meaningSub: "미국의 'hood'에 해당", example: "There's something wrong under the bonnet. — 보닛 안에 뭔가 이상해" },
-      { category: "Transport", word: "Roundabout", pronunciation: "[ˈraʊndəbaʊt]", meaningMain: "로터리, 회전 교차로", meaningSub: "영국 도로에 매우 많음", example: "Take the second exit at the roundabout. — 로터리에서 두 번째 출구로 나가" },
-
-      { category: "Pub & Drinking", word: "Pint", pronunciation: "[paɪnt]", meaningMain: "맥주 한 잔 (파인트)", meaningSub: "영국 펍에서 맥주 단위, 약 568ml", example: "I'll have a pint of lager, please. — 라거 한 파인트 주세요" },
-      { category: "Pub & Drinking", word: "Round", pronunciation: "[raʊnd]", meaningMain: "한 라운드 (모두에게 한 잔씩)", meaningSub: "펍에서 번갈아 사는 영국 문화", example: "It's my round. What are you having? — 내가 살게. 뭐 마실래?" },
-      { category: "Pub & Drinking", word: "On the pull", pronunciation: "[ɒn ðə pʊl]", meaningMain: "이성 만나러 나가다", meaningSub: "펍에 이성을 만나러 나간 상태", example: "They're out on the pull tonight. — 걔네 오늘 밤 작업하러 나갔어" },
-      { category: "Pub & Drinking", word: "Legless", pronunciation: "[ˈleɡləs]", meaningMain: "완전히 취한", meaningSub: "너무 취해서 걷지도 못하는 상태", example: "He was absolutely legless. — 걔 완전 뻗어 있었어" },
       { category: "Pub & Drinking", word: "Sloshed", pronunciation: "[slɒʃt]", meaningMain: "많이 취한", meaningSub: "'drunk'의 재밌는 영국식 표현", example: "She was completely sloshed. — 걔 완전 취했어" },
-      { category: "Pub & Drinking", word: "Last orders", pronunciation: "[lɑːst ˈɔːdəz]", meaningMain: "마지막 주문", meaningSub: "펍 마감 전 마지막 주문 시간 알림", example: "Last orders, please! — 마지막 주문 받겠습니다!" },
-      { category: "Pub & Drinking", word: "Tipsy", pronunciation: "[ˈtɪpsi]", meaningMain: "살짝 취한", meaningSub: "기분 좋게 조금 취한 상태", example: "I'm just a little tipsy. — 나 살짝만 취했어" },
       { category: "Pub & Drinking", word: "Pub grub", pronunciation: "[pʌb ɡrʌb]", meaningMain: "펍 음식", meaningSub: "펍에서 파는 간단한 식사", example: "Fancy some pub grub? — 펍 음식 먹을래?" },
-      { category: "Pub & Drinking", word: "Plastered", pronunciation: "[ˈplɑːstəd]", meaningMain: "완전 취한", meaningSub: "매우 취한 상태를 나타내는 표현", example: "He got absolutely plastered. — 걔 완전히 퍼졌어" },
-      { category: "Pub & Drinking", word: "Gaff", pronunciation: "[ɡæf]", meaningMain: "집, 아파트", meaningSub: "특히 파티를 여는 집을 뜻함", example: "Come back to mine gaff after? — 끝나고 우리 집 올래?" },
-      { category: "Pub & Drinking", word: "Boozer", pronunciation: "[ˈbuːzə]", meaningMain: "술집, 술꾼", meaningSub: "펍을 친근하게 부르는 말", example: "Let's head to the local boozer. — 동네 술집으로 가자" },
-      { category: "Pub & Drinking", word: "Nightcap", pronunciation: "[ˈnaɪtkæp]", meaningMain: "잠자리 술 한 잔", meaningSub: "자기 전에 마시는 마지막 한 잔", example: "How about a nightcap? — 마지막으로 한 잔 어때?" },
-
-      { category: "Work & School", word: "Brilliant student", pronunciation: "[ˈbrɪliənt ˈstjuːdənt]", meaningMain: "우수한 학생", meaningSub: "'brilliant'은 영국에서 '뛰어난'을 뜻함", example: "She's an absolutely brilliant student. — 걔 진짜 우수한 학생이야" },
       { category: "Work & School", word: "Swot", pronunciation: "[swɒt]", meaningMain: "공부벌레, 열심히 공부하다", meaningSub: "열심히 공부하는 사람을 약간 놀릴 때", example: "He's such a swot. — 걔 완전 공부벌레야" },
-      { category: "Work & School", word: "Bunk off", pronunciation: "[bʌŋk ɒf]", meaningMain: "학교 땡땡이 치다", meaningSub: "'skive'와 비슷한 표현", example: "We bunked off last period. — 우리 마지막 수업 째고 나왔어" },
       { category: "Work & School", word: "Marking", pronunciation: "[ˈmɑːkɪŋ]", meaningMain: "채점하다", meaningSub: "미국의 'grading'에 해당", example: "I've got loads of marking to do. — 채점해야 할 게 엄청 많아" },
       { category: "Work & School", word: "Chat someone up", pronunciation: "[tʃæt sʌmwʌn ʌp]", meaningMain: "작업을 걸다, 말 걸다", meaningSub: "이성에게 말을 걸어 관심을 끌 때", example: "He tried to chat her up at the pub. — 걔 펍에서 그녀한테 작업 걸었어" },
-      { category: "Work & School", word: "Overtime", pronunciation: "[ˈəʊvətaɪm]", meaningMain: "초과 근무", meaningSub: "영미 공통이지만 영국에서도 자주 씀", example: "I've been doing loads of overtime. — 나 요즘 초과 근무 엄청 해" },
-      { category: "Work & School", word: "Ring in sick", pronunciation: "[rɪŋ ɪn sɪk]", meaningMain: "전화로 병가 내다", meaningSub: "미국의 'call in sick'에 해당", example: "She rang in sick on Monday. — 걔 월요일에 병가 냈어" },
-      { category: "Work & School", word: "Fortnight's holiday", pronunciation: "[ˈfɔːtnaɪts ˈhɒlɪdeɪ]", meaningMain: "2주 휴가", meaningSub: "영국에서 휴가는 'holiday'라고 함", example: "We're going on a fortnight's holiday. — 우리 2주 휴가 가" },
-      { category: "Work & School", word: "Redundant", pronunciation: "[rɪˈdʌndənt]", meaningMain: "정리해고 된", meaningSub: "회사 사정으로 해고된 것을 뜻함", example: "He was made redundant last year. — 걔 작년에 정리해고 됐어" },
-      { category: "Work & School", word: "Fresher", pronunciation: "[ˈfreʃə]", meaningMain: "대학교 신입생", meaningSub: "first year university student", example: "She's a fresher at Oxford. — 걔 옥스퍼드 신입생이야" },
-
-      { category: "Shopping", word: "Queueing", pronunciation: "[ˈkjuːɪŋ]", meaningMain: "줄 서기", meaningSub: "영국인의 국민 스포츠 같은 문화", example: "There's a huge queue at the checkout. — 계산대에 줄이 엄청 길어" },
       { category: "Shopping", word: "Bargain", pronunciation: "[ˈbɑːɡɪn]", meaningMain: "득템, 싸게 산 것", meaningSub: "저렴하게 잘 산 물건", example: "That's an absolute bargain! — 완전 득템이다!" },
       { category: "Shopping", word: "Nip to the shops", pronunciation: "[nɪp tə ðə ʃɒps]", meaningMain: "잠깐 가게에 들르다", meaningSub: "빠르게 가게에 다녀올 때", example: "I'll just nip to the shops. — 잠깐 가게 다녀올게" },
-      { category: "Shopping", word: "Car boot sale", pronunciation: "[kɑː buːt seɪl]", meaningMain: "차 트렁크 벼룩시장", meaningSub: "차 트렁크에서 물건 파는 영국식 벼룩시장", example: "I found this at a car boot sale. — 벼룩시장에서 이거 찾았어" },
-      { category: "Shopping", word: "Half price", pronunciation: "[hɑːf praɪs]", meaningMain: "반값", meaningSub: "세일 표현", example: "It's half price in the sale. — 세일 중에 반값이야" },
       { category: "Shopping", word: "Fancy dress", pronunciation: "[ˈfænsi dres]", meaningMain: "코스튬 (변장 의상)", meaningSub: "미국의 'costume'에 해당, 파티용 변장", example: "It's a fancy dress party! — 코스튬 파티야!" },
-      { category: "Shopping", word: "Jumble sale", pronunciation: "[ˈdʒʌmbl seɪl]", meaningMain: "자선 바자회", meaningSub: "중고 물품을 판매하는 자선 행사", example: "I bought this at the church jumble sale. — 교회 바자회에서 샀어" },
-      { category: "Shopping", word: "Trolley", pronunciation: "[ˈtrɒli]", meaningMain: "쇼핑 카트", meaningSub: "미국의 'shopping cart'에 해당", example: "Can you grab a trolley? — 쇼핑 카트 하나 가져와줄래?" },
-
       { category: "Insults & Banter", word: "Muppet", pronunciation: "[ˈmʌpɪt]", meaningMain: "바보, 멍청이", meaningSub: "약한 욕설로 친구 사이에서도 씀", example: "You absolute muppet! — 이 바보 같은 놈!" },
       { category: "Insults & Banter", word: "Plonker", pronunciation: "[ˈplɒŋkə]", meaningMain: "얼간이, 바보", meaningSub: "Only Fools and Horses에서 유명해진 표현", example: "You silly plonker! — 이 얼간이야!" },
       { category: "Insults & Banter", word: "Pillock", pronunciation: "[ˈpɪlək]", meaningMain: "바보, 멍청이", meaningSub: "가벼운 욕설로 친근하게 쓰이기도 함", example: "Don't be such a pillock. — 그렇게 바보같이 굴지 마" },
-      { category: "Insults & Banter", word: "Mug", pronunciation: "[mʌɡ]", meaningMain: "속기 쉬운 사람, 봉", meaningSub: "쉽게 속는 사람을 뜻하는 슬랭", example: "Don't be a mug and fall for that. — 봉처럼 속지 마" },
-      { category: "Insults & Banter", word: "Wind up", pronunciation: "[waɪnd ʌp]", meaningMain: "놀리다, 약 올리다", meaningSub: "장난으로 누군가를 놀릴 때", example: "Are you winding me up? — 나 놀리는 거야?" },
       { category: "Insults & Banter", word: "Banter", pronunciation: "[ˈbæntə]", meaningMain: "장난스러운 말싸움, 농담", meaningSub: "영국 문화의 핵심 — 친구 간 유머러스한 놀림", example: "It's just banter, mate! — 그냥 농담이야, 친구!" },
       { category: "Insults & Banter", word: "Moan", pronunciation: "[məʊn]", meaningMain: "투덜대다, 불평하다", meaningSub: "'complain'의 영국식 표현", example: "Stop moaning and get on with it. — 투덜대지 말고 해" },
       { category: "Insults & Banter", word: "Slag off", pronunciation: "[slæɡ ɒf]", meaningMain: "험담하다, 깎아내리다", meaningSub: "누군가를 나쁘게 말할 때", example: "Stop slagging him off. — 걔 험담 그만해" },
       { category: "Insults & Banter", word: "Wally", pronunciation: "[ˈwɒli]", meaningMain: "바보, 얼간이", meaningSub: "무해하고 귀여운 욕설", example: "You silly wally! — 이 바보야!" },
-            { category: "Insults & Banter", word: "Divvy", pronunciation: "[ˈdɪvi]", meaningMain: "멍청이, 바보", meaningSub: "북부 영국에서 주로 쓰는 표현", example: "Don't be a divvy! — 바보같이 굴지 마!" },
-
+      { category: "Insults & Banter", word: "Divvy", pronunciation: "[ˈdɪvi]", meaningMain: "멍청이, 바보", meaningSub: "북부 영국에서 주로 쓰는 표현", example: "Don't be a divvy! — 바보같이 굴지 마!" },
       { category: "British Humour", word: "Taking the biscuit", pronunciation: "[ˈteɪkɪŋ ðə ˈbɪskɪt]", meaningMain: "도가 지나치다, 어이가 없다", meaningSub: "참을 수 없을 정도로 뻔뻔하거나 황당할 때", example: "That really takes the biscuit! — 이건 정말 어이없네!" },
       { category: "British Humour", word: "Sod's law", pronunciation: "[sɒdz lɔː]", meaningMain: "머피의 법칙", meaningSub: "최악의 상황이 늘 일어난다는 영국식 표현", example: "Of course it rained — Sod's law! — 당연히 비가 오지 — 머피의 법칙!" },
       { category: "British Humour", word: "Tongue in cheek", pronunciation: "[tʌŋ ɪn tʃiːk]", meaningMain: "농담으로 한 말, 빈정거림", meaningSub: "진지한 척하지만 사실 농담인 것", example: "It was tongue in cheek, obviously. — 당연히 농담이었지" },
       { category: "British Humour", word: "Dry humour", pronunciation: "[draɪ ˈhjuːmə]", meaningMain: "건조한 유머, 무표정 개그", meaningSub: "감정 없이 진지하게 농담하는 영국 특유의 유머", example: "Very dry humour — you had to think about it. — 건조한 유머라 한 번 생각해야 해" },
       { category: "British Humour", word: "Wind-up merchant", pronunciation: "[waɪnd ʌp ˈmɜːtʃənt]", meaningMain: "놀리기 좋아하는 사람", meaningSub: "항상 남을 놀리는 사람", example: "He's a total wind-up merchant. — 걔 맨날 남 놀리는 사람이야" },
-      { category: "British Humour", word: "Deadpan", pronunciation: "[ˈdedpæn]", meaningMain: "무표정으로 하는 농담", meaningSub: "표정 변화 없이 진지하게 하는 개그", example: "His deadpan delivery is hilarious. — 걔 무표정 개그 진짜 웃겨" },
-      { category: "British Humour", word: "Self-deprecating", pronunciation: "[self ˈdeprɪkeɪtɪŋ]", meaningMain: "자기 비하 유머", meaningSub: "스스로를 낮추며 웃기는 영국식 유머", example: "Very self-deprecating, typically British. — 전형적인 영국식 자기 비하 유머" },
       { category: "British Humour", word: "Spot on", pronunciation: "[spɒt ɒn]", meaningMain: "정확해! 딱 맞아!", meaningSub: "무언가 완벽하게 맞았을 때", example: "Spot on, that's exactly right! — 정확해, 딱 맞아!" },
       { category: "British Humour", word: "Taking the piss", pronunciation: "[ˈteɪkɪŋ ðə pɪs]", meaningMain: "놀리다, 비웃다", meaningSub: "누군가를 놀리거나 농담할 때 쓰는 구어", example: "Are you taking the piss? — 나 놀리는 거야?" },
       { category: "British Humour", word: "Blimey", pronunciation: "[ˈblaɪmi]", meaningMain: "이런!, 세상에!", meaningSub: "놀랐을 때 쓰는 전통 영국식 감탄사", example: "Blimey, that was unexpected! — 이런, 예상 못 했는데!" },
       { category: "British Humour", word: "Cor", pronunciation: "[kɔː]", meaningMain: "와!, 어머나!", meaningSub: "강한 놀라움을 표현하는 오래된 영국식 감탄사", example: "Cor blimey, look at that! — 와, 저것 좀 봐!" }
+    
     ];
 
     let userCards = JSON.parse(localStorage.getItem('britishUserCards') || '[]');
@@ -548,14 +637,16 @@
       const pct = total > 0 ? Math.round((sortedCount / total) * 100) : 0;
       document.getElementById('progress-percent').textContent = pct + '%';
       document.getElementById('progress-bar').style.width = pct + '%';
-      document.getElementById('progress-sorted-count').textContent = `Sorted ${sortedCount}개`;
-      document.getElementById('progress-total-count').textContent = `전체 ${total}개`;
+      document.getElementById('progress-sorted-count').textContent = `Sorted: ${sortedCount}`;
+      document.getElementById('progress-total-count').textContent = `Total: ${total}`;
     }
 
-    function toggleFlip() {
-      isFlipped = !isFlipped;
-      document.getElementById('card-container').classList.toggle('flipped', isFlipped);
-    }
+function toggleFlip() {
+  isFlipped = !isFlipped;
+  document.getElementById('card-container').classList.toggle('flipped', isFlipped);
+  const back = document.querySelector('.card-back');
+  if (back) back.style.visibility = isFlipped ? 'visible' : 'hidden';
+}
 
     function speakText(text) {
       const clean = text.replace(/["""]/g, '').replace(/—.*$/g, '').trim();
@@ -580,19 +671,59 @@
       if (!key) return;
       localStorage.setItem('claudeApiKey', key);
       CLAUDE_API_KEY = key;
-      document.getElementById('api-status').textContent = '✅ 저장됐어요!';
+      document.getElementById('api-status').textContent = '✅ Saved!';
       document.getElementById('api-status').className = 'settings-status ok';
       document.getElementById('api-key-input').value = '';
     }
 
-    function resetData() {
-      if (confirm('학습 기록을 모두 초기화할까요?')) {
-        localStorage.removeItem('britishResults');
-        results = {};
-        initDecks(); updateProgressBar(); showStudyCard();
-        alert('초기화됐어요!');
-      }
+function resetData() {
+  if (confirm('Reset all study progress?\n\nYour Sorted/Again marks and today\'s stats will be cleared.\nSaved words will stay put.')) {
+    localStorage.removeItem('britishResults');
+    localStorage.removeItem(todayKey);
+    results = {};
+    todayStats = { total: 0, sorted: 0, again: 0 };
+    initDecks();
+    updateProgressBar();
+    updateStatsUI();
+    showStudyCard();
+    showTestCard();
+    alert('Done! Fresh start.');
+  }
+}
+
+function resetAll() {
+  if (!confirm('Wipe absolutely everything?\n\nThis will clear:\n• Study progress (Sorted/Again)\n• Today\'s stats\n• All words you added from the Dictionary\n\nDefault words will stay. There\'s no undo.')) return;
+  if (!confirm('You sure, mate? This is permanent.')) return;
+
+  // Clear progress and stats
+  localStorage.removeItem('britishResults');
+  localStorage.removeItem(todayKey);
+  // Clear user-added words
+  localStorage.removeItem('britishUserCards');
+  // Clear daily history (all 'britishToday_*' keys for the calendar) and memos
+  Object.keys(localStorage).forEach(k => {
+    if (k.startsWith('britishToday_')) {
+      localStorage.removeItem(k);
     }
+  });
+  localStorage.removeItem('britishMemos');
+
+  results = {};
+  todayStats = { total: 0, sorted: 0, again: 0 };
+  userCards = [];
+  cards = [...defaultCards];
+  memos = {};
+
+  initDecks();
+  updateProgressBar();
+  updateStatsUI();
+  renderCategoryFilter && renderCategoryFilter();
+  showStudyCard();
+  showTestCard();
+  if (typeof renderList === 'function') renderList();
+  if (typeof renderCalendar === 'function') renderCalendar();
+  alert('Wiped clean. Back to factory settings.');
+}
 
     async function dictSearch() {
       const input = document.getElementById('dict-input').value.trim();
@@ -601,10 +732,10 @@
       pendingResult = null; selectedDictCat = null;
 
       if (!CLAUDE_API_KEY) {
-        area.innerHTML = '<div class="dict-error">⚙️ Settings에서 API 키를 먼저 입력해주세요!</div>';
+        area.innerHTML = '<div class="dict-error">⚙️ Pop into Settings and enter your API key first!</div>';
         return;
       }
-      area.innerHTML = '<div class="dict-loading">🔍 검색 중... 잠깐만요!</div>';
+      area.innerHTML = '<div class="dict-loading">🔍 Hang on, having a look...</div>';
 
       try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -621,9 +752,9 @@
         if (data.error) throw new Error(data.error.message);
         let rawText = data.content[0].text.replace(/```json|```/g, '').trim();
         const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error('올바른 응답을 받지 못했어요');
+        if (!jsonMatch) throw new Error('Got an unexpected response, sorry');
         const result = JSON.parse(jsonMatch[0]);
-        if (!result.word) throw new Error('단어를 찾지 못했어요');
+        if (!result.word) throw new Error('Couldn\'t find that word');
         pendingResult = result;
 
         const alreadyAdded = cards.some(c => c.word.toLowerCase() === result.word.toLowerCase());
@@ -632,7 +763,7 @@
 
         const pillsHtml = existingCats.map((cat, i) =>
           `<button class="dict-cat-pill ${i === 0 ? 'selected' : ''}" onclick="selectDictCat('${cat}', this)">${cat}</button>`
-        ).join('') + `<button class="dict-cat-pill new-cat" onclick="selectDictCat('__new__', this)">+ 새 카테고리</button>`;
+        ).join('') + `<button class="dict-cat-pill new-cat" onclick="selectDictCat('__new__', this)">+ New category</button>`;
 
         area.innerHTML = `
           <div class="dict-result">
@@ -651,16 +782,16 @@
               </div>` : ''}
             ${!alreadyAdded ? `
               <div class="dict-cat-section">
-                <div class="dict-cat-label">카테고리 선택</div>
+                <div class="dict-cat-label">Choose category</div>
                 <div class="dict-cat-pills">${pillsHtml}</div>
-                <input class="dict-cat-input" id="dict-cat-input" placeholder="새 카테고리 이름...">
+                <input class="dict-cat-input" id="dict-cat-input" placeholder="New category name...">
               </div>` : ''}
             <button class="dict-add-btn" id="add-btn" ${alreadyAdded ? 'disabled' : ''} onclick="addToStudy()">
-              ${alreadyAdded ? '✅ 이미 추가된 단어' : '➕ Study에 추가하기'}
+              ${alreadyAdded ? '✅ Already added' : '➕ Add to Study'}
             </button>
           </div>`;
       } catch (e) {
-        area.innerHTML = `<div class="dict-error">오류가 발생했어요 😢<br><small>${e.message}</small></div>`;
+        area.innerHTML = `<div class="dict-error">Something went wrong 😢<br><small>${e.message}</small></div>`;
       }
     }
 
@@ -693,14 +824,14 @@
       localStorage.setItem('britishUserCards', JSON.stringify(userCards));
       renderCategoryFilter(); initDecks(); updateProgressBar(); showStudyCard(); showTestCard();
       const btn = document.getElementById('add-btn');
-      if (btn) { btn.disabled = true; btn.textContent = `✅ "${category}"에 추가됐어요!`; }
+      if (btn) { btn.disabled = true; btn.textContent = `✅ Added to "${category}"!`; }
       pendingResult = null;
     }
 
     function showStudyCard() {
       const area = document.getElementById('study-card-area');
       if (studyDeck.length === 0) {
-        area.innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">모두 완료!</div><div class="all-done-sub">이 카테고리 단어를 모두 Sorted 했어요!<br>다른 카테고리를 선택하거나 사전에서 새 단어를 추가해봐요.</div><button class="all-done-btn" onclick="switchView('dict')">🔍 사전 열기</button></div>`;
+        area.innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">All sorted!</div><div class="all-done-sub">You've sorted every word in this category. Brilliant!<br>Try another category or pop into the dictionary to add new ones.</div><button class="all-done-btn" onclick="switchView('dict')">🔍 Open Dictionary</button></div>`;
         document.getElementById('s-progress').textContent = ''; return;
       }
       if (studyCurrent >= studyDeck.length) {
@@ -721,7 +852,8 @@
           <div class="meaning-main">${c.meaningMain}</div>
           <div class="meaning-sub">${c.meaningSub}</div>
           <div class="example-wrap">
-            <div class="example">${c.example}</div>
+<span id="s-example-en">${c.example.split('—')[0].trim()}</span>
+<span class="example-ko">${c.example.includes('—') ? '— ' + c.example.split('—')[1].trim() : ''}</span>
             <button class="example-speak" onclick="speakText('${exampleText.replace(/'/g, "\\'")}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg></button>
           </div>
           <div class="buttons">
@@ -729,18 +861,22 @@
             <button class="btn-got" onclick="markCard('sorted','study')">Sorted! ✅</button>
           </div>
         </div>`;
-      document.getElementById('s-progress').textContent = `남은 단어 ${studyDeck.length - studyCurrent}개`;
+      document.getElementById('s-progress').textContent = `${studyDeck.length - studyCurrent} left`;
     }
 
     function showTestCard() {
       if (testDeck.length === 0) {
-        document.getElementById('test-card-area').innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">모두 완료!</div><div class="all-done-sub">이 카테고리 단어를 모두 Sorted 했어요!</div><button class="all-done-btn" onclick="switchView('list')">My Words 보기</button></div>`;
+        document.getElementById('test-card-area').innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">All sorted!</div><div class="all-done-sub">You've sorted every word in this category.</div><button class="all-done-btn" onclick="switchView('list')">View My Words</button></div>`;
         document.getElementById('t-progress').textContent = ''; return;
       }
       if (testCurrent >= testDeck.length) {
         testDeck = shuffle(getActiveDeck()); testCurrent = 0;
         if (testDeck.length === 0) { showTestCard(); return; }
       }
+      // 앞면으로 확실히 되돌리기
+      isFlipped = false;
+      document.getElementById('card-container').classList.remove('flipped');
+      // 새 카드 내용 업데이트 (앞면 + 뒷면 모두 한 번에)
       const c = testDeck[testCurrent];
       document.getElementById('t-category').textContent = c.category;
       document.getElementById('t-category-back').textContent = c.category;
@@ -748,16 +884,16 @@
       document.getElementById('t-pronunciation').textContent = c.pronunciation;
       document.getElementById('t-meaning-main').textContent = c.meaningMain;
       document.getElementById('t-meaning-sub').textContent = c.meaningSub;
-      document.getElementById('t-example').textContent = c.example;
-      document.getElementById('t-progress').textContent = `남은 단어 ${testDeck.length - testCurrent}개`;
-      isFlipped = false;
-      document.getElementById('card-container').classList.remove('flipped');
+      const parts = c.example.split('—');
+      document.getElementById('t-example-en').textContent = parts[0].trim();
+      document.getElementById('t-example-ko').textContent = parts[1] ? '— ' + parts[1].trim() : '';
+      document.getElementById('t-progress').textContent = `${testDeck.length - testCurrent} left`;
     }
 
     function showReviewCard() {
       const area = document.getElementById('review-card-area');
       if (reviewCurrent >= reviewCards.length) {
-        area.innerHTML = `<div class="complete-card"><div class="complete-emoji">🎉</div><div class="complete-title">Review 완료!</div><div class="complete-sub">Again 단어를 모두 복습했어요</div><button class="complete-btn" onclick="switchView('list')">My Words로 돌아가기</button></div>`;
+        area.innerHTML = `<div class="complete-card"><div class="complete-emoji">🎉</div><div class="complete-title">Review done!</div><div class="complete-sub">You've revisited all your Again words. Lovely stuff!</div><button class="complete-btn" onclick="switchView('list')">Back to My Words</button></div>`;
         document.getElementById('r-progress').textContent = ''; return;
       }
       const c = reviewCards[reviewCurrent];
@@ -775,7 +911,8 @@
           <div class="meaning-main">${c.meaningMain}</div>
           <div class="meaning-sub">${c.meaningSub}</div>
           <div class="example-wrap">
-            <div class="example">${c.example}</div>
+<span id="r-example-en">${c.example.split('—')[0].trim()}</span>
+<span class="example-ko">${c.example.includes('—') ? '— ' + c.example.split('—')[1].trim() : ''}</span>
             <button class="example-speak" onclick="speakText('${exampleText.replace(/'/g, "\\'")}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg></button>
           </div>
           <div class="buttons">
@@ -800,10 +937,35 @@
         results[studyDeck[studyCurrent].word] = status; saveResults();
         if (status === 'sorted') studyDeck.splice(studyCurrent, 1); else studyCurrent++;
         showStudyCard();
-      } else if (mode === 'test') {
-        results[testDeck[testCurrent].word] = status; saveResults();
-        if (status === 'sorted') testDeck.splice(testCurrent, 1); else testCurrent++;
-        showTestCard();
+} else if (mode === 'test') {
+  results[testDeck[testCurrent].word] = status; saveResults();
+  if (status === 'sorted') testDeck.splice(testCurrent, 1); else testCurrent++;
+
+  const back = document.querySelector('#test-view .card-back');
+  const front = document.querySelector('#test-view .card-front');
+  const container = document.getElementById('card-container');
+  const inner = container.querySelector('.card-inner');
+
+  // 1. 양면 페이드아웃 시작
+  if (back) back.style.opacity = '0';
+  if (front) front.style.opacity = '0';
+
+  // 2. 페이드아웃 끝난 후: 카드 내용 갱신 + 뒤집기 리셋 + 페이드인
+  setTimeout(() => {
+    // 카드 내용을 새 단어로 (이때는 안 보이는 상태)
+    showTestCard();
+    // 뒤집기 즉시 리셋 (애니메이션 없이)
+    if (inner) inner.style.transition = 'none';
+    container.classList.remove('flipped');
+    isFlipped = false;
+    // 페이드인
+    if (back) back.style.opacity = '1';
+    if (front) front.style.opacity = '1';
+    // flip transition 다시 활성화
+    if (inner) {
+      requestAnimationFrame(() => { inner.style.transition = ''; });
+    }
+  }, 160);
       } else if (mode === 'review') {
         results[reviewCards[reviewCurrent].word] = status; saveResults();
         reviewCurrent++; showReviewCard();
@@ -864,7 +1026,7 @@
         const againCount = cards.filter(c => results[c.word] === 'again').length;
         reviewBtn.style.display = 'block';
         reviewBtn.disabled = againCount === 0;
-        reviewBtn.textContent = againCount > 0 ? `🔄 Again 단어 ${againCount}개 다시 공부하기` : '🔄 Again 단어가 없어요';
+        reviewBtn.textContent = againCount > 0 ? `🔄 Practise ${againCount} Again word${againCount === 1 ? '' : 's'}` : '🔄 No Again words to practise';
       } else { reviewBtn.style.display = 'none'; }
       if (filtered.length === 0) {
         list.innerHTML = `<div class="empty-msg">${query ? '검색 결과가 없어요 🔍' : currentListTab === 'sorted' ? '아직 Sorted한 단어가 없어요 📖' : '아직 Again한 단어가 없어요 🎉'}</div>`;
