@@ -15,14 +15,17 @@
     html { -webkit-text-size-adjust: 100%; }
     body {
       font-family: 'Inter', sans-serif; background: #f7f7f7; color: #111;
-      min-height: 100vh;
+      height: 100vh; height: 100dvh;
       display: flex; flex-direction: column; align-items: center;
       padding: 12px 16px calc(90px + env(safe-area-inset-bottom)) 16px;
       padding-top: calc(12px + env(safe-area-inset-top));
       overscroll-behavior-y: none;
       -webkit-user-select: none; user-select: none;
       -webkit-touch-callout: none;
+      overflow: hidden;
     }
+    body.allow-scroll { overflow-y: auto; height: auto; min-height: 100vh; min-height: 100dvh; }
+    /* 학습 모드 (Study/Test): 페이지 전체 스크롤 비활성화 */
     /* 입력창과 예문 / 단어 부분은 선택 가능하게 (복사 가능) */
     input, textarea, .word, .meaning-main, .meaning-sub, .example-wrap, .dict-word, .dict-def, .dict-def-ko, .dict-example { -webkit-user-select: text; user-select: text; }
     .header { text-align: center; margin-bottom: 16px; }
@@ -45,12 +48,18 @@
     .category-filter::-webkit-scrollbar { display: none; }
     .filter-btn { padding: 10px 16px; min-height: 38px; border: 1.5px solid #e0e0e0; border-radius: 20px; font-size: 0.78rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: #fff; color: #888; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
     .filter-btn.active { background: #111; color: #fff; border-color: #111; }
-    #study-view, #test-view, #review-view, #dict-view, #settings-view { width: 100%; max-width: 460px; }
-.card { background: #fff; border-radius: 20px; padding: 24px 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; display: flex; flex-direction: column; }    .card.review-card::before { background: #f59e0b; }
+    #study-view, #test-view, #review-view { width: 100%; max-width: 460px; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    #study-view[style*="none"], #test-view[style*="none"], #review-view[style*="none"] { flex: 0; }
+    #dict-view, #settings-view { width: 100%; max-width: 460px; position: relative; z-index: 5; }
+    #study-card-area, #test-card-area, #review-card-area { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    #calendar-view { display: none; width: 100%; max-width: 460px; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+    #calendar-view[style*="none"] { flex: 0; }
+    #list-view { display: none; width: 100%; max-width: 460px; flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.card { background: #fff; border-radius: 20px; padding: 20px 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; display: flex; flex-direction: column; flex: 1; min-height: 0; }    .card.review-card::before { background: #f59e0b; }
     .review-badge { display: inline-block; background: #fff7ed; color: #f59e0b; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
     .category { display: inline-block; font-size: 0.68rem; letter-spacing: 2.5px; color: #111; text-transform: uppercase; font-weight: 600; background: #f0f0f0; padding: 4px 14px; border-radius: 20px; margin-bottom: 18px; }
     .word-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
-    .word { font-size: clamp(2rem, 8vw, 3rem); font-weight: 700; color: #111; letter-spacing: -1px; line-height: 1.1; word-break: break-word; }
+    .word { font-size: clamp(1.5rem, 7vw, 2.5rem); font-weight: 700; color: #111; letter-spacing: -1px; line-height: 1.15; word-break: break-word; }
     .speak-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
     .speak-btn:hover { background: #e0e0e0; }
     .speak-btn.sm { width: 30px; height: 30px; font-size: 0.85rem; }
@@ -58,7 +67,7 @@
     .divider { width: 36px; height: 2px; background: #111; margin: 0 auto 18px; border-radius: 2px; }
     .meaning-main { font-size: 1.15rem; font-weight: 700; color: #111; margin-bottom: 6px; line-height: 1.5; }
     .meaning-sub { font-size: 0.85rem; color: #aaa; margin-bottom: 16px; line-height: 1.6; }
-.example-wrap { position: relative; margin-bottom: 20px; flex: 1; background: #f7f7f7; border-radius: 12px; padding: 14px 18px; max-height: 120px; overflow-y: auto; font-size: 0.85rem; color: #888; font-style: italic; line-height: 1.55; text-align: left; }    .buttons { display: flex; gap: 10px; justify-content: center; }
+.example-wrap { position: relative; margin-bottom: 16px; flex: 1; min-height: 0; background: #f7f7f7; border-radius: 12px; padding: 14px 18px; overflow-y: auto; font-size: 0.85rem; color: #888; font-style: italic; line-height: 1.55; text-align: left; -webkit-overflow-scrolling: touch; }    .buttons { display: flex; gap: 10px; justify-content: center; flex-shrink: 0; margin-top: auto; }
     .btn-again { background: #f0f0f0; color: #888; flex: 1; border: 1px solid #e8e8e8; }
     .btn-got { background: #111; color: #fff; flex: 1.4; }
     .btn-got:hover { background: #333; }
@@ -71,10 +80,10 @@
     .all-done-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
     .all-done-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
     .all-done-btn { padding: 14px 28px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
-    .card-container { width: 100%; perspective: 1000px; cursor: pointer; }
-.card-inner { position: relative; width: 100%; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; min-height: 400px; will-change: transform; }    .card-container.flipped .card-inner { transform: rotateY(180deg); }
-.card-front, .card-back { width: 100%; border-radius: 20px; padding: 24px 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 400px; transition: opacity 0.15s ease; }
-.card-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }    .card-front::before, .card-back::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
+    .card-container { width: 100%; perspective: 1000px; cursor: pointer; flex: 1; min-height: 0; }
+.card-inner { position: relative; width: 100%; transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; height: 100%; will-change: transform; }    .card-container.flipped .card-inner { transform: rotateY(180deg); }
+.card-front, .card-back { width: 100%; border-radius: 20px; padding: 20px 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: opacity 0.15s ease; }
+.card-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); }    .card-front::before, .card-back::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #111; }
     .flip-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-top: 24px; }
     .flip-back-hint { color: #ddd; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 20px; }
     .dict-search-box { display: flex; gap: 8px; margin-bottom: 16px; }
@@ -107,7 +116,7 @@
     .list-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
     .list-tab { flex: 1; padding: 12px; min-height: 44px; border: none; border-radius: 12px; font-size: 0.88rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: #ebebeb; color: #888; transition: all 0.15s; }
     .list-tab.active { background: #111; color: #fff; }
-    .word-list { display: flex; flex-direction: column; gap: 10px; max-height: 45vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .word-list { display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     .word-item { background: #fff; border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
     .word-item-left { text-align: left; flex: 1; }
     .word-item-word { font-size: 1.05rem; font-weight: 700; color: #111; }
@@ -122,15 +131,15 @@
     .complete-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
     .complete-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; }
     .complete-btn { padding: 14px 28px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
-    .settings-card { background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); }
+    .settings-card { background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); margin-bottom: 40px; position: relative; z-index: 10; }
     .settings-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
     .settings-desc { font-size: 0.85rem; color: #aaa; margin-bottom: 20px; line-height: 1.5; }
     .settings-input { width: 100%; padding: 14px 16px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 16px; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 12px; }
-    .settings-save-btn { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-bottom: 12px; }
+    .settings-save-btn { width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; margin-bottom: 12px; -webkit-tap-highlight-color: rgba(0,0,0,0.1); }
     .settings-status { text-align: center; font-size: 0.85rem; color: #aaa; }
     .settings-status.ok { color: #4ade80; }
     .settings-divider { width: 100%; height: 1px; background: #f0f0f0; margin: 24px 0; }
-    .settings-danger-btn { width: 100%; padding: 14px; background: #fff0f0; color: #f87171; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; }
+    .settings-danger-btn { width: 100%; padding: 14px; background: #fff0f0; color: #f87171; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; position: relative; z-index: 10; -webkit-tap-highlight-color: rgba(0,0,0,0.1); }
     /* === WORD DETAIL MODAL === */
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); z-index: 1000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
@@ -162,32 +171,101 @@
     .list-filter-btn.active { background: #111; color: #fff; border-color: #111; }
 
     /* === CALENDAR VIEW === */
-    #calendar-view { display: none; width: 100%; max-width: 460px; }
-    .calendar-card { background: #fff; border-radius: 24px; padding: 28px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); }
-    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .cal-title { font-size: 1.1rem; font-weight: 700; color: #111; }
-    .cal-nav-btn { background: #f0f0f0; border: none; border-radius: 10px; width: 44px; height: 44px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .calendar-card { background: #fff; border-radius: 20px; padding: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); margin-bottom: 8px; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+    /* Streak card */
+    .streak-card { background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%); border-radius: 16px; padding: 14px 18px; margin-bottom: 8px; color: #fff; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25); }
+    .streak-left { display: flex; align-items: center; gap: 12px; }
+    .streak-flame { font-size: 1.8rem; line-height: 1; }
+    .streak-info { display: flex; flex-direction: column; gap: 2px; }
+    .streak-num { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+    .streak-label { font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.9; font-weight: 600; }
+    .streak-message { font-size: 0.7rem; text-align: right; opacity: 0.95; line-height: 1.3; max-width: 130px; font-weight: 500; }
+    /* Daily Phrases card */
+    .phrases-card { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 16px; padding: 14px 18px; margin-bottom: 12px; color: #fff; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; -webkit-tap-highlight-color: transparent; }
+    .phrases-card:active { transform: scale(0.98); }
+    .phrases-left { display: flex; align-items: center; gap: 12px; }
+    .phrases-icon { font-size: 1.8rem; line-height: 1; }
+    .phrases-info { display: flex; flex-direction: column; gap: 2px; }
+    .phrases-title { font-size: 1rem; font-weight: 800; line-height: 1.2; }
+    .phrases-sub { font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.9; font-weight: 600; }
+    .phrases-right { font-size: 0.7rem; text-align: right; opacity: 0.95; line-height: 1.3; max-width: 130px; font-weight: 500; }
+    .phrases-arrow { font-size: 1.2rem; opacity: 0.8; }
+    /* Phrases Study View */
+    #phrases-view { display: none; width: 100%; max-width: 460px; }
+    .phrases-back-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: #888; cursor: pointer; padding: 8px 0; margin-bottom: 12px; -webkit-tap-highlight-color: transparent; }
+    .phrases-back-btn:hover { color: #111; }
+    .phrases-day-badge { display: inline-block; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 8px; }
+    .phrases-day-topic { text-align: center; color: #888; font-size: 0.78rem; margin-bottom: 16px; }
+    .phrases-progress-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; }
+    .phrases-dot { width: 10px; height: 10px; border-radius: 50%; background: #e0e0e0; transition: all 0.3s; }
+    .phrases-dot.active { background: #6366f1; transform: scale(1.3); }
+    .phrases-dot.done { background: #4ade80; }
+    .phrase-card { background: #fff; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 420px; }
+    .phrase-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6366f1, #8b5cf6); }
+    .phrase-en { font-size: clamp(1.2rem, 5vw, 1.6rem); font-weight: 700; color: #111; line-height: 1.4; margin-bottom: 12px; letter-spacing: -0.3px; }
+    .phrase-ko { font-size: 1rem; color: #6366f1; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+    .phrase-tip { background: #f7f7f7; border-radius: 12px; padding: 14px 18px; font-size: 0.82rem; color: #888; line-height: 1.6; text-align: left; margin-bottom: 16px; flex: 1; }
+    .phrase-example-box { background: #fafaff; border-radius: 12px; padding: 14px 18px; font-size: 0.85rem; color: #555; font-style: italic; line-height: 1.6; text-align: left; margin-bottom: 16px; position: relative; border-left: 3px solid #6366f1; }
+    .phrase-example-ko { color: #aaa; font-style: normal; display: block; margin-top: 6px; font-size: 0.8rem; }
+    .phrases-nav-btns { display: flex; gap: 10px; margin-top: auto; }
+    .phrases-nav-btns button { flex: 1; padding: 14px; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.15s; }
+    .phrases-nav-btns button:active { transform: scale(0.97); }
+    .phrase-prev-btn { background: #f0f0f0; color: #888; }
+    .phrase-next-btn { background: #6366f1; color: #fff; }
+    .phrase-next-btn:hover { background: #4f46e5; }
+    .phrases-complete { background: #fff; border-radius: 24px; padding: 48px 44px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08); }
+    .phrases-complete-emoji { font-size: 3rem; margin-bottom: 16px; }
+    .phrases-complete-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+    .phrases-complete-sub { color: #aaa; font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
+    .phrases-complete-btn { padding: 14px 28px; background: #6366f1; color: #fff; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+    /* Phrases History Card */
+    .phrases-history-card { background: #fff; border-radius: 16px; padding: 14px 18px; margin-top: 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.15s; -webkit-tap-highlight-color: transparent; border: 1.5px solid #e8e8e8; }
+    .phrases-history-card:active { transform: scale(0.98); }
+    .phrases-history-left { display: flex; align-items: center; gap: 12px; }
+    .phrases-history-icon { font-size: 1.4rem; line-height: 1; }
+    .phrases-history-info { display: flex; flex-direction: column; gap: 2px; }
+    .phrases-history-title { font-size: 0.9rem; font-weight: 700; color: #111; }
+    .phrases-history-sub { font-size: 0.68rem; color: #aaa; font-weight: 500; }
+    .phrases-history-arrow { font-size: 1.2rem; color: #ccc; transition: transform 0.25s; }
+    .phrases-history-arrow.open { transform: rotate(90deg); }
+    /* Phrases History List */
+    .phrases-history-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .phrases-history-day { background: #fff; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #f0f0f0; }
+    .phrases-history-day-header { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; -webkit-tap-highlight-color: transparent; gap: 12px; }
+    .phrases-history-day-header:active { background: #fafafa; }
+    .phrases-history-day-title { font-size: 0.82rem; font-weight: 700; color: #111; }
+    .phrases-history-day-topic { font-size: 0.7rem; color: #aaa; white-space: nowrap; }
+    .phrases-history-day-items { padding: 0 16px 12px; display: none; }
+    .phrases-history-day-items.open { display: block; }
+    .phrases-history-item { padding: 10px 0; border-top: 1px solid #f0f0f0; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .phrases-history-item:first-child { border-top: none; }
+    .phrases-history-item-en { font-size: 0.85rem; font-weight: 600; color: #111; line-height: 1.4; }
+    .phrases-history-item-ko { font-size: 0.78rem; color: #888; margin-top: 2px; line-height: 1.4; }
+    .phrases-history-item-speak { background: #f0f0f0; border: none; border-radius: 50%; width: 32px; height: 32px; min-width: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .cal-title { font-size: 1rem; font-weight: 700; color: #111; }
+    .cal-nav-btn { background: #f0f0f0; border: none; border-radius: 10px; width: 36px; height: 36px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
     .cal-nav-btn:hover { background: #e0e0e0; }
-    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-    .cal-day-label { text-align: center; font-size: 0.65rem; font-weight: 700; color: #bbb; letter-spacing: 1px; text-transform: uppercase; padding: 4px 0 8px; }
-    .cal-cell { aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; cursor: default; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .cal-day-label { text-align: center; font-size: 0.6rem; font-weight: 700; color: #bbb; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 0 4px; }
+    .cal-cell { aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; cursor: default; }
     .cal-cell.has-data { cursor: pointer; }
-    .cal-cell-date { font-size: 0.78rem; font-weight: 600; color: #bbb; line-height: 1; }
+    .cal-cell-date { font-size: 0.72rem; font-weight: 600; color: #bbb; line-height: 1; }
     .cal-cell.has-data .cal-cell-date { color: #111; }
     .cal-cell.today .cal-cell-date { color: #6366f1; font-weight: 800; }
-    .cal-cell-dot { width: 18px; height: 18px; border-radius: 6px; margin-top: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: #fff; }
+    .cal-cell-dot { width: 14px; height: 14px; border-radius: 5px; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 700; color: #fff; }
     .cal-cell-dot.low { background: #d1fae5; color: #059669; }
     .cal-cell-dot.mid { background: #a7f3d0; color: #047857; }
     .cal-cell-dot.high { background: #6366f1; }
     .cal-cell-dot.top { background: #4338ca; }
     .cal-cell.empty { opacity: 0; pointer-events: none; }
-    .cal-month-stats { display: flex; gap: 10px; margin-top: 20px; }
-    .cal-stat { flex: 1; background: #f7f7f7; border-radius: 14px; padding: 14px; text-align: center; }
-    .cal-stat-num { font-size: 1.5rem; font-weight: 700; color: #111; }
-    .cal-stat-label { font-size: 0.68rem; color: #bbb; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
-    .cal-legend { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-    .cal-legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: #888; }
-    .cal-legend-dot { width: 14px; height: 14px; border-radius: 4px; }
+    .cal-month-stats { display: flex; gap: 8px; margin-top: 12px; }
+    .cal-stat { flex: 1; background: #f7f7f7; border-radius: 12px; padding: 10px 8px; text-align: center; }
+    .cal-stat-num { font-size: 1.2rem; font-weight: 700; color: #111; }
+    .cal-stat-label { font-size: 0.6rem; color: #bbb; letter-spacing: 0.8px; text-transform: uppercase; margin-top: 2px; }
+    .cal-legend { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+    .cal-legend-item { display: flex; align-items: center; gap: 4px; font-size: 0.65rem; color: #888; }
+    .cal-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
     .cal-tooltip { background: #111; color: #fff; border-radius: 10px; padding: 10px 14px; font-size: 0.8rem; text-align: center; line-height: 1.5; }
 
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; display: flex; justify-content: center; padding: 8px 4px calc(12px + env(safe-area-inset-bottom)); z-index: 100; }
@@ -207,13 +285,13 @@
 </head>
 <body>
 
-  <div class="today-stats">
+  <div class="today-stats" id="top-stats">
     <div class="stat-box total"><div class="stat-number" id="stat-total">0</div><div class="stat-label">Today</div></div>
     <div class="stat-box"><div class="stat-number" id="stat-sorted">0</div><div class="stat-label">Sorted ✅</div></div>
     <div class="stat-box again"><div class="stat-number" id="stat-again">0</div><div class="stat-label">Again 🔄</div></div>
   </div>
 
-  <div class="progress-section">
+  <div class="progress-section" id="top-progress">
     <div class="progress-header">
       <span class="progress-label">Overall progress</span>
       <span class="progress-percent" id="progress-percent">0%</span>
@@ -229,7 +307,7 @@
 
   <div id="study-view">
     <div id="study-card-area"></div>
-    <div class="progress" id="s-progress"></div>
+    
   </div>
 
   <div id="test-view" style="display:none;">
@@ -264,7 +342,7 @@
         </div>
       </div>
     </div>
-    <div class="progress" id="t-progress"></div>
+    
   </div>
 
   <div id="dict-view" style="display:none;">
@@ -300,6 +378,30 @@
   </div>
 
   <div id="calendar-view" style="display:none;">
+    <div class="streak-card">
+      <div class="streak-left">
+        <div class="streak-flame">🔥</div>
+        <div class="streak-info">
+          <div class="streak-num" id="streak-num">0</div>
+          <div class="streak-label" id="streak-label">Day streak</div>
+        </div>
+      </div>
+      <div class="streak-message" id="streak-message">Start your streak today!</div>
+    </div>
+
+    <div class="phrases-card" id="phrases-card" onclick="openDailyPhrases()">
+      <div class="phrases-left">
+        <div class="phrases-icon">💬</div>
+        <div class="phrases-info">
+          <div class="phrases-title" id="phrases-card-title">Today's Phrases</div>
+          <div class="phrases-sub" id="phrases-card-sub">3 sentences to learn</div>
+        </div>
+      </div>
+      <div class="phrases-right">
+        <span class="phrases-arrow">›</span>
+      </div>
+    </div>
+
     <div class="calendar-card">
       <div class="cal-header">
         <button class="cal-nav-btn" onclick="calChangeMonth(-1)">‹</button>
@@ -319,6 +421,33 @@
         <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#4338ca;"></div>21+</div>
       </div>
     </div>
+  </div>
+
+  <div id="phrases-view" style="display:none;">
+    <button class="phrases-back-btn" onclick="closeDailyPhrases()">‹ Back to Calendar</button>
+    <div class="phrases-day-badge" id="phrases-day-label">DAY 1</div>
+    <div class="phrases-day-topic" id="phrases-topic"></div>
+    <div class="phrases-progress-dots" id="phrases-dots"></div>
+    <div id="phrases-card-area"></div>
+    <div class="phrases-history-card" onclick="openPhrasesHistory()">
+      <div class="phrases-history-left">
+        <div class="phrases-history-icon">📚</div>
+        <div class="phrases-history-info">
+          <div class="phrases-history-title">My Phrases</div>
+          <div class="phrases-history-sub" id="phrases-history-sub">0 phrases learned</div>
+        </div>
+      </div>
+      <div class="phrases-history-arrow">›</div>
+    </div>
+  </div>
+
+  <div id="phrases-history-view" style="display:none; width:100%; max-width:460px;">
+    <button class="phrases-back-btn" onclick="closePhrasesHistory()">‹ Back to Phrases</button>
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="font-size:1.2rem; font-weight:700; color:#111;">📚 My Phrases</div>
+      <div style="font-size:0.75rem; color:#aaa; margin-top:4px;" id="phrases-history-count">0 phrases learned</div>
+    </div>
+    <div id="phrases-history-list-area"></div>
   </div>
 
   <div id="settings-view" style="display:none;">
@@ -578,8 +707,152 @@
       { category: "British Humour", word: "Spot on", pronunciation: "[spɒt ɒn]", meaningMain: "정확해! 딱 맞아!", meaningSub: "무언가 완벽하게 맞았을 때", example: "Spot on, that's exactly right! — 정확해, 딱 맞아!" },
       { category: "British Humour", word: "Taking the piss", pronunciation: "[ˈteɪkɪŋ ðə pɪs]", meaningMain: "놀리다, 비웃다", meaningSub: "누군가를 놀리거나 농담할 때 쓰는 구어", example: "Are you taking the piss? — 나 놀리는 거야?" },
       { category: "British Humour", word: "Blimey", pronunciation: "[ˈblaɪmi]", meaningMain: "이런!, 세상에!", meaningSub: "놀랐을 때 쓰는 전통 영국식 감탄사", example: "Blimey, that was unexpected! — 이런, 예상 못 했는데!" },
-      { category: "British Humour", word: "Cor", pronunciation: "[kɔː]", meaningMain: "와!, 어머나!", meaningSub: "강한 놀라움을 표현하는 오래된 영국식 감탄사", example: "Cor blimey, look at that! — 와, 저것 좀 봐!" }
-    
+      { category: "British Humour", word: "Cor", pronunciation: "[kɔː]", meaningMain: "와!, 어머나!", meaningSub: "강한 놀라움을 표현하는 오래된 영국식 감탄사", example: "Cor blimey, look at that! — 와, 저것 좀 봐!" },
+
+      // ===== 📅 5월 Phrases: 매일 3문장씩 27일 (81문장) =====
+      // ── Week 1: 계획 짜기 & 약속 잡기 ──
+
+      // Day 1 (5/5)
+      { category: "Phrases", word: "Shall we just wing it?", pronunciation: "Day 1 · 계획 짜기", meaningMain: "그냥 즉흥으로 하자?", meaningSub: "계획 없이 그냥 해보자고 할 때. 'wing it' = 즉흥으로 하다", example: "\"We haven't planned anything.\" \"Shall we just wing it?\"\n— \"우리 아무것도 안 정했잖아.\" \"그냥 즉흥으로 하자?\"" },
+      { category: "Phrases", word: "I'm down for whatever.", pronunciation: "Day 1 · 계획 짜기", meaningMain: "나는 뭐든 상관없어.", meaningSub: "뭘 할지 정할 때 특별히 의견 없을 때. 'I'm fine with anything'보다 자연스러움", example: "\"Pub or pizza?\" \"I'm down for whatever, mate.\"\n— \"펍이냐 피자냐?\" \"나는 뭐든 상관없어, 친구.\"" },
+      { category: "Phrases", word: "What's everyone's take?", pronunciation: "Day 1 · 계획 짜기", meaningMain: "다들 어떻게 생각해?", meaningSub: "그룹에서 의견을 모을 때. 'What do you think?'보다 자연스러움", example: "\"We could go bowling or to the cinema. What's everyone's take?\"\n— \"볼링이나 영화관 갈 수 있는데. 다들 어떻게 생각해?\"" },
+
+      // Day 2 (5/6)
+      { category: "Phrases", word: "Are you free Saturday?", pronunciation: "Day 2 · 약속 잡기", meaningMain: "토요일에 시간 있어?", meaningSub: "약속 잡을 때 가장 기본적이면서 자연스러운 표현", example: "\"Are you free Saturday? Fancy grabbing some food?\"\n— \"토요일에 시간 있어? 뭐 좀 먹을래?\"" },
+      { category: "Phrases", word: "Let's play it by ear.", pronunciation: "Day 2 · 약속 잡기", meaningMain: "그때 가서 보자.", meaningSub: "확실하게 정하지 않고 상황 봐서 하자는 뜻", example: "\"Should we book a table?\" \"Nah, let's play it by ear.\"\n— \"예약할까?\" \"아냐, 그때 가서 보자.\"" },
+      { category: "Phrases", word: "I'll sort it out.", pronunciation: "Day 2 · 약속 잡기", meaningMain: "내가 알아서 할게.", meaningSub: "예약이나 준비를 내가 처리하겠다고 할 때", example: "\"Who's booking the restaurant?\" \"Don't worry, I'll sort it out.\"\n— \"누가 식당 예약해?\" \"걱정 마, 내가 알아서 할게.\"" },
+
+      // Day 3 (5/7)
+      { category: "Phrases", word: "I can't be arsed.", pronunciation: "Day 3 · 귀찮을 때", meaningMain: "하기 싫어. 귀찮아.", meaningSub: "뭔가 할 의욕이 없을 때. 친한 친구 사이에서만 쓸 것", example: "\"Wanna go to the gym?\" \"Nah, I can't be arsed.\"\n— \"헬스장 갈래?\" \"아냐, 귀찮아.\"" },
+      { category: "Phrases", word: "I'm not really feeling it.", pronunciation: "Day 3 · 거절", meaningMain: "별로 내키지 않아.", meaningSub: "부드럽게 거절할 때. 직접적으로 '싫어'라고 안 하는 영국식 표현", example: "\"Shall we go clubbing?\" \"I'm not really feeling it tonight.\"\n— \"클럽 갈까?\" \"오늘 밤은 별로 내키지 않아.\"" },
+      { category: "Phrases", word: "Rain check?", pronunciation: "Day 3 · 거절", meaningMain: "다음에 하자?", meaningSub: "지금은 못 하지만 다음에 하자고 할 때", example: "\"I'm knackered. Rain check?\"\n— \"나 너무 피곤해. 다음에 하자?\"" },
+
+      // Day 4 (5/8)
+      { category: "Phrases", word: "I'm heading off now.", pronunciation: "Day 4 · 헤어질 때", meaningMain: "나 이제 갈게.", meaningSub: "자리를 떠날 때 쓰는 자연스러운 표현", example: "\"Right, I'm heading off now. See you later!\"\n— \"자, 나 이제 갈게. 나중에 봐!\"" },
+      { category: "Phrases", word: "It was well good seeing you.", pronunciation: "Day 4 · 헤어질 때", meaningMain: "만나서 진짜 좋았어.", meaningSub: "'well' = 'really'. 영국식으로 강조하는 방법", example: "\"It was well good seeing you, let's do this again.\"\n— \"만나서 진짜 좋았어, 또 하자.\"" },
+      { category: "Phrases", word: "Get home safe, yeah?", pronunciation: "Day 4 · 헤어질 때", meaningMain: "집에 잘 들어가, 알지?", meaningSub: "친구가 떠날 때 마지막에 하는 인사", example: "\"Alright, get home safe, yeah? Text me when you're in.\"\n— \"좋아, 집에 잘 들어가, 알지? 도착하면 문자 줘.\"" },
+
+      // Day 5 (5/9)
+      { category: "Phrases", word: "What are you having?", pronunciation: "Day 5 · 주문할 때", meaningMain: "뭐 먹을 거야? / 뭐 마실 거야?", meaningSub: "식당이나 펍에서 같이 주문할 때", example: "\"What are you having? I'll get this round.\"\n— \"뭐 마실 거야? 이번 건 내가 살게.\"" },
+      { category: "Phrases", word: "Shall we split it?", pronunciation: "Day 5 · 계산할 때", meaningMain: "나눠서 낼까?", meaningSub: "계산을 나눠서 하자고 할 때. 영국에서는 각자 내는 게 보통", example: "\"Shall we split it or go halves?\"\n— \"나눠서 낼까 아니면 반반?\"" },
+      { category: "Phrases", word: "My shout.", pronunciation: "Day 5 · 계산할 때", meaningMain: "내가 살게.", meaningSub: "'It's on me'보다 더 영국식 표현. 특히 펍에서 많이 씀", example: "\"Put your wallet away, it's my shout.\"\n— \"지갑 넣어, 내가 살게.\"" },
+
+      // Day 6 (5/10)
+      { category: "Phrases", word: "Fancy a pint after work?", pronunciation: "Day 6 · 술 약속", meaningMain: "퇴근 후에 맥주 한 잔 할래?", meaningSub: "영국에서 가장 흔한 술 약속 제안. 'pint' = 맥주 한 잔", example: "\"Fancy a pint after work? I proper need one.\"\n— \"퇴근 후에 맥주 한 잔 할래? 진짜 한 잔 필요해.\"" },
+      { category: "Phrases", word: "One more won't hurt.", pronunciation: "Day 6 · 술자리", meaningMain: "한 잔 더 해도 괜찮겠지.", meaningSub: "한 잔만 더 하자고 꼬실 때 쓰는 클래식한 표현", example: "\"I should go home.\" \"Come on, one more won't hurt.\"\n— \"나 집에 가야 해.\" \"아, 한 잔 더 해도 괜찮겠지.\"" },
+      { category: "Phrases", word: "I'm absolutely smashed.", pronunciation: "Day 6 · 술자리", meaningMain: "나 완전히 취했어.", meaningSub: "'drunk'의 영국식 슬랭. 친구들 사이에서 자연스럽게", example: "\"How many pints have you had?\" \"Lost count, I'm absolutely smashed.\"\n— \"맥주 몇 잔 마신 거야?\" \"모르겠어, 나 완전히 취했어.\"" },
+
+      // Day 7 (5/11)
+      { category: "Phrases", word: "You lot coming or what?", pronunciation: "Day 7 · 재촉할 때", meaningMain: "너네 올 거야 말 거야?", meaningSub: "'you lot' = 너네들. 친구 그룹에게 재촉할 때", example: "\"You lot coming or what? We're gonna be late!\"\n— \"너네 올 거야 말 거야? 늦겠다!\"" },
+      { category: "Phrases", word: "Stop faffing about!", pronunciation: "Day 7 · 재촉할 때", meaningMain: "꾸물대지 마!", meaningSub: "'faff about' = 쓸데없이 시간 보내다. 영국식 표현", example: "\"Stop faffing about and just pick something!\"\n— \"꾸물대지 말고 그냥 아무거나 골라!\"" },
+      { category: "Phrases", word: "We're running late.", pronunciation: "Day 7 · 재촉할 때", meaningMain: "우리 늦고 있어.", meaningSub: "약속에 늦을 것 같을 때. 단순하지만 실전에서 자주 쓰임", example: "\"We're running late, shall we grab a taxi?\"\n— \"우리 늦고 있어, 택시 탈까?\"" },
+
+      // ── Week 2: 농담 & 리액션 ──
+
+      // Day 8 (5/12)
+      { category: "Phrases", word: "You're having a laugh!", pronunciation: "Day 8 · 놀랄 때", meaningMain: "농담이지?! 말도 안 돼!", meaningSub: "믿기 어려운 상황에 반응할 때. = 'You're joking!'", example: "\"The train's been cancelled.\" \"You're having a laugh!\"\n— \"기차 취소됐대.\" \"농담이지?!\"" },
+      { category: "Phrases", word: "No way, that's mental!", pronunciation: "Day 8 · 놀랄 때", meaningMain: "말도 안 돼, 미쳤다!", meaningSub: "'mental' = crazy의 영국식 표현. 놀라운 소식 들었을 때", example: "\"He quit his job to travel the world.\" \"No way, that's mental!\"\n— \"걔 직장 그만두고 세계여행 간대.\" \"말도 안 돼, 미쳤다!\"" },
+      { category: "Phrases", word: "Shut up, seriously?!", pronunciation: "Day 8 · 놀랄 때", meaningMain: "에이, 진짜?!", meaningSub: "진짜 '입 다물라'는 뜻이 아님. 놀라서 나오는 리액션", example: "\"I got the job!\" \"Shut up, seriously?! That's amazing!\"\n— \"나 취직됐어!\" \"에이, 진짜?! 대박이다!\"" },
+
+      // Day 9 (5/13)
+      { category: "Phrases", word: "Fair enough.", pronunciation: "Day 9 · 동의할 때", meaningMain: "그래, 알겠어. / 이해해.", meaningSub: "상대 의견을 받아들일 때. 영국인이 하루에 수십 번 쓰는 표현", example: "\"I don't fancy going out tonight.\" \"Fair enough, we'll do it another time.\"\n— \"오늘 밤 나가기 싫어.\" \"그래, 알겠어. 다음에 하자.\"" },
+      { category: "Phrases", word: "Yeah, makes sense.", pronunciation: "Day 9 · 동의할 때", meaningMain: "응, 말이 되네.", meaningSub: "상대 말에 논리적으로 동의할 때", example: "\"I think we should leave early to avoid traffic.\" \"Yeah, makes sense.\"\n— \"차 막히기 전에 일찍 출발하자.\" \"응, 말이 되네.\"" },
+      { category: "Phrases", word: "Couldn't agree more.", pronunciation: "Day 9 · 동의할 때", meaningMain: "완전 동의해.", meaningSub: "강하게 동의할 때. 교과서적이지만 영국인도 실제로 많이 씀", example: "\"This weather's rubbish.\" \"Couldn't agree more.\"\n— \"이 날씨 진짜 별로다.\" \"완전 동의.\"" },
+
+      // Day 10 (5/14)
+      { category: "Phrases", word: "Oh, do one!", pronunciation: "Day 10 · 장난칠 때", meaningMain: "꺼져! (장난스럽게)", meaningSub: "친한 친구 사이에서 장난으로 '꺼져'라고 할 때. 진지하면 안 됨", example: "\"You still owe me a fiver.\" \"Oh, do one!\"\n— \"너 나한테 5파운드 빚졌잖아.\" \"아, 꺼져!\"" },
+      { category: "Phrases", word: "Get out of it!", pronunciation: "Day 10 · 장난칠 때", meaningMain: "에이, 말도 안 돼! / 뻥치지 마!", meaningSub: "친구가 허풍 떨거나 믿기 힘든 말 할 때 장난으로", example: "\"I ran 10 miles this morning.\" \"Get out of it! You can barely run for the bus.\"\n— \"오늘 아침에 10마일 뛰었어.\" \"뻥치지 마! 넌 버스도 못 쫓아가잖아.\"" },
+      { category: "Phrases", word: "You absolute melt.", pronunciation: "Day 10 · 장난칠 때", meaningMain: "넌 진짜 바보야. (애정 담긴 놀림)", meaningSub: "'melt' = 바보 같이 감성적인 사람. 친구를 놀리는 표현", example: "\"I cried at that film.\" \"You absolute melt.\"\n— \"그 영화 보고 울었어.\" \"넌 진짜 바보야.\"" },
+
+      // Day 11 (5/15)
+      { category: "Phrases", word: "To be fair...", pronunciation: "Day 11 · 의견 말할 때", meaningMain: "솔직히 말하면... / 공정하게 보면...", meaningSub: "영국인 입버릇 1위. 의견 말하기 전에 거의 무조건 붙임", example: "\"To be fair, it wasn't that bad.\"\n— \"솔직히, 그렇게 나쁘진 않았어.\"" },
+      { category: "Phrases", word: "I reckon we should...", pronunciation: "Day 11 · 제안할 때", meaningMain: "내 생각엔 우리... 하는 게 좋겠어.", meaningSub: "'I think'보다 영국식. 'reckon' = 생각하다", example: "\"I reckon we should leave before it starts raining.\"\n— \"내 생각엔 비 오기 전에 출발하는 게 좋겠어.\"" },
+      { category: "Phrases", word: "Can't complain, to be honest.", pronunciation: "Day 11 · 안부 답할 때", meaningMain: "뭐, 불만은 없어. 솔직히.", meaningSub: "'How are you?'에 대한 전형적인 영국식 대답", example: "\"How's things?\" \"Can't complain, to be honest.\"\n— \"어떻게 지내?\" \"뭐, 불만은 없어. 솔직히.\"" },
+
+      // Day 12 (5/16)
+      { category: "Phrases", word: "That's bang out of order.", pronunciation: "Day 12 · 화날 때", meaningMain: "그건 진짜 선 넘었어.", meaningSub: "누가 부당하게 행동했을 때. 'out of order' = 선을 넘다", example: "\"He didn't invite you?\" \"Yeah, that's bang out of order.\"\n— \"걔가 너 안 불렀어?\" \"응, 그건 진짜 선 넘었어.\"" },
+      { category: "Phrases", word: "I'm so done with this.", pronunciation: "Day 12 · 짜증날 때", meaningMain: "이거 진짜 지긋지긋해.", meaningSub: "더 이상 못 참겠다는 느낌. 일, 상황, 사람 모두에 쓸 수 있음", example: "\"The Wi-Fi's down again.\" \"I'm so done with this.\"\n— \"와이파이 또 끊겼어.\" \"이거 진짜 지긋지긋해.\"" },
+      { category: "Phrases", word: "That proper wound me up.", pronunciation: "Day 12 · 짜증날 때", meaningMain: "그거 진짜 열받았어.", meaningSub: "'wind up' = 짜증나게 하다. 'proper' = 정말(강조)", example: "\"He cancelled last minute again.\" \"That proper wound me up.\"\n— \"걔가 또 직전에 취소했어.\" \"그거 진짜 열받았어.\"" },
+
+      // Day 13 (5/17)
+      { category: "Phrases", word: "How come?", pronunciation: "Day 13 · 이유 물을 때", meaningMain: "왜?", meaningSub: "'Why?'보다 훨씬 자연스럽고 부드러운 표현", example: "\"I can't make it tomorrow.\" \"Oh, how come?\"\n— \"나 내일 못 가.\" \"아, 왜?\"" },
+      { category: "Phrases", word: "What's the plan then?", pronunciation: "Day 13 · 다음 단계", meaningMain: "그래서 계획이 뭐야?", meaningSub: "뭘 할지 구체적으로 정하자고 할 때", example: "\"So we're all free Sunday. What's the plan then?\"\n— \"그러면 일요일 다 시간 되네. 그래서 계획이 뭐야?\"" },
+      { category: "Phrases", word: "I'm easy.", pronunciation: "Day 13 · 의견 없을 때", meaningMain: "나는 아무거나 좋아.", meaningSub: "선택을 맡기겠다는 뜻. 'I don't mind'보다 캐주얼함", example: "\"Chinese or Indian?\" \"I'm easy, you pick.\"\n— \"중국 음식이냐 인도 음식이냐?\" \"나는 아무거나 좋아, 네가 골라.\"" },
+
+      // Day 14 (5/18)
+      { category: "Phrases", word: "Mate, that's class.", pronunciation: "Day 14 · 칭찬할 때", meaningMain: "야, 그거 진짜 대박이다.", meaningSub: "'class' = brilliant, amazing. 영국 북부에서 특히 많이 씀", example: "\"I just got promoted!\" \"Mate, that's class! Well deserved.\"\n— \"나 승진했어!\" \"야, 대박이다! 당연한 거지.\"" },
+      { category: "Phrases", word: "Fair play to you.", pronunciation: "Day 14 · 칭찬할 때", meaningMain: "대단하다, 인정.", meaningSub: "누가 잘한 일에 인정을 표할 때. 존경의 표현", example: "\"I've been going to the gym every day.\" \"Fair play to you, mate.\"\n— \"매일 헬스장 가고 있어.\" \"대단하다, 인정.\"" },
+      { category: "Phrases", word: "You've smashed it!", pronunciation: "Day 14 · 칭찬할 때", meaningMain: "너 완전 해냈다!", meaningSub: "'smash it' = 아주 잘하다. 시험, 발표, 면접 등에서", example: "\"How was the interview?\" \"You've smashed it, I bet!\"\n— \"면접 어땠어?\" \"넌 완전 해냈을 거야!\"" },
+
+      // ── Week 3: 공감 & 리액션 ──
+
+      // Day 15 (5/19)
+      { category: "Phrases", word: "That's rough, mate.", pronunciation: "Day 15 · 공감할 때", meaningMain: "그거 힘들겠다, 친구.", meaningSub: "친구가 안 좋은 일 당했을 때 공감 표현", example: "\"I failed my driving test again.\" \"That's rough, mate.\"\n— \"운전 시험 또 떨어졌어.\" \"그거 힘들겠다, 친구.\"" },
+      { category: "Phrases", word: "I feel you.", pronunciation: "Day 15 · 공감할 때", meaningMain: "이해해. 공감이야.", meaningSub: "상대 감정이나 상황에 공감한다는 표현", example: "\"I'm so tired of working weekends.\" \"I feel you.\"\n— \"주말에 일하는 거 진짜 지겨워.\" \"이해해.\"" },
+      { category: "Phrases", word: "Been there, done that.", pronunciation: "Day 15 · 공감할 때", meaningMain: "나도 겪어봤어.", meaningSub: "비슷한 경험이 있다며 공감할 때", example: "\"My landlord's being a nightmare.\" \"Been there, done that.\"\n— \"집주인이 진짜 악몽이야.\" \"나도 겪어봤어.\"" },
+
+      // Day 16 (5/20)
+      { category: "Phrases", word: "It is what it is.", pronunciation: "Day 16 · 체념할 때", meaningMain: "어쩔 수 없지 뭐.", meaningSub: "상황을 받아들일 때. 영국인이 정말 많이 쓰는 표현", example: "\"The flight's delayed by three hours.\" \"It is what it is.\"\n— \"비행기 3시간 지연이래.\" \"어쩔 수 없지 뭐.\"" },
+      { category: "Phrases", word: "Could be worse.", pronunciation: "Day 16 · 체념할 때", meaningMain: "더 나쁠 수도 있었어.", meaningSub: "안 좋은 상황을 긍정적으로 볼 때. 전형적 영국식 낙관", example: "\"I got a parking ticket.\" \"Could be worse, at least your car wasn't towed.\"\n— \"주차 딱지 떼였어.\" \"더 나쁠 수도 있었어, 최소한 견인은 안 됐잖아.\"" },
+      { category: "Phrases", word: "No point stressing about it.", pronunciation: "Day 16 · 위로할 때", meaningMain: "스트레스 받아봤자 소용없어.", meaningSub: "걱정하는 친구를 안심시킬 때", example: "\"I'm worried about the exam results.\" \"No point stressing about it now.\"\n— \"시험 결과 걱정돼.\" \"지금 스트레스 받아봤자 소용없어.\"" },
+
+      // Day 17 (5/21)
+      { category: "Phrases", word: "I'm buzzing!", pronunciation: "Day 17 · 기쁠 때", meaningMain: "나 완전 들떠! 신나!", meaningSub: "'excited'의 영국 슬랭. 좋은 소식 있을 때", example: "\"We're going to Glastonbury!\" \"I'm buzzing!\"\n— \"우리 글래스턴버리 간다!\" \"나 완전 들떠!\"" },
+      { category: "Phrases", word: "Made my day, that has.", pronunciation: "Day 17 · 기쁠 때", meaningMain: "오늘 기분 완전 좋아졌어.", meaningSub: "좋은 일이 생겼을 때. 영국식 어순이 특징", example: "\"You got free coffee?\" \"Yeah, made my day, that has.\"\n— \"공짜 커피 받았어?\" \"응, 오늘 기분 완전 좋아졌어.\"" },
+      { category: "Phrases", word: "Get in!", pronunciation: "Day 17 · 기쁠 때", meaningMain: "좋았어! 됐다!", meaningSub: "좋은 결과가 나왔을 때 외치는 감탄사. 축구 볼 때 특히 많이 씀", example: "\"You passed!\" \"Get in! I can't believe it!\"\n— \"합격했어!\" \"좋았어! 못 믿겠다!\"" },
+
+      // Day 18 (5/22)
+      { category: "Phrases", word: "Honestly, I couldn't care less.", pronunciation: "Day 18 · 관심 없을 때", meaningMain: "솔직히, 전혀 관심 없어.", meaningSub: "정말 관심 없다는 걸 강조할 때", example: "\"Did you see what he posted?\" \"Honestly, I couldn't care less.\"\n— \"걔가 뭐 올린 거 봤어?\" \"솔직히, 전혀 관심 없어.\"" },
+      { category: "Phrases", word: "Each to their own.", pronunciation: "Day 18 · 다른 의견 존중", meaningMain: "뭐, 사람마다 다르지.", meaningSub: "동의는 안 하지만 상대 취향을 존중할 때", example: "\"He puts ketchup on everything.\" \"Each to their own, I suppose.\"\n— \"걔 모든 것에 케첩을 뿌려.\" \"뭐, 사람마다 다르지.\"" },
+      { category: "Phrases", word: "Not gonna lie...", pronunciation: "Day 18 · 솔직하게", meaningMain: "솔직히 말하면...", meaningSub: "진짜 속마음을 말할 때 앞에 붙이는 표현", example: "\"Not gonna lie, I was proper nervous.\"\n— \"솔직히 말하면, 나 진짜 긴장했었어.\"" },
+
+      // Day 19 (5/23)
+      { category: "Phrases", word: "What a result!", pronunciation: "Day 19 · 좋은 결과", meaningMain: "대박 결과다!", meaningSub: "예상보다 좋은 결과가 나왔을 때", example: "\"The landlord lowered the rent!\" \"What a result!\"\n— \"집주인이 월세를 내렸어!\" \"대박 결과다!\"" },
+      { category: "Phrases", word: "Typical.", pronunciation: "Day 19 · 짜증날 때", meaningMain: "역시나. 예상대로.", meaningSub: "안 좋은 일이 예상대로 일어났을 때. 한 단어로 다 표현", example: "\"The bus is late again.\" \"Typical.\"\n— \"버스 또 늦었어.\" \"역시나.\"" },
+      { category: "Phrases", word: "Story of my life.", pronunciation: "Day 19 · 자조적으로", meaningMain: "내 인생이 다 그렇지 뭐.", meaningSub: "안 좋은 일이 반복될 때 자조적으로", example: "\"You always pick the slowest queue.\" \"Story of my life.\"\n— \"너는 항상 제일 느린 줄을 고르네.\" \"내 인생이 다 그렇지 뭐.\"" },
+
+      // Day 20 (5/24)
+      { category: "Phrases", word: "Bit awkward, innit?", pronunciation: "Day 20 · 어색할 때", meaningMain: "좀 어색하지 않아?", meaningSub: "'innit' = isn't it. 어색한 상황을 인정할 때", example: "\"We bumped into my ex.\" \"Bit awkward, innit?\"\n— \"전 여친이랑 마주쳤어.\" \"좀 어색하지 않아?\"" },
+      { category: "Phrases", word: "I'm not being funny, but...", pronunciation: "Day 20 · 솔직하게", meaningMain: "진심으로 하는 말인데...", meaningSub: "좀 불편한 말을 하기 전에 붙이는 전형적 영국식 전치사", example: "\"I'm not being funny, but that took way too long.\"\n— \"진심으로 하는 말인데, 그거 너무 오래 걸렸어.\"" },
+      { category: "Phrases", word: "Absolutely not.", pronunciation: "Day 20 · 단호하게", meaningMain: "절대 안 돼.", meaningSub: "강하게 거절할 때. 'No'보다 단호함을 강조", example: "\"Can I borrow your car?\" \"Absolutely not.\"\n— \"차 좀 빌려줄 수 있어?\" \"절대 안 돼.\"" },
+
+      // Day 21 (5/25)
+      { category: "Phrases", word: "Sorry, what was that?", pronunciation: "Day 21 · 못 알아들었을 때", meaningMain: "미안, 뭐라고 했어?", meaningSub: "영국인은 'What?'보다 이렇게 정중하게 다시 물어봄", example: "\"Sorry, what was that? I didn't quite catch it.\"\n— \"미안, 뭐라고 했어? 잘 못 들었어.\"" },
+      { category: "Phrases", word: "Say that again?", pronunciation: "Day 21 · 못 알아들었을 때", meaningMain: "다시 말해줄래?", meaningSub: "친한 사이에서 못 알아들었을 때 쓰는 캐주얼한 표현", example: "\"Say that again? I was miles away.\"\n— \"다시 말해줄래? 나 딴 생각하고 있었어.\"" },
+      { category: "Phrases", word: "You what?!", pronunciation: "Day 21 · 깜짝 놀랐을 때", meaningMain: "뭐라고?! (놀라서)", meaningSub: "충격적인 말 들었을 때. 'What?!'보다 영국식", example: "\"I'm moving to Australia.\" \"You what?!\"\n— \"나 호주로 이민 가.\" \"뭐라고?!\"" },
+
+      // ── Week 4: 일상 & 생활 ──
+
+      // Day 22 (5/26)
+      { category: "Phrases", word: "I'm not gonna make it.", pronunciation: "Day 22 · 약속 취소", meaningMain: "나 못 갈 것 같아.", meaningSub: "약속에 못 간다고 할 때. 문자로도 많이 씀", example: "\"I'm not gonna make it tonight, something came up.\"\n— \"오늘 밤 못 갈 것 같아, 일이 생겼어.\"" },
+      { category: "Phrases", word: "No worries at all.", pronunciation: "Day 22 · 괜찮다고 할 때", meaningMain: "전혀 괜찮아.", meaningSub: "'It's okay'보다 자연스러운 영국식 표현", example: "\"Sorry I'm late!\" \"No worries at all, we just got here.\"\n— \"늦어서 미안!\" \"전혀 괜찮아, 우리도 방금 왔어.\"" },
+      { category: "Phrases", word: "Don't worry about it.", pronunciation: "Day 22 · 괜찮다고 할 때", meaningMain: "신경 쓰지 마.", meaningSub: "상대가 사과하거나 미안해할 때", example: "\"I forgot to bring the money.\" \"Don't worry about it, you can get me next time.\"\n— \"돈 가져오는 거 깜빡했어.\" \"신경 쓰지 마, 다음에 사줘.\"" },
+
+      // Day 23 (5/27)
+      { category: "Phrases", word: "Long story short...", pronunciation: "Day 23 · 이야기할 때", meaningMain: "간단히 말하면...", meaningSub: "긴 이야기를 요약해서 핵심만 말할 때", example: "\"Long story short, we missed the train and walked for two hours.\"\n— \"간단히 말하면, 기차를 놓쳐서 두 시간을 걸었어.\"" },
+      { category: "Phrases", word: "You'll never guess what happened.", pronunciation: "Day 23 · 이야기할 때", meaningMain: "무슨 일이 있었는지 절대 못 맞출 걸.", meaningSub: "재미있는 이야기를 시작할 때", example: "\"You'll never guess what happened at work today.\"\n— \"오늘 직장에서 무슨 일이 있었는지 절대 못 맞출 걸.\"" },
+      { category: "Phrases", word: "Wait, it gets worse.", pronunciation: "Day 23 · 이야기할 때", meaningMain: "잠깐, 더 심해져.", meaningSub: "안 좋은 이야기가 계속될 때. 서스펜스 효과", example: "\"So I lost my wallet. Wait, it gets worse — my phone died too.\"\n— \"그래서 지갑을 잃어버렸어. 잠깐, 더 심해져 — 폰도 꺼졌어.\"" },
+
+      // Day 24 (5/28)
+      { category: "Phrases", word: "Can I get a hand with this?", pronunciation: "Day 24 · 도움 요청", meaningMain: "이거 좀 도와줄 수 있어?", meaningSub: "'Can you help me?'보다 자연스럽고 캐주얼한 표현", example: "\"Can I get a hand with this? It's proper heavy.\"\n— \"이거 좀 도와줄 수 있어? 진짜 무거워.\"" },
+      { category: "Phrases", word: "You're a lifesaver!", pronunciation: "Day 24 · 감사할 때", meaningMain: "너 진짜 생명의 은인이야!", meaningSub: "큰 도움을 받았을 때 감사 표현", example: "\"I brought you coffee.\" \"You're a lifesaver!\"\n— \"커피 가져왔어.\" \"너 진짜 생명의 은인이야!\"" },
+      { category: "Phrases", word: "I owe you one.", pronunciation: "Day 24 · 감사할 때", meaningMain: "나 너한테 하나 빚졌다.", meaningSub: "도움 받은 후 나중에 갚겠다는 표현", example: "\"I owe you one, seriously.\"\n— \"나 너한테 진짜 하나 빚졌다.\"" },
+
+      // Day 25 (5/29)
+      { category: "Phrases", word: "What's he/she like?", pronunciation: "Day 25 · 사람 얘기", meaningMain: "걔 어떤 사람이야?", meaningSub: "새로운 사람에 대해 물어볼 때", example: "\"I met Tom's new girlfriend.\" \"What's she like?\"\n— \"톰의 새 여자친구 만났어.\" \"걔 어떤 사람이야?\"" },
+      { category: "Phrases", word: "They seem well sound.", pronunciation: "Day 25 · 사람 평가", meaningMain: "걔네 완전 좋은 사람 같아.", meaningSub: "'sound' = 좋은, 믿을 만한. 사람 평가할 때 영국식 표현", example: "\"Met your new flatmate. They seem well sound.\"\n— \"새 룸메이트 만났어. 걔 완전 좋은 사람 같아.\"" },
+      { category: "Phrases", word: "They're a right laugh.", pronunciation: "Day 25 · 사람 평가", meaningMain: "걔네 진짜 웃겨. / 같이 있으면 재밌어.", meaningSub: "재미있는 사람을 칭찬할 때. 'right' = 진짜(강조)", example: "\"You'll love my mate Dave, he's a right laugh.\"\n— \"내 친구 데이브 좋아할 거야, 진짜 재밌는 사람이야.\"" },
+
+      // Day 26 (5/30)
+      { category: "Phrases", word: "I'm cream-crackered.", pronunciation: "Day 26 · 피곤할 때", meaningMain: "나 완전 녹초야.", meaningSub: "코크니 라이밍 슬랭: cream-crackered = knackered. 재밌는 영국식 표현", example: "\"I'm cream-crackered after that shift.\"\n— \"그 근무 끝나고 완전 녹초야.\"" },
+      { category: "Phrases", word: "I need a proper lie-in.", pronunciation: "Day 26 · 피곤할 때", meaningMain: "나 제대로 늦잠 자야 해.", meaningSub: "'lie-in' = 늦잠. 영국식 표현. 미국에서는 'sleep in'", example: "\"I need a proper lie-in this weekend.\"\n— \"이번 주말에 제대로 늦잠 자야 해.\"" },
+      { category: "Phrases", word: "I could sleep for a week.", pronunciation: "Day 26 · 피곤할 때", meaningMain: "일주일은 잘 수 있겠다.", meaningSub: "극도로 피곤할 때 과장해서 하는 말", example: "\"I could sleep for a week after that night out.\"\n— \"어젯밤 놀고 나서 일주일은 잘 수 있겠다.\"" },
+
+      // Day 27 (5/31)
+      { category: "Phrases", word: "Let's call it a night.", pronunciation: "Day 27 · 마무리할 때", meaningMain: "오늘은 이만 하자.", meaningSub: "밤에 놀다가 집에 갈 때 쓰는 표현", example: "\"It's getting late. Shall we call it a night?\"\n— \"늦어지고 있네. 오늘은 이만 할까?\"" },
+      { category: "Phrases", word: "Same time next week?", pronunciation: "Day 27 · 다음 약속", meaningMain: "다음 주 같은 시간에?", meaningSub: "정기적으로 만나는 친구와 다음 약속을 잡을 때", example: "\"That was fun. Same time next week?\"\n— \"재밌었어. 다음 주 같은 시간에?\"" },
+      { category: "Phrases", word: "It's been a laugh.", pronunciation: "Day 27 · 마무리할 때", meaningMain: "재밌었어. 즐거웠어.", meaningSub: "'a laugh' = 재미. 모임을 마무리할 때 쓰는 따뜻한 표현", example: "\"Right, I'm off. It's been a laugh, cheers everyone!\"\n— \"자, 나 갈게. 재밌었어, 다들 고마워!\"" }
+
     ];
 
     let userCards = JSON.parse(localStorage.getItem('britishUserCards') || '[]');
@@ -608,7 +881,7 @@
     const todayKey = 'britishToday_' + new Date().toISOString().slice(0, 10);
     let todayStats = JSON.parse(localStorage.getItem(todayKey) || '{"total":0,"sorted":0,"again":0}');
 
-    function getCategories() { return ['All', ...new Set(cards.map(c => c.category))]; }
+    function getCategories() { return ['All', ...new Set(cards.filter(c => c.category !== 'Phrases').map(c => c.category))]; }
 
     function renderCategoryFilter() {
       document.getElementById('category-filter').innerHTML = getCategories().map(cat =>
@@ -625,7 +898,7 @@
     }
 
     function getActiveDeck() {
-      let deck = cards.filter(c => results[c.word] !== 'sorted');
+      let deck = cards.filter(c => results[c.word] !== 'sorted' && c.category !== 'Phrases');
       if (selectedCategory !== 'All') deck = deck.filter(c => c.category === selectedCategory);
       return deck;
     }
@@ -647,8 +920,9 @@
       document.getElementById('stat-again').textContent = todayStats.again;
     }
     function updateProgressBar() {
-      const total = cards.length;
-      const sortedCount = cards.filter(c => results[c.word] === 'sorted').length;
+      const nonPhrases = cards.filter(c => c.category !== 'Phrases');
+      const total = nonPhrases.length;
+      const sortedCount = nonPhrases.filter(c => results[c.word] === 'sorted').length;
       const pct = total > 0 ? Math.round((sortedCount / total) * 100) : 0;
       document.getElementById('progress-percent').textContent = pct + '%';
       document.getElementById('progress-bar').style.width = pct + '%';
@@ -692,52 +966,87 @@ function toggleFlip() {
     }
 
 function resetData() {
-  if (confirm('Reset all study progress?\n\nYour Sorted/Again marks and today\'s stats will be cleared.\nSaved words will stay put.')) {
-    localStorage.removeItem('britishResults');
-    localStorage.removeItem(todayKey);
-    results = {};
-    todayStats = { total: 0, sorted: 0, again: 0 };
-    initDecks();
-    updateProgressBar();
-    updateStatsUI();
-    showStudyCard();
-    showTestCard();
-    alert('Done! Fresh start.');
-  }
+  showConfirmModal(
+    '🗑️ Reset progress?',
+    'Sorted/Again 기록과 오늘의 통계가 초기화됩니다.\n저장된 단어는 유지됩니다.',
+    function() {
+      localStorage.removeItem('britishResults');
+      localStorage.removeItem(todayKey);
+      results = {};
+      todayStats = { total: 0, sorted: 0, again: 0 };
+      initDecks();
+      updateProgressBar();
+      updateStatsUI();
+      showStudyCard();
+      showTestCard();
+      showConfirmModal('✅ Done!', 'Fresh start.', null);
+    }
+  );
 }
 
 function resetAll() {
-  if (!confirm('Wipe absolutely everything?\n\nThis will clear:\n• Study progress (Sorted/Again)\n• Today\'s stats\n• All words you added from the Dictionary\n\nDefault words will stay. There\'s no undo.')) return;
-  if (!confirm('You sure, mate? This is permanent.')) return;
+  showConfirmModal(
+    '⚠️ Wipe everything?',
+    '모든 학습 진행, 통계, 사전에서 추가한 단어가 삭제됩니다.\n기본 단어는 유지됩니다. 되돌릴 수 없어요.',
+    function() {
+      localStorage.removeItem('britishResults');
+      localStorage.removeItem(todayKey);
+      localStorage.removeItem('britishUserCards');
+      Object.keys(localStorage).forEach(k => {
+        if (k.startsWith('britishToday_')) localStorage.removeItem(k);
+      });
+      localStorage.removeItem('britishMemos');
+      localStorage.removeItem('britishPhrasesProgress');
 
-  // Clear progress and stats
-  localStorage.removeItem('britishResults');
-  localStorage.removeItem(todayKey);
-  // Clear user-added words
-  localStorage.removeItem('britishUserCards');
-  // Clear daily history (all 'britishToday_*' keys for the calendar) and memos
-  Object.keys(localStorage).forEach(k => {
-    if (k.startsWith('britishToday_')) {
-      localStorage.removeItem(k);
+      results = {};
+      todayStats = { total: 0, sorted: 0, again: 0 };
+      userCards = [];
+      cards = [...defaultCards];
+      memos = {};
+
+      initDecks();
+      updateProgressBar();
+      updateStatsUI();
+      renderCategoryFilter && renderCategoryFilter();
+      showStudyCard();
+      showTestCard();
+      if (typeof renderList === 'function') renderList();
+      if (typeof renderCalendar === 'function') renderCalendar();
+      if (typeof renderStreak === 'function') renderStreak();
+      showConfirmModal('✅ Wiped!', 'Back to factory settings.', null);
     }
-  });
-  localStorage.removeItem('britishMemos');
+  );
+}
 
-  results = {};
-  todayStats = { total: 0, sorted: 0, again: 0 };
-  userCards = [];
-  cards = [...defaultCards];
-  memos = {};
+function showConfirmModal(title, message, onConfirm) {
+  let existing = document.getElementById('custom-confirm');
+  if (existing) existing.remove();
 
-  initDecks();
-  updateProgressBar();
-  updateStatsUI();
-  renderCategoryFilter && renderCategoryFilter();
-  showStudyCard();
-  showTestCard();
-  if (typeof renderList === 'function') renderList();
-  if (typeof renderCalendar === 'function') renderCalendar();
-  alert('Wiped clean. Back to factory settings.');
+  const isAlert = !onConfirm;
+  const div = document.createElement('div');
+  div.id = 'custom-confirm';
+  div.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  div.innerHTML = `
+    <div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.15);">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:10px;">${title}</div>
+      <div style="font-size:0.85rem;color:#888;line-height:1.6;margin-bottom:24px;white-space:pre-line;">${message}</div>
+      <div style="display:flex;gap:10px;">
+        ${isAlert ? `
+          <button onclick="document.getElementById('custom-confirm').remove()" style="flex:1;padding:14px;background:#111;color:#fff;border:none;border-radius:14px;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;">OK</button>
+        ` : `
+          <button onclick="document.getElementById('custom-confirm').remove()" style="flex:1;padding:14px;background:#f0f0f0;color:#888;border:none;border-radius:14px;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;">Cancel</button>
+          <button id="confirm-yes-btn" style="flex:1;padding:14px;background:#f87171;color:#fff;border:none;border-radius:14px;font-size:0.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;">Confirm</button>
+        `}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(div);
+  if (!isAlert) {
+    document.getElementById('confirm-yes-btn').onclick = function() {
+      document.getElementById('custom-confirm').remove();
+      onConfirm();
+    };
+  }
 }
 
     async function dictSearch() {
@@ -847,7 +1156,7 @@ function resetAll() {
       const area = document.getElementById('study-card-area');
       if (studyDeck.length === 0) {
         area.innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">All sorted!</div><div class="all-done-sub">You've sorted every word in this category. Brilliant!<br>Try another category or pop into the dictionary to add new ones.</div><button class="all-done-btn" onclick="switchView('dict')">🔍 Open Dictionary</button></div>`;
-        document.getElementById('s-progress').textContent = ''; return;
+        // removed return;
       }
       if (studyCurrent >= studyDeck.length) {
         studyDeck = shuffle(getActiveDeck()); studyCurrent = 0;
@@ -876,13 +1185,13 @@ function resetAll() {
             <button class="btn-got" onclick="markCard('sorted','study')">Sorted! ✅</button>
           </div>
         </div>`;
-      document.getElementById('s-progress').textContent = `${studyDeck.length - studyCurrent} left`;
+      // removed
     }
 
     function showTestCard() {
       if (testDeck.length === 0) {
         document.getElementById('test-card-area').innerHTML = `<div class="all-done-card"><div class="all-done-emoji">🎉</div><div class="all-done-title">All sorted!</div><div class="all-done-sub">You've sorted every word in this category.</div><button class="all-done-btn" onclick="switchView('list')">View My Words</button></div>`;
-        document.getElementById('t-progress').textContent = ''; return;
+        // removed return;
       }
       if (testCurrent >= testDeck.length) {
         testDeck = shuffle(getActiveDeck()); testCurrent = 0;
@@ -902,7 +1211,7 @@ function resetAll() {
       const parts = c.example.split('—');
       document.getElementById('t-example-en').textContent = parts[0].trim();
       document.getElementById('t-example-ko').textContent = parts[1] ? '— ' + parts[1].trim() : '';
-      document.getElementById('t-progress').textContent = `${testDeck.length - testCurrent} left`;
+      // removed
     }
 
     function showReviewCard() {
@@ -989,17 +1298,30 @@ function resetAll() {
     }
 
     function switchView(view) {
-      ['study','test','dict','list','review','settings','calendar'].forEach(v => {
+      ['study','test','dict','list','review','settings','calendar','phrases','phrases-history'].forEach(v => {
         const el = document.getElementById(v+'-view');
-        if (el) el.style.display = view === v ? 'block' : 'none';
+        if (!el) return;
+        if (view === v) {
+          const flexViews = ['study','test','review','calendar','list'];
+          el.style.display = flexViews.includes(v) ? 'flex' : 'block';
+        } else {
+          el.style.display = 'none';
+        }
       });
       ['study','test','dict','list','settings','calendar'].forEach(v => {
         const el = document.getElementById('nav-'+v);
-        if (el) el.classList.toggle('active', view === v);
+        if (el) el.classList.toggle('active', view === v || ((view === 'phrases' || view === 'phrases-history') && v === 'calendar'));
       });
       document.getElementById('category-filter').style.display = (view === 'study' || view === 'test') ? 'flex' : 'none';
+      // 스크롤 제어: dict, settings, phrases, phrases-history만 스크롤 허용
+      const scrollViews = ['dict', 'settings', 'phrases', 'phrases-history'];
+      document.body.classList.toggle('allow-scroll', scrollViews.includes(view));
+      // 캘린더/phrases 탭에선 위쪽 통계/진행률 숨김
+      const hideTop = view === 'calendar' || view === 'phrases' || view === 'phrases-history' || view === 'settings';
+      document.getElementById('top-stats').style.display = hideTop ? 'none' : 'flex';
+      document.getElementById('top-progress').style.display = hideTop ? 'none' : 'block';
       if (view === 'list') { renderListCategoryFilter(); renderList(); }
-      if (view === 'calendar') renderCalendar();
+      if (view === 'calendar') { renderStreak(); renderCalendar(); renderPhrasesCard(); }
       if (view === 'settings') {
         const s = document.getElementById('api-status');
         s.textContent = CLAUDE_API_KEY ? '✅ API 키가 저장되어 있어요' : 'API 키가 없어요. 입력해주세요.';
@@ -1136,6 +1458,56 @@ function resetAll() {
       return data;
     }
 
+    /* === STREAK === */
+    function calculateStreak() {
+      const studyData = getAllStudyData();
+      const today = new Date();
+      const todayStr = today.toISOString().slice(0, 10);
+
+      let streak = 0;
+      const cursor = new Date(today);
+
+      // 오늘 학습했으면 오늘부터, 아니면 어제부터 (오늘은 아직 시간 있을 수 있으니까)
+      if ((studyData[todayStr] || 0) === 0) {
+        cursor.setDate(cursor.getDate() - 1);
+      }
+
+      // 거꾸로 가면서 연속된 학습일 카운트
+      while (true) {
+        const key = cursor.toISOString().slice(0, 10);
+        if ((studyData[key] || 0) > 0) {
+          streak++;
+          cursor.setDate(cursor.getDate() - 1);
+        } else {
+          break;
+        }
+      }
+      return streak;
+    }
+
+    function renderStreak() {
+      const streak = calculateStreak();
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const todayCount = (getAllStudyData()[todayStr] || 0);
+      document.getElementById('streak-num').textContent = streak;
+      document.getElementById('streak-label').textContent = streak === 1 ? 'Day streak' : 'Day streak';
+
+      const msgEl = document.getElementById('streak-message');
+      if (streak === 0) {
+        msgEl.textContent = 'Start your streak today, mate!';
+      } else if (todayCount === 0) {
+        msgEl.textContent = `Don't break it — study today!`;
+      } else if (streak < 3) {
+        msgEl.textContent = 'Brilliant start, keep going!';
+      } else if (streak < 7) {
+        msgEl.textContent = 'You\'re on a roll!';
+      } else if (streak < 30) {
+        msgEl.textContent = 'Properly impressive!';
+      } else {
+        msgEl.textContent = 'Absolute legend!';
+      }
+    }
+
     function calChangeMonth(delta) {
       calMonth += delta;
       if (calMonth < 0) { calMonth = 11; calYear--; }
@@ -1185,6 +1557,265 @@ function resetAll() {
         </div>`;
       }
       document.getElementById('cal-grid').innerHTML = html;
+    }
+
+    // ===== DAILY PHRASES SYSTEM =====
+    // 5월 5일 = Day 1, 5월 6일 = Day 2, ... 5월 31일 = Day 27
+    // 27일 이후에는 다시 Day 1부터 순환
+    let phrasesCurrent = 0;
+    let phrasesDay = 1;
+
+    function getDayNumber() {
+      let startStr = localStorage.getItem('britishStartDate');
+      if (!startStr) {
+        // 첫 실행: 오늘을 시작일로 저장
+        startStr = new Date().toISOString().slice(0, 10);
+        localStorage.setItem('britishStartDate', startStr);
+      }
+      const parts = startStr.split('-');
+      const startDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      startDate.setHours(0,0,0,0);
+      const diff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+      if (diff < 0) return 1;
+      return (diff % 27) + 1;
+    }
+
+    function getPhrasesForDay(dayNum) {
+      return cards.filter(c => {
+        if (c.category !== 'Phrases') return false;
+        const match = c.pronunciation.match(/Day (\d+)/);
+        return match && parseInt(match[1]) === dayNum;
+      });
+    }
+
+    function getPhrasesProgress() {
+      return JSON.parse(localStorage.getItem('britishPhrasesProgress') || '{}');
+    }
+
+    function savePhrasesProgress(data) {
+      localStorage.setItem('britishPhrasesProgress', JSON.stringify(data));
+    }
+
+    function renderPhrasesCard() {
+      const dayNum = getDayNumber();
+      const phrases = getPhrasesForDay(dayNum);
+      const progress = getPhrasesProgress();
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const todayDone = progress[todayStr] || [];
+      const doneCount = todayDone.length;
+      const total = phrases.length;
+
+      const titleEl = document.getElementById('phrases-card-title');
+      const subEl = document.getElementById('phrases-card-sub');
+
+      if (total === 0) {
+        titleEl.textContent = 'No phrases today';
+        subEl.textContent = 'Check back tomorrow';
+        return;
+      }
+
+      if (doneCount >= total) {
+        titleEl.textContent = 'All done today! ✅';
+        subEl.textContent = `${total}/${total} phrases completed`;
+      } else {
+        const topic = phrases[0]?.pronunciation.split('·')[1]?.trim() || '';
+        titleEl.textContent = `Day ${dayNum} — ${topic}`;
+        subEl.textContent = `${doneCount}/${total} phrases done`;
+      }
+    }
+
+    function openDailyPhrases() {
+      phrasesDay = getDayNumber();
+      phrasesCurrent = 0;
+      switchView('phrases');
+      showPhraseCard();
+      updatePhrasesHistorySub();
+    }
+
+    function closeDailyPhrases() {
+      // 열어본 문장들 전부 완료 처리
+      const phrases = getPhrasesForDay(phrasesDay);
+      const progress = getPhrasesProgress();
+      const todayStr = new Date().toISOString().slice(0, 10);
+      if (!progress[todayStr]) progress[todayStr] = [];
+      phrases.forEach(p => {
+        if (!progress[todayStr].includes(p.word)) {
+          progress[todayStr].push(p.word);
+        }
+      });
+      savePhrasesProgress(progress);
+      switchView('calendar');
+    }
+
+    function showPhraseCard() {
+      const area = document.getElementById('phrases-card-area');
+      const phrases = getPhrasesForDay(phrasesDay);
+
+      if (phrases.length === 0) {
+        area.innerHTML = '<div class="phrases-complete"><div class="phrases-complete-emoji">📭</div><div class="phrases-complete-title">No phrases for this day</div><div class="phrases-complete-sub">Check back tomorrow!</div><button class="phrases-complete-btn" onclick="closeDailyPhrases()">Back to Calendar</button></div>';
+        return;
+      }
+
+      // Clamp current index
+      if (phrasesCurrent < 0) phrasesCurrent = 0;
+      if (phrasesCurrent >= phrases.length) phrasesCurrent = phrases.length - 1;
+
+      // Day label & topic
+      const topic = phrases[0]?.pronunciation.split('·')[1]?.trim() || '';
+      document.getElementById('phrases-day-label').textContent = `DAY ${phrasesDay}`;
+      document.getElementById('phrases-topic').textContent = topic;
+
+      // Progress dots
+      const dotsHtml = phrases.map((p, i) => {
+        let cls = 'phrases-dot';
+        if (i === phrasesCurrent) cls += ' active';
+        return `<div class="${cls}" onclick="goToPhrase(${i})" style="cursor:pointer;"></div>`;
+      }).join('');
+      document.getElementById('phrases-dots').innerHTML = dotsHtml;
+
+      const c = phrases[phrasesCurrent];
+      // 예문 파싱 (대화형이라 \n으로 줄바꿈)
+      const exParts = c.example.split('\n');
+      const exEn = exParts[0]?.replace(/^"|"$/g, '').trim() || '';
+      const exKo = exParts[1]?.replace(/^—\s*/, '').trim() || '';
+
+      // 영어 문장에서 TTS용 텍스트 추출
+      const speakEn = c.word.replace(/'/g, "\\'");
+      const speakEx = exEn.replace(/"/g, '').replace(/'/g, "\\'").replace(/—.*$/g, '').trim();
+
+      area.innerHTML = `
+        <div class="phrase-card">
+          <div style="font-size:0.72rem; color:#aaa; letter-spacing:1px; margin-bottom:12px;">${phrasesCurrent + 1} / ${phrases.length}</div>
+          <div class="phrase-en">"${c.word}"</div>
+          <button class="speak-btn" style="margin: 0 auto 12px; background: #f0f0ff;" onclick="speakText('${speakEn}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg></button>
+          <div class="phrase-ko">${c.meaningMain}</div>
+          <div class="phrase-tip">💡 ${c.meaningSub}</div>
+          <div class="phrase-example-box">
+            ${exEn}
+            <span class="phrase-example-ko">${exKo}</span>
+            <button class="example-speak" onclick="speakText('${speakEx}')" style="top:8px;right:8px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" /></svg></button>
+          </div>
+          <div class="phrases-nav-btns">
+            <button class="phrase-prev-btn" onclick="prevPhrase()" ${phrasesCurrent === 0 ? 'style="visibility:hidden;"' : ''}>← Prev</button>
+            <button class="phrase-next-btn" onclick="nextPhrase()" ${phrasesCurrent === phrases.length - 1 ? 'style="visibility:hidden;"' : ''}>Next →</button>
+          </div>
+        </div>`;
+    }
+
+    function goToPhrase(index) {
+      phrasesCurrent = index;
+      showPhraseCard();
+    }
+
+    function nextPhrase() {
+      const phrases = getPhrasesForDay(phrasesDay);
+      if (phrasesCurrent < phrases.length - 1) {
+        phrasesCurrent++;
+        showPhraseCard();
+      }
+    }
+
+    function prevPhrase() {
+      if (phrasesCurrent > 0) {
+        phrasesCurrent--;
+        showPhraseCard();
+      }
+    }
+
+    // ===== PHRASES HISTORY =====
+    function updatePhrasesHistorySub() {
+      const progress = getPhrasesProgress();
+      const totalLearned = Object.values(progress).reduce((sum, arr) => sum + arr.length, 0);
+      const el = document.getElementById('phrases-history-sub');
+      if (el) el.textContent = `${totalLearned} phrases learned`;
+    }
+
+    function openPhrasesHistory() {
+      switchView('phrases-history');
+      renderPhrasesHistory();
+    }
+
+    function closePhrasesHistory() {
+      switchView('phrases');
+      showPhraseCard();
+      updatePhrasesHistorySub();
+    }
+
+    function renderPhrasesHistory() {
+      const area = document.getElementById('phrases-history-list-area');
+      const allPhrases = cards.filter(c => c.category === 'Phrases');
+
+      // Day별로 그룹핑
+      const dayMap = {};
+      allPhrases.forEach(p => {
+        const match = p.pronunciation.match(/Day (\d+)/);
+        if (!match) return;
+        const dayNum = parseInt(match[1]);
+        if (!dayMap[dayNum]) dayMap[dayNum] = [];
+        dayMap[dayNum].push(p);
+      });
+
+      const currentDay = getDayNumber();
+      const progress = getPhrasesProgress();
+      const totalLearned = Object.values(progress).reduce((sum, arr) => sum + arr.length, 0);
+      document.getElementById('phrases-history-count').textContent = `${totalLearned} phrases learned`;
+
+      // Day 1부터 현재 Day까지 오름차순
+      const days = Object.keys(dayMap).map(Number).filter(d => d <= currentDay).sort((a, b) => a - b);
+
+      if (days.length === 0) {
+        area.innerHTML = '<div style="text-align:center; color:#ccc; padding:30px 0; font-size:0.85rem;">No phrases yet</div>';
+        return;
+      }
+
+      let html = '<div class="phrases-history-list">';
+      days.forEach(dayNum => {
+        const phrases = dayMap[dayNum];
+        const topic = phrases[0]?.pronunciation.split('·')[1]?.trim() || '';
+        const isToday = dayNum === currentDay;
+
+        html += `<div class="phrases-history-day">
+          <div class="phrases-history-day-header" onclick="toggleHistoryDay(this)">
+            <div style="min-width:0; flex:1;">
+              <div class="phrases-history-day-title">${isToday ? '📌 ' : ''}Day ${dayNum}</div>
+              <div class="phrases-history-day-topic">${topic}</div>
+            </div>
+            <div style="font-size:1rem; color:#ccc; transition: transform 0.25s; flex-shrink:0;">›</div>
+          </div>
+          <div class="phrases-history-day-items">`;
+
+        phrases.forEach(p => {
+          const speakWord = p.word.replace(/'/g, "\\'");
+          html += `<div class="phrases-history-item">
+            <div>
+              <div class="phrases-history-item-en">${p.word}</div>
+              <div class="phrases-history-item-ko">${p.meaningMain}</div>
+            </div>
+            <button class="phrases-history-item-speak" onclick="speakText('${speakWord}')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" style="width:16px;height:16px;stroke:#888;"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"/></svg></button>
+          </div>`;
+        });
+
+        html += `</div></div>`;
+      });
+      html += '</div>';
+      area.innerHTML = html;
+    }
+
+    function toggleHistoryDay(header) {
+      const items = header.nextElementSibling;
+      const arrow = header.querySelector('div:last-child');
+      const isOpen = items.classList.contains('open');
+      // 다른 열린 것 닫기
+      document.querySelectorAll('.phrases-history-day-items.open').forEach(el => {
+        el.classList.remove('open');
+        el.previousElementSibling.querySelector('div:last-child').style.transform = '';
+      });
+      if (!isOpen) {
+        items.classList.add('open');
+        arrow.style.transform = 'rotate(90deg)';
+      }
     }
 
     window.speechSynthesis.onvoiceschanged = () => {};
