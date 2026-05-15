@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="British English">
   <meta name="theme-color" content="#f7f7f7">
   <meta name="format-detection" content="telephone=no">
+  <!-- PWA manifest (inline data URI so single-file deployment works on GitHub Pages) -->
+  <link rel="manifest" href='data:application/manifest+json,{"name":"British English","short_name":"British","start_url":".","display":"standalone","orientation":"portrait","background_color":"%23f7f7f7","theme_color":"%23f7f7f7","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22%3E%3Crect width=%22192%22 height=%22192%22 rx=%2240%22 fill=%22%23111%22/%3E%3Ctext x=%2296%22 y=%22128%22 font-size=%22110%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Inter,sans-serif%22 font-weight=%22700%22%3E🇬🇧%3C/text%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"}]}'>
+  <link rel="apple-touch-icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="%23111"/><text x="96" y="128" font-size="110" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="700">🇬🇧</text></svg>'>
   <title>British English 🇬🇧</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
@@ -38,6 +42,14 @@
     .stat-box.again .stat-number { color: #f59e0b; }
     .stat-box.total .stat-number { color: #6366f1; }
     .progress-section { width: 100%; max-width: 460px; background: #fff; border-radius: 10px; padding: 8px 12px; margin-bottom: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    /* 학습 모드(Study/Test/Review): 상단 영역 컴팩트화 */
+    .today-stats.compact { display: none; }
+    .progress-section.compact { padding: 6px 12px; margin-bottom: 4px; }
+    .progress-section.compact .progress-header { margin-bottom: 3px; }
+    .progress-section.compact .progress-label { font-size: 0.6rem; }
+    .progress-section.compact .progress-percent { font-size: 0.75rem; }
+    .progress-section.compact .progress-bar-bg { height: 4px; }
+    .progress-section.compact .progress-counts { display: none; }
     .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
     .progress-label { font-size: 0.68rem; font-weight: 600; color: #888; letter-spacing: 0.8px; text-transform: uppercase; }
     .progress-percent { font-size: 0.85rem; font-weight: 700; color: #111; }
@@ -55,7 +67,7 @@
       background: #f0f0f0; border: 1px solid #e8e8e8;
       width: 46px; height: 46px;
       cursor: pointer; padding: 0;
-      color: #c4c4c4;
+      color: #9ca3af;
       display: flex; align-items: center; justify-content: center;
       border-radius: 12px;
       flex-shrink: 0;
@@ -98,9 +110,20 @@
     .example-divider { width: 100%; height: 1px; background: #e8e8e8; margin: 8px 0; }
     .example-extra-en { color: #999; }
     .example-tip { font-style: normal; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd; font-size: 0.75rem; color: #6366f1; line-height: 1.5; }
+    .example-toggle-btn {
+      display: block; margin: 8px auto 0;
+      background: transparent; border: 1px dashed #d4d4d8;
+      color: #9ca3af; padding: 5px 14px;
+      border-radius: 14px; font-size: 0.7rem;
+      font-family: 'Inter', sans-serif; font-weight: 600;
+      cursor: pointer; font-style: normal;
+      transition: all 0.15s ease;
+    }
+    .example-toggle-btn:hover { color: #6366f1; border-color: #a78bfa; background: #f5f3ff; }
+    .example-toggle-btn:active { transform: scale(0.96); }
     .buttons { display: flex; gap: 8px; justify-content: center; flex-shrink: 0; margin-top: auto; align-items: stretch; }
-    .btn-again { background: #f0f0f0; color: #888; flex: 1; border: 1px solid #e8e8e8; }
-    .btn-got { background: #111; color: #fff; flex: 1.4; }
+    .btn-again { background: #f0f0f0; color: #888; flex: 1; border: 1px solid #e8e8e8; white-space: nowrap; }
+    .btn-got { background: #111; color: #fff; flex: 1.8; white-space: nowrap; }
     .btn-got:hover { background: #333; }
     .btn-again:hover { background: #e8e8e8; }
     .buttons button { padding: 12px 20px; border: none; border-radius: 12px; font-size: 0.85rem; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif; transition: all 0.15s ease; }
@@ -390,7 +413,7 @@
             </div>
             <div class="buttons">
               <button class="fav-toggle" id="t-fav-back" onclick="event.stopPropagation(); toggleFavTestCard(this)" aria-label="Toggle favourite"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/></svg></button>
-              <button class="btn-again" onclick="event.stopPropagation(); markCard('again', 'test')">Again, mate</button>
+              <button class="btn-again" onclick="event.stopPropagation(); markCard('again', 'test')">Again</button>
               <button class="btn-got" onclick="event.stopPropagation(); markCard('sorted', 'test')">Sorted! ✅</button>
             </div>
           </div>
@@ -882,8 +905,34 @@
     // ===== 🔧 RUNTIME PATCH =====
     // Phrases 구조 표준화 — pronunciation → dayTag 분리
     defaultCards.forEach(c => { if (c.category === 'Phrases' && c.pronunciation && /^Day \d+/.test(c.pronunciation)) { c.dayTag = c.pronunciation; c.pronunciation = ''; } });
-    // example2 통일 렌더링 헬퍼
-    function buildExamplesHtml(c) { let h = ''; if (c.example2) { const p = c.example2.split('—'); h += '<div class="example-divider"></div><span class="example-extra-en">' + p[0].trim() + '</span><span class="example-ko">' + (p[1] ? '— ' + p[1].trim() : '') + '</span>'; } if (c.tip) { h += '<div class="example-tip">' + c.tip + '</div>'; } return h; }
+    // example2 통일 렌더링 헬퍼 — 두 번째 예문은 기본 숨김, "예문 더보기" 클릭 시 노출
+    function buildExamplesHtml(c) {
+      let h = '';
+      if (c.example2) {
+        const p = c.example2.split('—');
+        const en = p[0].trim();
+        const ko = p[1] ? '— ' + p[1].trim() : '';
+        const safeEn = en.replace(/'/g, "\\'");
+        h += '<div class="example2-wrap" style="display:none;">'
+          + '<div class="example-divider"></div>'
+          + '<span class="example-extra-en">' + en + '</span>'
+          + '<span class="example-ko">' + ko + '</span>'
+          + '<button class="example-speak" onclick="event.stopPropagation(); speakText(\'' + safeEn + '\')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"/></svg></button>'
+          + '</div>'
+          + '<button class="example-toggle-btn" onclick="event.stopPropagation(); toggleExample2(this)">+ 예문 더보기</button>';
+      }
+      if (c.tip) {
+        h += '<div class="example-tip">' + c.tip + '</div>';
+      }
+      return h;
+    }
+    function toggleExample2(btn) {
+      const wrap = btn.parentElement.querySelector('.example2-wrap');
+      if (!wrap) return;
+      const isHidden = wrap.style.display === 'none';
+      wrap.style.display = isHidden ? 'block' : 'none';
+      btn.textContent = isHidden ? '− 예문 접기' : '+ 예문 더보기';
+    }
     // ===== END PATCH =====
 
     let userCards = JSON.parse(localStorage.getItem('britishUserCards') || '[]');
@@ -1472,7 +1521,7 @@ ${buildExamplesHtml(c)}
           </div>
           <div class="buttons">
             <button class="fav-toggle ${starred ? 'starred' : ''}" onclick="toggleFavourite('${c.word.replace(/'/g, "\\'")}', this)" aria-label="Toggle favourite">${starred ? STAR_FILLED_SVG : STAR_EMPTY_SVG}</button>
-            <button class="btn-again" onclick="markCard('again','study')">Again, mate</button>
+            <button class="btn-again" onclick="markCard('again','study')">Again</button>
             <button class="btn-got" onclick="markCard('sorted','study')">Sorted! ✅</button>
           </div>
         </div>`;
@@ -1561,7 +1610,7 @@ ${buildExamplesHtml(c)}
           </div>
           <div class="buttons">
             <button class="fav-toggle ${starred ? 'starred' : ''}" onclick="toggleFavourite('${c.word.replace(/'/g, "\\'")}', this)" aria-label="Toggle favourite">${starred ? STAR_FILLED_SVG : STAR_EMPTY_SVG}</button>
-            <button class="btn-again" onclick="markCard('again','review')">Again, mate</button>
+            <button class="btn-again" onclick="markCard('again','review')">Again</button>
             <button class="btn-got" onclick="markCard('sorted','review')">Sorted! ✅</button>
           </div>
         </div>`;
@@ -1644,8 +1693,14 @@ ${buildExamplesHtml(c)}
       document.body.classList.toggle('allow-scroll', scrollViews.includes(view));
       // 캘린더/phrases 탭에선 위쪽 통계/진행률 숨김
       const hideTop = view === 'calendar' || view === 'phrases' || view === 'phrases-history' || view === 'settings';
-      document.getElementById('top-stats').style.display = hideTop ? 'none' : 'flex';
-      document.getElementById('top-progress').style.display = hideTop ? 'none' : 'block';
+      // 학습/리뷰 모드: 상단 영역 컴팩트화 (TODAY/SORTED/AGAIN 박스 숨김, 진행률만 얇게)
+      const compactTop = view === 'study' || view === 'test' || view === 'review';
+      const topStats = document.getElementById('top-stats');
+      const topProgress = document.getElementById('top-progress');
+      topStats.style.display = hideTop ? 'none' : 'flex';
+      topProgress.style.display = hideTop ? 'none' : 'block';
+      topStats.classList.toggle('compact', compactTop);
+      topProgress.classList.toggle('compact', compactTop);
       if (view === 'list') { renderListCategoryFilter(); renderList(); }
       if (view === 'calendar') { renderStreak(); renderCalendar(); renderPhrasesCard(); }
       if (view === 'settings') {
